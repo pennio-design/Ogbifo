@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ogbifọ Verifier</title>
+<style>
+  :root {
+    --bg: #faf8f4; --surface: #ffffff; --text: #1d1b18; --muted: #6b665e;
+    --border: #ddd7cc; --accent: #8a3b12; --accent-text: #ffffff; --warn: #9a6700;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #161412; --surface: #211e1b; --text: #f1ece4; --muted: #a39c91;
+      --border: #3a352f; --accent: #e08a5a; --accent-text: #161412; --warn: #e3b341;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #161412; --surface: #211e1b; --text: #f1ece4; --muted: #a39c91;
+    --border: #3a352f; --accent: #e08a5a; --accent-text: #161412; --warn: #e3b341;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 1.25rem; margin: 0 0 4px; }
+  p.hint { color: var(--muted); margin: 0 0 16px; font-size: 0.9rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+          padding: 16px; margin-bottom: 16px; }
+  label { display: block; font-weight: 600; margin: 12px 0 4px; }
+  input[type=text], textarea { width: 100%; font: inherit; color: var(--text);
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+  textarea { font-size: 1.3rem; line-height: 1.6; min-height: 5.5em; resize: vertical; }
+  button { font: inherit; border-radius: 8px; border: 1px solid var(--border);
+           background: var(--surface); color: var(--text); padding: 10px 14px; cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-text);
+                   font-weight: 600; }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .row.spread { justify-content: space-between; }
+  .marks button { min-width: 3.2em; font-size: 1.2rem; }
+  .meta { color: var(--muted); font-size: 0.9rem; }
+  .context { color: var(--muted); font-size: 1rem; margin: 6px 0; min-height: 1.5em; }
+  .paused { color: var(--warn); font-weight: 600; }
+  .progress { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 8px 0 16px; }
+  .progress > div { height: 100%; background: var(--accent); width: 0; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Ogbifọ Verifier</h1>
+  <p class="hint">Correct each line's tone marks and underdots, then move on. Time is recorded per line so we can price verification. Nothing leaves this device until you download and send your results.</p>
+
+  <section id="setup" class="card">
+    <label for="name">Your name</label>
+    <input id="name" type="text" autocomplete="name">
+    <label for="file">Drafts file (drafts.jsonl)</label>
+    <input id="file" type="file" accept=".jsonl,.json,.txt">
+    <p class="hint" id="setup-msg"></p>
+  </section>
+
+  <section id="work" hidden>
+    <div class="row spread meta">
+      <span id="where"></span>
+      <span id="count"></span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div class="card">
+      <div class="context" id="prev"></div>
+      <textarea id="line" spellcheck="false" autocapitalize="off" autocorrect="off"></textarea>
+      <div class="context" id="next"></div>
+      <div class="row marks" aria-label="Insert a mark after the letter before the cursor">
+        <button data-mark="&#x301;" title="High tone">◌́</button>
+        <button data-mark="&#x300;" title="Low tone">◌̀</button>
+        <button data-mark="&#x323;" title="Underdot">◌̣</button>
+        <button id="reset" title="Put the draft back">Reset</button>
+      </div>
+      <p class="meta" id="audio"></p>
+    </div>
+    <div class="row">
+      <button id="back">Back</button>
+      <button id="flag">Not sure</button>
+      <button id="save" class="primary">Correct → next</button>
+    </div>
+    <p class="hint">Ctrl + Enter also saves. Tap Pause for breaks; the timer also pauses when you leave this tab.</p>
+    <div class="row spread">
+      <button id="pause">Pause</button>
+      <span id="paused-label" class="paused" hidden>Paused</span>
+      <button id="export">Download results</button>
+    </div>
+  </section>
+
+  <section id="done" class="card" hidden>
+    <strong>All lines done.</strong>
+    <p class="hint">Download your results and send the file back. You can go back to any line before you download.</p>
+    <div class="row"><button id="export-done" class="primary">Download results</button>
+      <button id="review">Review lines</button></div>
+  </section>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const nfc = (s) => (s || "").normalize("NFC");
+  let lines = [], results = {}, index = 0, storageKey = null;
+  let activeSince = null, paused = false;
+
+  const store = {
+    get(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } },
+    set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) {} },
+  };
+
+  try { $("name").value = localStorage.getItem("ogbifo-verifier-name") || ""; } catch (e) {}
+
+  $("file").addEventListener("change", async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (!$("name").value.trim()) {
+      $("setup-msg").textContent = "Enter your name first.";
+      event.target.value = "";
+      return;
+    }
+    try {
+      lines = (await file.text()).split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l));
+      if (!lines.length || !lines.every((l) => l.id && typeof l.draft === "string")) throw new Error();
+    } catch (e) {
+      $("setup-msg").textContent = "That file is not a drafts file from the harness.";
+      return;
+    }
+    try { localStorage.setItem("ogbifo-verifier-name", $("name").value.trim()); } catch (e) {}
+    storageKey = `ogbifo-verify:${file.name}:${lines.length}:${$("name").value.trim()}`;
+    const saved = store.get(storageKey);
+    results = (saved && saved.results) || {};
+    index = saved ? Math.min(saved.index || 0, lines.length - 1) : 0;
+    $("setup").hidden = true;
+    show(index);
+  });
+
+  function stopClock() {
+    if (activeSince === null) return;
+    const id = lines[index].id;
+    const r = results[id] || (results[id] = { seconds: 0 });
+    r.seconds = (r.seconds || 0) + (performance.now() - activeSince) / 1000;
+    activeSince = null;
+  }
+
+  function startClock() {
+    if (!paused && !document.hidden && !$("work").hidden) activeSince = performance.now();
+  }
+
+  function persist() { if (storageKey) store.set(storageKey, { results, index }); }
+
+  function show(i) {
+    index = i;
+    const line = lines[i];
+    $("work").hidden = false;
+    $("done").hidden = true;
+    $("where").textContent = `${line.song_id} · line ${line.line_no}`;
+    const done = Object.values(results).filter((r) => r.final !== undefined).length;
+    $("count").textContent = `${done} / ${lines.length} done`;
+    $("bar").style.width = `${(100 * done) / lines.length}%`;
+    const prev = lines[i - 1], next = lines[i + 1];
+    $("prev").textContent = prev && prev.song_id === line.song_id
+      ? nfc((results[prev.id] && results[prev.id].final) || prev.draft) : "";
+    $("next").textContent = next && next.song_id === line.song_id ? nfc(next.draft) : "";
+    const existing = results[line.id];
+    $("line").value = nfc(existing && existing.final !== undefined ? existing.final : line.draft);
+    const audio = line.meta && line.meta.audio_url;
+    $("audio").innerHTML = "";
+    if (audio) {
+      const a = document.createElement("a");
+      a.href = audio; a.target = "_blank"; a.rel = "noopener"; a.textContent = "Listen to this line";
+      $("audio").appendChild(a);
+    }
+    $("back").disabled = i === 0;
+    persist();
+    startClock();
+    $("line").focus();
+  }
+
+  function record(status) {
+    stopClock();
+    const line = lines[index];
+    const final = nfc($("line").value.trim().replace(/\s+/g, " "));
+    const r = results[line.id] || (results[line.id] = { seconds: 0 });
+    Object.assign(r, {
+      id: line.id, draft: line.draft, final,
+      status: status || (final === nfc(line.draft) ? "accepted" : "corrected"),
+      verifier: $("name").value.trim(), finished_at: new Date().toISOString(),
+    });
+    if (index + 1 < lines.length) {
+      show(index + 1);
+    } else {
+      persist();
+      $("work").hidden = true;
+      $("done").hidden = false;
+    }
+  }
+
+  $("save").addEventListener("click", () => record());
+  $("flag").addEventListener("click", () => record("flagged"));
+  $("back").addEventListener("click", () => { stopClock(); show(index - 1); });
+  $("review").addEventListener("click", () => show(0));
+  $("reset").addEventListener("click", () => { $("line").value = nfc(lines[index].draft); $("line").focus(); });
+  $("line").addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); record(); }
+  });
+
+  document.querySelectorAll("[data-mark]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const box = $("line"), at = box.selectionStart;
+      box.value = box.value.slice(0, at) + button.dataset.mark + box.value.slice(box.selectionEnd);
+      box.focus();
+      box.setSelectionRange(at + 1, at + 1);
+    });
+  });
+
+  $("pause").addEventListener("click", () => {
+    paused = !paused;
+    if (paused) stopClock(); else startClock();
+    $("pause").textContent = paused ? "Resume" : "Pause";
+    $("paused-label").hidden = !paused;
+    ["line", "save", "flag"].forEach((id) => { $(id).disabled = paused; });
+    $("back").disabled = paused || index === 0;
+    persist();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) { stopClock(); persist(); } else startClock();
+  });
+
+  function exportResults() {
+    stopClock();
+    persist();
+    const rows = lines.map((l) => results[l.id]).filter((r) => r && r.final !== undefined)
+      .map((r) => JSON.stringify({ ...r, seconds: Math.round(r.seconds * 10) / 10 }));
+    const blob = new Blob([rows.join("\n") + "\n"], { type: "application/x-ndjson" });
+    const a = document.createElement("a");
+    const who = $("name").value.trim().replace(/[^\p{L}\p{N}]+/gu, "-") || "verifier";
+    a.href = URL.createObjectURL(blob);
+    a.download = `verified-${who}-${new Date().toISOString().slice(0, 10)}.jsonl`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    startClock();
+  }
+  $("export").addEventListener("click", exportResults);
+  $("export-done").addEventListener("click", exportResults);
+})();
+</script>
+</body>
+</html>

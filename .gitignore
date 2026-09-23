@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+
+# Lyrics are copyrighted and this repository is public: keep line sheets,
+# drafts, verifier exports and reports out of git.
+bench/data/
+bench/runs/
