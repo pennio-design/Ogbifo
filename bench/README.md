@@ -81,11 +81,17 @@ A free Google Colab GPU is enough for this. Upload the `bench` folder, then run 
 - **Lines accepted with errors still in them** is the verifier-quality number. If it is above zero on gold lines, a single verifier is not enough, and the second-verifier step in the plan is needed from the start.
 - Treat timings from the first 20 or so lines as warm-up. Look at the median and p90 as well as the mean.
 
+## Audit
+
+The same package runs the lyrics-online audit (`python -m ogbifo_bench audit ...`). It needs `openpyxl`. See [`../audit/README.md`](../audit/README.md).
+
 ## Development
 
 ```sh
 cd bench
 python -m unittest discover -s tests -t .
 ```
+
+The audit tests are skipped if `openpyxl` is not installed.
 
 The fixture in `samples/` is test data for the scorer. It is not a verified corpus.

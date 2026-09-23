@@ -1,4 +1,4 @@
-"""Command line: `python -m ogbifo_bench draft ...` and `python -m ogbifo_bench report ...`."""
+"""Command line: `python -m ogbifo_bench draft|report|audit ...`."""
 
 import argparse
 import json
@@ -7,6 +7,15 @@ from pathlib import Path
 
 from . import backends, report
 from .io import load_lines, read_jsonl, write_jsonl
+
+
+def write_report(path, markdown, summary):
+    """Write the Markdown report and a JSON summary beside it."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(markdown + "\n", encoding="utf-8")
+    out.with_suffix(".json").write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def cmd_draft(args):
@@ -47,11 +56,29 @@ def cmd_report(args):
     markdown = report.to_markdown(summary, currency=args.currency)
     print(markdown)
     if args.out:
-        out = Path(args.out)
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(markdown + "\n", encoding="utf-8")
-        out.with_suffix(".json").write_text(
-            json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        write_report(args.out, markdown, summary)
+
+
+def cmd_audit_sample(args):
+    from .audit import sample
+    songs, shortfalls = sample.run(args.candidates, args.out, args.per_genre,
+                                   args.accuracy_per_genre, args.seed, args.frame)
+    genres = sorted({s["genre"] for s in songs})
+    print(f"Sampled {len(songs)} songs across {len(genres)} genres -> {args.out}",
+          file=sys.stderr)
+    for genre, count in shortfalls.items():
+        print(f"warning: only {count} candidates for {genre}; add more to reach "
+              f"{args.per_genre}", file=sys.stderr)
+
+
+def cmd_audit_report(args):
+    from .audit import report as audit_report
+    from .audit.workbook import read_workbook
+    summary = audit_report.build(read_workbook(args.workbook))
+    markdown = audit_report.to_markdown(summary)
+    print(markdown)
+    if args.out:
+        write_report(args.out, markdown, summary)
 
 
 def main(argv=None):
@@ -85,6 +112,22 @@ def main(argv=None):
     rep.add_argument("--case-sensitive", action="store_true")
     rep.add_argument("--out", help="Write the report here (.md) plus a .json summary")
     rep.set_defaults(func=cmd_report)
+
+    audit = sub.add_parser("audit", help="The Yorùbá-lyrics-online audit.")
+    audit_sub = audit.add_subparsers(dest="audit_command", required=True)
+    samp = audit_sub.add_parser("sample", help="Draw the sample and write the audit workbook.")
+    samp.add_argument("candidates", help="CSV/TSV with title, artist, genre (year, frame_source, url)")
+    samp.add_argument("--out", required=True, help="Workbook to write (.xlsx)")
+    samp.add_argument("--per-genre", type=int, default=40)
+    samp.add_argument("--accuracy-per-genre", type=int, default=8)
+    samp.add_argument("--seed", type=int, help="Random seed (default: the current year)")
+    samp.add_argument("--frame", default="",
+                      help="One line describing where the candidates came from")
+    samp.set_defaults(func=cmd_audit_sample)
+    arep = audit_sub.add_parser("report", help="Headline numbers from a filled-in workbook.")
+    arep.add_argument("workbook")
+    arep.add_argument("--out", help="Write the report here (.md) plus a .json summary")
+    arep.set_defaults(func=cmd_audit_report)
 
     args = parser.parse_args(argv)
     try:

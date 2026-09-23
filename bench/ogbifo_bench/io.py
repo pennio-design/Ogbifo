@@ -9,17 +9,23 @@ from .text import nfc, strip_marks
 CORE_COLUMNS = {"song_id", "line_no", "reference", "plain", "draft"}
 
 
-def read_table(path):
+def read_rows(path):
     """Read a TSV (default) or CSV file into a list of dicts with NFC text."""
     path = Path(path)
     delimiter = "," if path.suffix.lower() == ".csv" else "\t"
     with path.open(encoding="utf-8-sig", newline="") as f:
-        rows = list(csv.DictReader(f, delimiter=delimiter))
+        return [{k.strip(): nfc((v or "").strip()) for k, v in row.items() if k}
+                for row in csv.DictReader(f, delimiter=delimiter)]
+
+
+def read_table(path):
+    """Read a line table: rows that each carry song_id and line_no."""
+    rows = read_rows(path)
     for row in rows:
         for key in ("song_id", "line_no"):
-            if not (row.get(key) or "").strip():
+            if not row.get(key):
                 raise ValueError(f"{path}: every row needs {key}")
-    return [{k.strip(): nfc((v or "").strip()) for k, v in row.items() if k} for row in rows]
+    return rows
 
 
 def record_id(row):

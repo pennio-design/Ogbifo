@@ -6,3 +6,5 @@ __pycache__/
 # drafts, verifier exports and reports out of git.
 bench/data/
 bench/runs/
+audit/data/
+audit/runs/
