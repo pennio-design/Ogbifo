@@ -31,6 +31,8 @@ Scores are guidance. Do not claim: *"Your pronunciation is objectively correct."
 
 ## Audio privacy
 
+> Decided (`PRODUCT_DECISIONS.md` D-019): learner audio is analysed on-device and not uploaded by default.
+
 Recordings should not be retained indefinitely by default. Storage/retention policy must be explicit.
 
 Users must be able to understand whether audio is: processed locally, uploaded, stored, used for improvement, deleted.

@@ -4,6 +4,8 @@
 
 Language knowledge should not be validated exclusively by an algorithm. Community members must be able to participate in establishing whether submitted material is appropriate and accurate.
 
+> Two tiers (`PRODUCT_DECISIONS.md` D-021): "Peer confirmed" (five self-declared speakers) and "Reviewed" (named reviewers; the only state allowed into a Deck). The `peer_verified` name below is the first tier; it must never be shown as "Reviewed".
+
 ## States
 
 `pending_review`, `peer_verified`, `flagged`, `rejected`

@@ -75,3 +75,19 @@ An installable web app (PWA) first, responsive, using the browser microphone. Of
 ## D-018 Business model
 
 None in the first release: free until the product shows retention. No paywalls. Locked Decks are progression only, not payment. Tokens are progress points with no cash value. Pricing is revisited with retention data.
+
+## D-019 Learner audio
+
+Pitch analysis runs on-device. A learner's recordings are not uploaded by default; only the numeric scores and contour are saved. The audio is discarded unless the learner explicitly keeps or shares it. Consequence: the scoring algorithm must run client-side (WASM or Web Audio), offline, and old attempts cannot be re-scored when it improves.
+
+## D-020 Archive visibility and licence
+
+Verified Archive entries are public to read. The contributor keeps ownership and grants Ogbifọ a non-exclusive licence to display, preserve and let the community verify the entry, on Ogbifọ only. The contributor can withdraw the licence, and a withdrawn entry disappears from view. Nothing is licensed to third parties (see D-002). Copyrighted works such as lyrics are not accepted without a rights declaration.
+
+## D-021 Two verification tiers
+
+Any signed-in user who declares fluency may confirm a contribution, and five confirmations make it "Peer confirmed". Only the named reviewer group (D-012) can mark an item "Reviewed", and only "Reviewed" items may enter a Deck. The two labels are never conflated in copy or data. One vote per account, with rate limits.
+
+## D-022 Accounts
+
+Anyone can read anonymously, including the Reading Room and a free sample Deck. An account (Google, Apple or an email link, no passwords) is required to keep progress, download Decks, contribute or confirm. Phone-number sign-in is not part of the first release.

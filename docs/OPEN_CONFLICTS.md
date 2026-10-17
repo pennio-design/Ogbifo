@@ -8,22 +8,13 @@ Also open: the revenue model for the consumer product is undefined. Not a Phase 
 
 ---
 
-## 4. Verification can be gamed — BEFORE-PHASE-4
+## 4. Verification abuse controls — BEFORE-PHASE-4
 
-Peer verification supports community trust and archive quality. It is not dataset certification (D-004). That lowers the stakes, but the weakness remains: `peer_verified` at 5 confirmations has no sybil resistance, so five throwaway accounts can mark anything verified and degrade trust in the Archive.
+D-021 sets who may confirm and splits "Peer confirmed" from "Reviewed". Still to specify: how fluency is declared and what stops a throwaway account from declaring it, rate limits per account and per device, how a wrongly confirmed entry is revoked, what `flagged` and `rejected` require, and who the named reviewers are and how they are appointed and removed.
 
-Still unspecified: who may confirm (any user, or speakers of that language), how a confirmer's competence is established, and what `flagged` and `rejected` require. Minimum before Phase 4: rate limits, one-account-per-person signals, and a moderation path to revoke `peer_verified`.
+## 5. Consent and licensing: implementation — BEFORE-PHASE-3
 
-## 5. Consent, licensing and copyright — BEFORE-PHASE-3
-
-Not a dataset concern, but still required: users contribute recordings, media, lyrics and cultural material (D-003, D-005). `DATA_MODEL.md` has no consent, license, rights or retention fields.
-
-- Lyrics and songs are copyrighted. "Praise/song excerpt" is a listed content type, and external media URLs are accepted.
-- Voice recordings are personal data. Nigeria's data protection law (NDPA) applies.
-- Cultural material may carry community or family ownership that the contributor does not hold alone.
-- The grant must be scoped to what Ogbifọ actually does: display in the Archive, community verification, the contributor's own practice. Any use beyond that (training, licensing, sale) needs new, separate consent. It must not be bundled into the original terms.
-
-Minimum fields before any contribution is stored: `consentVersion`, `licenseGrant` (scoped as above), `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, and a withdrawal path.
+Policy is decided (D-005, D-019, D-020). Still to build and word: `Contribution` fields (`consentVersion`, `licenseGrant`, `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, `withdrawnAt`); the consent screen copy, reviewed by a lawyer; the withdrawal flow and what it does to entries already confirmed or reviewed; and the rights declaration for lyrics. Voice recordings are personal data under Nigeria's data protection law (NDPA) and, for diaspora users, likely GDPR or UK GDPR as well. Counsel needed on lawful basis and retention before Phase 3.
 
 ## 7. Define the pitch-contour metrics — BEFORE-PHASE-2
 
