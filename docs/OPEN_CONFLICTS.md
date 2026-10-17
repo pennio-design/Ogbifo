@@ -89,7 +89,7 @@ From Sprint 3 part 2 (`SCORING_SPEC.md` section 15). Browser-tested with synthet
 
 From Sprint 4 part 1 (D-038). Browser-tested in Chromium only.
 
-- **Contributions have no owner without accounts.** `userId` is null. Contributions live in one browser's IndexedDB; clearing site data loses them. Decide whether drafts without an account are allowed, and what happens when the contributor signs in (claim, merge, discard). D-022 says contributing needs an account.
+- **Contributing is closed until sign-in exists.** Settled: no anonymous contributions (D-038). The consequence is that accounts are now on the critical path for any contribution beta: provider choice (Google, Apple, email link), the server session, and what an account stores. Until then the form is reachable only with `NEXT_PUBLIC_DEV_ACCOUNT=1`, a development stand-in that must never be set in a deployment. Contributions are stored per browser in IndexedDB, filtered by `userId`; a signed-in user on a second device sees nothing until sync exists.
 - **The consent wording is a draft.** Sync is off in code until counsel reviews it (`CONSENT_IS_DRAFT`). `docs/COUNSEL_BRIEFING.md` lists the questions.
 - **Rights note rule is a guess.** A note is required for lyrics and for anything not the contributor's own work. Counsel may want more (or a stronger warranty). Communal knowledge such as proverbs and oriki may not belong to one person; the "I wrote or said it myself" option may be wrong for them.
 - **Contribution kinds are inferred.** Phrase, proverb and greeting come from the Community page copy; lyric from D-020. The PRD names types text, audio, video and external URL, which are not built.

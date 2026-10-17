@@ -18,6 +18,7 @@ import {
   type SyncState,
 } from "@ogbifo/domain";
 import { EmptyState, LanguageText } from "@ogbifo/ui";
+import { currentIdentity } from "@/lib/identity";
 import { IndexedDbArchiveStore } from "@/lib/indexeddb-archive-store";
 
 const KIND_LABEL: Record<ContributionKind, string> = { phrase: "Phrase", proverb: "Proverb", greeting: "Greeting", lyric: "Lyric" };
@@ -39,6 +40,22 @@ const languageField = `${fieldBase} font-language py-3`;
 const label = "block font-ui text-xs uppercase tracking-wider text-ash";
 
 export function Contribute() {
+  const identity = currentIdentity();
+  if (identity.kind !== "account") return <SignInRequired />;
+  return <ContributeSignedIn userId={identity.userId} />;
+}
+
+function SignInRequired() {
+  return (
+    <EmptyState title="Add to the Archive with an account">
+      Adding to the Archive needs an account, so that what you add is yours: you can find it again, withdraw it,
+      and the community can see who stands behind it. Reading, and the Reading Room, stay open to everyone.
+      Sign-in is not open yet.
+    </EmptyState>
+  );
+}
+
+function ContributeSignedIn({ userId }: { userId: string }) {
   const service = useMemo(
     () =>
       new ContributionService({
@@ -56,13 +73,13 @@ export function Contribute() {
 
   const refresh = useCallback(async () => {
     try {
-      setItems(await service.list());
+      setItems(await service.list(userId));
       setStoreError(false);
     } catch {
       setStoreError(true);
       setItems([]);
     }
-  }, [service]);
+  }, [service, userId]);
 
   useEffect(() => {
     // Sync is closed while the consent wording is a draft; guardTransport enforces it.
@@ -96,6 +113,7 @@ export function Contribute() {
 
       <ContributeForm
         service={service}
+        userId={userId}
         disabled={storeError}
         onSaved={async () => {
           await refresh();
@@ -166,11 +184,13 @@ export function Contribute() {
 
 function ContributeForm({
   service,
+  userId,
   disabled,
   onSaved,
   onEdit,
 }: {
   service: ContributionService;
+  userId: string;
   disabled: boolean;
   onSaved: () => Promise<void>;
   onEdit: () => void;
@@ -192,7 +212,7 @@ function ContributeForm({
     setError(null);
     try {
       const result = await service.submit({
-        userId: null,
+        userId,
         kind,
         languageId: "yo",
         dialect: text("dialect"),

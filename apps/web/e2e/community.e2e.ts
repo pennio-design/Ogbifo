@@ -1,7 +1,9 @@
 /**
  * End-to-end check of local-first contributions (Sprint 4 part 1).
  *
- *   BASE_URL=http://localhost:3000 CHROMIUM_PATH=... npm run e2e:community -w @ogbifo/web
+ *   BASE_URL=http://localhost:3000 GATED_URL=http://localhost:3001 CHROMIUM_PATH=... npm run e2e:community -w @ogbifo/web
+ * BASE_URL: app built with NEXT_PUBLIC_DEV_ACCOUNT=1 (a stand-in signed-in user).
+ * GATED_URL: app built without it, where contributing must be closed to anonymous readers.
  */
 import { chromium } from "playwright-core";
 
@@ -24,6 +26,15 @@ async function main() {
   page.on("request", (r) => {
     if (r.method() !== "GET" && r.url().startsWith(BASE)) posts.push(`${r.method()} ${r.url()}`);
   });
+
+  if (process.env.GATED_URL) {
+    const anon = await context.newPage();
+    await anon.goto(`${process.env.GATED_URL}/community`, { waitUntil: "networkidle" });
+    const text = await anon.locator("main").innerText();
+    check(/needs an account/.test(text), "anonymous readers are told contributing needs an account");
+    check((await anon.locator("main textarea").count()) === 0, "anonymous readers get no contribution form");
+    await anon.close();
+  }
 
   await page.goto(`${BASE}/community`, { waitUntil: "networkidle" });
   const main = page.locator("main");

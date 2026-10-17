@@ -3,7 +3,7 @@ import { CONSENT_VERSION } from "../src/consent";
 import { createContribution, type Contribution } from "../src/contribution";
 import { confirmContribution, verificationLabel, type PeerConfirmation } from "../src/verification";
 
-const make = (userId: string | null = "author"): Contribution => {
+const make = (userId = "author"): Contribution => {
   const r = createContribution({
     id: "c1", clientId: "c1", userId, kind: "phrase", languageId: "yo", contentText: "Ẹ káàbọ̀",
     consent: { version: CONSENT_VERSION, acceptedAt: "t" }, rightsDeclaration: "own_work", createdAt: "t",

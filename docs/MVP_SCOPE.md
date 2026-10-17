@@ -71,4 +71,4 @@ Not built: reference audio offline caching (D-017), server storage for reference
 
 `packages/domain`: consent and licence fields (`consent.ts`, DRAFT wording), `Contribution` with validation and withdrawal, the outbox state machine with backoff and manual retry, `ContributionService`, peer confirmation rules and labels, migration 0004. Web: Community page with contribution form, draft consent screen, IndexedDB store, offline banner, local list with verification and sync states, withdraw. Browser check: `npm run e2e:community -w @ogbifo/web`.
 
-Nothing syncs: the transport is forced off while the consent wording is a draft (D-038). Not built: accounts, server API, background sync worker, confirm UI, community feed, moderation, audio/video/link contributions. See `OPEN_CONFLICTS.md` #20.
+Contributing needs an account, so anonymous readers see a plain explanation instead of the form. Nothing syncs: the transport is forced off while the consent wording is a draft (D-038). Not built: accounts, server API, background sync worker, confirm UI, community feed, moderation, audio/video/link contributions. See `OPEN_CONFLICTS.md` #20.

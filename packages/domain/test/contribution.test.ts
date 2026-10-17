@@ -4,7 +4,7 @@ import { createContribution, LIMITS, withdrawContribution, type ContributionInpu
 
 const consent = { version: CONSENT_VERSION, acceptedAt: "2026-10-18T10:00:00.000Z" };
 const base: ContributionInput = {
-  id: "c1", clientId: "c1", userId: null, kind: "proverb", languageId: "yo",
+  id: "c1", clientId: "c1", userId: "u-author", kind: "proverb", languageId: "yo",
   contentText: "Ẹni tó bá fẹ́ jẹun, kò gbọdọ̀ jẹkí", consent, rightsDeclaration: "own_work",
   createdAt: "2026-10-18T10:00:00.000Z",
 };
@@ -45,6 +45,10 @@ describe("createContribution", () => {
     const fits = "ẹ́".repeat(LIMITS.contentGraphemes);
     expect(createContribution({ ...base, contentText: fits }).ok).toBe(true);
     expect(createContribution({ ...base, contentText: fits + "a" }).ok).toBe(false);
+  });
+  it("refuses a contribution with no signed-in user", () => {
+    const r = createContribution({ ...base, userId: " " });
+    expect(!r.ok && r.error.code).toBe("SIGN_IN_REQUIRED");
   });
   it("refuses blank text and missing language", () => {
     expect(createContribution({ ...base, contentText: "  \n" }).ok).toBe(false);

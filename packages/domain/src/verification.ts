@@ -26,7 +26,7 @@ export function confirmContribution(
   at: string,
 ): Result<ConfirmationOutcome> {
   if (userId.trim() === "") return fail("CONFIRMATION_INVALID", "Sign in to confirm.");
-  if (contribution.userId !== null && contribution.userId === userId) {
+  if (contribution.userId === userId) {
     return fail("CONFIRM_OWN", "You cannot confirm your own contribution.");
   }
   if (contribution.withdrawnAt !== null) {

@@ -5,7 +5,7 @@
 CREATE TABLE contributions (
   id                         text PRIMARY KEY,
   client_id                  text NOT NULL UNIQUE,            -- idempotency key
-  user_id                    text,                            -- null until accounts exist
+  user_id                    text NOT NULL CHECK (btrim(user_id) <> ''),  -- contributing needs an account (D-022)
   type                       text NOT NULL CHECK (type = 'text'),
   kind                       text NOT NULL CHECK (kind IN ('phrase', 'proverb', 'greeting', 'lyric')),
   language_id                text NOT NULL REFERENCES languages (id),

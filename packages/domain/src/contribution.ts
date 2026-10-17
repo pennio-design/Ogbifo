@@ -38,8 +38,8 @@ export interface Contribution {
   readonly id: string;
   /** Idempotency key for sync. */
   readonly clientId: string;
-  /** Null until accounts exist (OPEN_CONFLICTS #20). */
-  readonly userId: string | null;
+  /** Always an account (D-022). There are no anonymous contributions (D-038). */
+  readonly userId: string;
   readonly type: "text";
   readonly kind: ContributionKind;
   readonly languageId: string;
@@ -63,7 +63,7 @@ export interface Contribution {
 export interface ContributionInput {
   readonly id: string;
   readonly clientId: string;
-  readonly userId: string | null;
+  readonly userId: string;
   readonly kind: ContributionKind;
   readonly languageId: string;
   readonly dialect?: string | undefined;
@@ -79,6 +79,7 @@ const rightsNoteRequired = (kind: ContributionKind, rights: RightsDeclaration) =
   rights !== "own_work" || kind === "lyric";
 
 export function createContribution(input: ContributionInput): Result<Contribution> {
+  if (isBlank(input.userId)) return fail("SIGN_IN_REQUIRED", "Sign in to add to the Archive.", "userId");
   if (isBlank(input.id) || isBlank(input.clientId)) {
     return fail("CONTRIBUTION_INVALID", "A contribution needs an id.", "clientId");
   }

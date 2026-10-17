@@ -9,8 +9,8 @@ export default function CommunityPage() {
       <p className="font-ui text-xs uppercase tracking-[0.3em] text-ochre">Community</p>
       <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Help keep it.</h1>
       <p className="mt-6 max-w-prose font-body text-base leading-relaxed text-ash">
-        Add a phrase, a proverb or a greeting to the Archive. It is saved on your device first, so you can add
-        it without a connection. Confirmation by other speakers comes once sync opens.
+        Add a phrase, a proverb or a greeting to the Archive. With an account, it is saved on your device first, so
+        you can add it without a connection. Confirmation by other speakers comes once sync opens.
       </p>
       <Contribute />
     </>

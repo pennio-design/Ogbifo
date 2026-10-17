@@ -19,6 +19,7 @@ export interface ServiceDeps {
 export class ContributionService {
   constructor(private readonly deps: ServiceDeps) {}
 
+  /** Contributing needs an account (D-022). The caller passes the signed-in user's id. */
   async submit(input: SubmitInput): Promise<Result<ContributionView>> {
     const clientId = this.deps.newId();
     const at = this.deps.now().toISOString();
@@ -42,12 +43,12 @@ export class ContributionService {
     return ok(undefined);
   }
 
-  /** Visible contributions, newest first, each with the state of its "contribute" sync. */
-  async list(): Promise<readonly ContributionView[]> {
+  /** The user's own visible contributions, newest first, each with the state of its "contribute" sync. */
+  async list(userId: string): Promise<readonly ContributionView[]> {
     const [contributions, outbox] = await Promise.all([this.deps.store.listContributions(), this.deps.store.listOutbox()]);
     const byId = new Map<string, OutboxEntry>(outbox.map((e) => [e.id, e]));
     return contributions
-      .filter(isVisible)
+      .filter((c) => c.userId === userId && isVisible(c))
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
       .map((contribution) => ({
         contribution,

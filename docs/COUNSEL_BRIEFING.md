@@ -24,7 +24,7 @@ It is **not** a data business. No dataset selling, licensing, export or training
 | Reviewer annotation tool | Built, switched off by default, no login yet. Used by volunteers to mark syllable boundaries on reference recordings. |
 | Accounts, server storage, database | **Not built.** Nothing about any user is stored on a server today. |
 | Analytics | **Not built.** Guardrails decided (D-028, D-035); vendor not chosen. |
-| Contributions (text only) | **Built, device-only.** Form, draft consent screen and licence fields exist and save to the contributor's own browser. Sync to a server is switched off in code until this wording is approved (D-038). |
+| Contributions (text only) | **Built, device-only.** Form, draft consent screen and licence fields exist and save to the contributor's own browser. Contributing requires an account, so every contribution is attributable to a person (sign-in itself is not built). Sync to a server is switched off in code until this wording is approved (D-038). |
 | Archive, Community verification, accounts | **Not built.** Peer confirmation rules exist as tested logic, with no screen. |
 | Consent screens, privacy notice, terms of service | **Not written.** |
 

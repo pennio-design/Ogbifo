@@ -80,11 +80,11 @@ describe("migrations", () => {
 
   describe("0004_contributions", () => {
     let db: PGlite;
-    const cols = "id, client_id, type, kind, language_id, content_text, consent_version, consent_accepted_at, licence_grant, rights_declaration, rights_note, retention_policy, created_at";
+    const cols = "id, client_id, user_id, type, kind, language_id, content_text, consent_version, consent_accepted_at, licence_grant, rights_declaration, rights_note, retention_policy, created_at";
     const grant = `'{"scope":"archive_display_and_verification","exclusive":false,"platform":"ogbifo_only","revocable":true}'::jsonb`;
     const row = (id: string, over: Record<string, string> = {}) => {
       const v: Record<string, string> = {
-        id: `'${id}'`, client_id: `'${id}'`, type: "'text'", kind: "'proverb'", language_id: "'yo'", content_text: "'Ẹ káàbọ̀'",
+        id: `'${id}'`, client_id: `'${id}'`, user_id: "'u-author'", type: "'text'", kind: "'proverb'", language_id: "'yo'", content_text: "'Ẹ káàbọ̀'",
         consent_version: "'draft-0.1'", consent_accepted_at: "now()", licence_grant: grant, rights_declaration: "'own_work'",
         rights_note: "NULL", retention_policy: "'until_withdrawn'", created_at: "now()", ...over,
       };
@@ -99,6 +99,9 @@ describe("migrations", () => {
       await db.exec(row("a"));
       const { rows } = await db.query<{ verification_status: string }>("SELECT verification_status FROM contributions WHERE id = 'a'");
       expect(rows[0]?.verification_status).toBe("pending_review");
+    });
+    it("refuses a contribution with no user", async () => {
+      await expect(db.exec(row("nouser", { user_id: "NULL" }))).rejects.toThrow();
     });
     it("treats client_id as an idempotency key", async () => {
       await expect(db.exec(row("b", { client_id: "'a'" }))).rejects.toThrow();
