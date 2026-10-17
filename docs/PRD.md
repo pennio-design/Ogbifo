@@ -74,6 +74,8 @@ The product concept treats archive gaps as something the platform can use to inf
 
 ### 3.4 Translation
 
+> Deferred (`PRODUCT_DECISIONS.md` D-023): no free-text machine translation in the MVP. Cards carry reviewer-approved translations. The list below is the deferred spec.
+
 Translation should support: source language, target language, text input, output, language swap, character count, word count, copy, feedback.
 
 Translation must preserve the source text exactly. It must not silently remove diacritics.

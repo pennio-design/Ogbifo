@@ -1,7 +1,7 @@
 # Product rules
 
 - Language is the hero, not the technology. No robotic AI voice.
-- Use the terminology list in `CLAUDE.md` exactly. Do not rename Reading Room, Deck, Card, Sovereign, Resonance Score, Archive, Royal Seal, Language Map.
+- Use the terminology list in `CLAUDE.md` exactly. Do not rename Reading Room, Deck, Card, Rank, Pioneer, Resonance Score, Archive, Royal Seal, Language Map. "Sovereign" is retired as a product term (D-025).
 - Contributions are "added to the archive", never "posted".
 - Scores are guidance. Never claim objective correctness or authenticity.
 - Verification is community trust, not dataset certification or truth. Never label `peer_verified` material as gold, certified or authoritative.

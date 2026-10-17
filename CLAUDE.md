@@ -70,7 +70,9 @@ Use these product terms consistently:
 - Reading Room — primary interaction experience
 - Deck — collection of language artifacts
 - Card — individual learning/reading artifact
-- Sovereign — progression/status concept
+- Rank — Listener, Reader, Interpreter, Keeper, Ogbifọ (progression)
+- Pioneer — status for contributing to under-documented dialects
+- Studio / Live — unscored practice / scored attempt in the Reading Room
 - Resonance Score — reading/speech result
 - Community — contribution and verification area
 - Archive — accumulated cultural/language corpus

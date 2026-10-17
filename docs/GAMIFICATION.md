@@ -16,7 +16,7 @@ Use titles carefully. The product language uses the idea of "earning the title o
 
 Ranks should represent contribution/competence rather than social status.
 
-Example future hierarchy: Listener, Reader, Interpreter, Keeper, Sovereign.
+Hierarchy (`PRODUCT_DECISIONS.md` D-025): Listener, Reader, Interpreter, Keeper, Ogbifọ.
 
 Do not finalize rank thresholds until product analytics are available.
 
@@ -24,4 +24,4 @@ Do not finalize rank thresholds until product analytics are available.
 
 A Pioneer can be associated with contributing to underrepresented languages or archive gaps. This should reward preservation rather than popularity.
 
-> Open: `OPEN_CONFLICTS.md` #8 (meaning of Sovereign). No leaderboards or competitive ranking in the MVP (`PRODUCT_DECISIONS.md` D-009).
+> No leaderboards or competitive ranking in the MVP (`PRODUCT_DECISIONS.md` D-009).

@@ -91,3 +91,19 @@ Any signed-in user who declares fluency may confirm a contribution, and five con
 ## D-022 Accounts
 
 Anyone can read anonymously, including the Reading Room and a free sample Deck. An account (Google, Apple or an email link, no passwords) is required to keep progress, download Decks, contribute or confirm. Phone-number sign-in is not part of the first release.
+
+## D-023 Translation
+
+The MVP has no free-text machine translation. Every Card carries a reviewer-approved English translation plus a note on meaning and context. The PRD's Translation page (language swap, copy, counts, confidence) is deferred. Revisit only with a measured quality bar on Yorùbá.
+
+## D-024 Reading Room modes
+
+**Studio** is unscored practice: hear the reference at normal or slow speed, record, compare contours, no score, no progress. **Live** is one scored attempt per Card and counts toward progress.
+
+## D-025 Progression
+
+Ranks are Listener, Reader, Interpreter, Keeper, and Ogbifọ as the highest. "Sovereign" is retired as a rank and as a product term. Ranks are earned by consistent practice and by Reviewed contributions, never by popularity. Thresholds are set later from retention data. Tokens are plain progress points (D-018). No leaderboards (D-009).
+
+## D-026 Launch bar
+
+A private beta with 30 to 50 diaspora learners: two Decks (Proverb House and Common Tongue) of about 30 Cards each, all reviewer-approved (D-012) with reference audio from two voices. The success measure is the share of learners who return in week 2 and week 4.

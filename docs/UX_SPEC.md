@@ -71,4 +71,4 @@ Empty states should explain what is missing and invite meaningful action.
 
 Example:
 
-> This language is waiting for its first Sovereign.
+> This dialect is waiting for its first Pioneer.
