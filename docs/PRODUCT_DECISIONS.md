@@ -195,3 +195,13 @@ Answers to `TONE_LEXICON_PROPOSAL.md` section 9:
 3. **Qualification tests competence, not birth.** See the proposal, section 3. Nativeness cannot be proved and does not need to be.
 4. **One lexicon standard: Standard Yorùbá.** Dialects are not modelled in the lexicon. Game copy says "Standard Yorùbá". Revisit if reviewers or contributors report that a regional form is being marked wrong. (The Language Map keeps its own dialect view, D-013.)
 5. **Terms are necessary but not sufficient.** The terms of service explain the product plainly. Using people's recordings to tune the app also needs a separate, unbundled, withdrawable opt-in, in plain language, worded by counsel. A single "I agree to the terms" box is not enough for voice.
+
+## D-043 The tone lexicon is dialect-aware (amends D-042 item 4)
+
+Reversal by the owner: a tone is marked the way it sounds, and it is interpreted the way it sounds. The lexicon therefore records each entry **in a named dialect**; no dialect is "wrong", and a difference between dialects is not an error. Standard Yorùbá is one dialect label among the others and the default for beginners. Consequences:
+
+- Agreement is counted **within a dialect**: three qualified contributors who declare that dialect, same tone-marked form. Reviewers are likewise recorded by dialect, and a reviewer can only mark Reviewed an entry in a dialect they speak.
+- A dialect register (name, region, status), curated by reviewers, is shared with the Language Map (D-013). No dialects are invented in code; the first entries come from the teacher.
+- The competence test (D-042 item 3) draws only on items a reviewer has marked as the same in every dialect, so a regional speaker is not failed for speaking their own dialect. A per-dialect test comes later.
+- Scoring in the Reading Room compares a learner with the reference recording's dialect. A Card names the dialect of its reference voice.
+- Start with the dialects the owner and the teacher speak, not all of them. Reviewer capacity per dialect is the limit.

@@ -1,6 +1,6 @@
 # Tone Lexicon and Tone Game — PROPOSAL
 
-**Status: direction decided in D-042; nothing built.** Remaining open items are in `OPEN_CONFLICTS.md` #23. Where this text says "dialect", D-042 applies: one Standard Yorùbá lexicon.
+**Status: direction decided in D-042 and D-043; nothing built.** Remaining open items are in `OPEN_CONFLICTS.md` #23. **D-043 (dialect-aware lexicon) replaces D-042 item 4 (one standard); where this text says otherwise, D-043 wins.**
 
 ## 1. Goal
 
@@ -22,7 +22,7 @@ Training a statistical model on crowd audio is not proposed. It is not needed fo
 
 Being a native speaker cannot be proved, and the product does not need it: what matters is whether someone reliably knows the tones. So the check tests **competence**:
 
-1. **Listening test.** 20 items drawn at random from the reviewed lexicon. Each plays a recorded word, and the person picks its correct tone-marked spelling from four. Pass at 18 of 20. Guessing gets that by luck about once in 600 million tries, so it cannot be gamed, and reading the answer does not help because it is the sound that is tested. A failed attempt can be retried after 24 hours with different items.
+1. **Listening test.** 20 items drawn at random from the reviewed lexicon, only those a reviewer has marked as the same in every dialect (D-043), so a regional speaker is not failed for speaking their own dialect. Each plays a recorded word, and the person picks its correct tone-marked spelling from four. Pass at 18 of 20. Guessing gets that by luck about once in 600 million tries, so it cannot be gamed, and reading the answer does not help because it is the sound that is tested. A failed attempt can be retried after 24 hours with different items.
 2. **Staying accurate.** About one item in ten is a hidden known answer. Falling below 85% over the last 40 pauses their contributions until a reviewer looks.
 3. **For the first contributors only,** while the lexicon is small, a named reviewer also vouches for them.
 
@@ -31,12 +31,12 @@ A learner who has studied and passes is welcome: the data needs competence, and 
 ## 4. When an answer becomes data
 
 Same two labels as everywhere else (D-021):
-- **Peer confirmed:** at least 3 different qualified contributors gave the same tone-marked form (compared after NFC; the original text is stored as typed), within the same dialect label, and none of the qualified contributors disagreed.
-- **Reviewed:** a named reviewer (the teacher) approved it. Only Reviewed entries may inform scoring or checks that learners see.
+- **Peer confirmed:** at least 3 different qualified contributors who declare the same dialect gave the same tone-marked form (compared after NFC; the original text is stored as typed), and none of them disagreed.
+- **Reviewed:** a named reviewer who speaks that dialect approved it. Only Reviewed entries may inform scoring or checks that learners see.
 
 Never labelled gold, certified or authoritative.
 
-**One standard (D-042).** The lexicon is Standard Yorùbá. Known limit: regional speech can differ in tone for some words, so a contributor from such a region may disagree with an entry that is correct for Standard Yorùbá. Disagreement is therefore never treated as the contributor's error on its own; a reviewer decides. If this happens often, add dialect labels (the earlier proposal) in a later version.
+**Dialect-aware (D-043).** A tone is recorded the way it sounds in a named dialect, and read the way it sounds. Entries carry a dialect from a register curated by reviewers; Standard Yorùbá is one label among others. A difference between dialects is not an error. Dialect is self-declared and cannot be proved, so it is a label for grouping agreement, not a credential. Start with the dialects the owner and the teacher speak; reviewers are the limit per dialect.
 
 **Ambiguity.** Many words differ only in tone and meaning. Show each item with an English gloss and a short context sentence, never a bare word, or contributors will be marking different words.
 

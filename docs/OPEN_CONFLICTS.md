@@ -127,12 +127,16 @@ Recommendation: do not build either before the beta gates (#17). After a real-sp
 
 ## 23. Tone lexicon and tone game — DIRECTION DECIDED (D-042), details open
 
-Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later, competence test, one Standard Yorùbá lexicon, terms plus separate opt-in. Still open:
+Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later, competence test, terms plus separate opt-in, and (D-043, replacing D-042's one-standard answer) a dialect-aware lexicon. Still open:
 
 - **Consent for voice.** A clear terms page does not by itself make voice consent valid under NDPA or GDPR: consent must be specific, unbundled and withdrawable. Counsel words the opt-in. Retention for opt-in audio. Minors.
 - **Audio storage was against D-019.** D-019 (audio stays on the device by default) still holds; opted-in audio is the exception and needs its own storage and deletion path. Not built.
 - **Reference-voice licence changed.** The draft now asks for a tick-box for tuning; counsel to confirm.
-- **One standard and dialects.** The owner's view is that dialects do not change tonal accuracy. Some regional speech does differ in tone for some words, so a regional speaker may be marked against Standard Yorùbá. Accepted for now; watch for it in reviewer feedback.
+- **Dialect register.** Which dialects, their names and regions, who curates it. Needs the teacher; shared with the Language Map (D-013). Nothing is invented in code.
+- **Reviewers per dialect.** A dialect with fewer than two reviewers cannot have Reviewed entries. Start with one or two dialects.
+- **Declared dialect cannot be verified.** It groups agreement; it is not a credential.
+- **Mixed speakers.** Many speakers blend dialects. Decide what a contributor declares and whether an entry can carry more than one.
+- **Reading Room scoring** compares a learner with the reference voice's dialect; a Card must name it. A learner from another region may score lower on a correct reading. Say so in the results copy.
 - **A learner can pass the competence test.** Intended, but it means the leaderboard rewards competence, not heritage. Say so in game copy.
 - **Pass marks** (18 of 20, 85% over 40 hidden checks) are proposals. Calibrate with real people.
 - **Revoking an entry** and how points are removed.
