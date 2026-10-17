@@ -56,3 +56,9 @@ Reading Room: Deck picker, Card player (Yorùbá first, reviewer-approved transl
 Not in Sprint 2: recording, reference audio, scoring, accounts (Sprint 3 and later). Live therefore cannot finish a Card yet, so Proverb House cannot be unlocked in the running product until recording exists. The unlock rule is tested in the domain and was checked in the browser by injecting a completed Live attempt.
 
 Sprint 3 scope is `SCORING_SPEC.md` section 13 (metrics approved). Nothing blocks it: D-036 settles the fallback and the Live completion rule.
+
+### Sprint 3 part 1 as built: the scoring core
+
+`packages/speech`: syllabifier, pitch tracker, resampler, MFCC, DTW alignment, Tone, Rhythm, Resonance Score, reference annotation builder and `analyzeAttempt`, with 82 tests on synthetic speech. See `SCORING_SPEC.md` section 14 for results and the changes testing forced.
+
+Part 2, not started: microphone capture and permission flow, the Live and Studio recording UI, contour and marker display, the "tones and timing, not words" statement, the Audacity label importer, the in-app annotation tool (D-033), reference provenance fields and playback with slow mode, `showResonanceNumber` switch, Card fields for the annotation, and finishing a Card on an analysable Live attempt (D-036).

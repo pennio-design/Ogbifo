@@ -151,3 +151,43 @@ Original list, for the record:
 ## 13. Sprint 3 scope if approved
 
 Microphone capture and permission flow; YIN pitch tracker; syllabifier; MFCC and DTW alignment; Tone, Rhythm and Resonance Score; contour and marker UI; Audacity label importer, then the in-app annotation tool (D-033); reference provenance fields (D-034); reference playback with slow mode; enabling Live to finish a Card (which makes the Proverb House unlock reachable); Live and Studio states per `UX_SPEC.md`; synthetic-signal and syllabifier tests. Calibration is a gate on shipping to beta users, not a code task.
+
+---
+
+## 14. Built in Sprint 3 part 1, and where testing changed this spec
+
+Package `packages/speech` (`@ogbifo/speech`): no dependencies, pure TypeScript, 82 tests. Contains the syllabifier, YIN pitch tracker, 16 kHz resampler, MFCC, DTW, Tone, Rhythm, Resonance Score, reference annotation builder, and `analyzeAttempt`. Not yet wired to the microphone or any screen.
+
+**Changes made after testing, each one visible in the code and the tests:**
+
+1. **Alignment is pinned at both ends.** The first version left the end open, so the path ended early and shortened the last syllables: a different-voice reading scored Rhythm 63 at the correct tempo. Start and end are now pinned near the speech span found from energy. Same readings now score Rhythm 100.
+2. **Pitch range is normalised, within bounds.** Without it, a reading with half or 1.5x the reference's pitch range dropped Tone to 70, and 2x dropped it to 15. The learner's steps are now rescaled to the reference's spread, clamped to 0.6 to 1.67 (`RANGE_SCALE_MIN`, `RANGE_SCALE_MAX` in `metrics.ts`; set both to 1 to switch off). A flat reading still scores low because the clamp stops it being stretched into a match. This changes section 6, which compared raw steps.
+3. **MFCCs use mean and variance normalisation**, not mean only (section 5).
+4. **Energy gate.** The noise floor is the lower of the 10th percentile and 10 percent of the 95th percentile, so a recording with no silence does not gate out its own speech. The speech gate is 5 percent of the 95th percentile.
+5. **Alignment cost limit is 6.** It only catches "could not follow". See the next point.
+
+**What the score does not measure.** It measures **tone pattern and timing, not whether the right words were said** (a consequence of D-014: no speech recognition). In synthetic tests, a different phrase read with the same tones scored 100. Alignment cost cannot detect wrong words: wrong phrases cost 2.9 to 4.6, while legitimate very different voices cost up to 4.7. **The results screen must say so**: "This checks the tones and timing of your reading, not the words."
+
+**Measured on synthetic speech** (known pitch and timing, deterministic; `packages/speech/test/synth.ts`):
+
+| Reading | Tone | Rhythm | Overall |
+|---|---|---|---|
+| Same reading, new noise | 100 | 100 | 100 |
+| Higher, lower, much higher, child-like voice | 100 | 100 | 100 |
+| 0.75x and 1.3x speed | 100 | 95 to 100 | 98 to 100 |
+| Pitch range 0.5x to 2x | 100 | 100 | 100 |
+| Moderate noise | 100 | 95 | 99 |
+| Two tones swapped | 25 | 100 | 48 |
+| Monotone | 15 | 100 | 40 |
+| Wrong timing, right tones | 100 | 28 | 78 |
+| Heavy noise, silence, too quiet, clipped, too short, 3x slow | refused | | |
+
+Fluent and monotone readings separate completely across five voices.
+
+**Limits of this evidence, stated plainly.**
+
+- Synthetic speech is clean, perfectly periodic and has no consonants. Real speech will be harder. **The calibration set (section 10) remains a ship gate**; nothing here replaces it.
+- A monotone reading with perfect rhythm scores about 40. That sits on the edge of the "median at most 40" bar (section 10) because Rhythm earns 30 percent. Real monotone readers also vary in rhythm. Calibration will show whether the weights need to change.
+- A child-like voice scored 100 but only aligns with a relaxed cost limit (cost 4.7). Reference voices should include a lower and a higher voice, and scoring should use the better alignment of the two. Not built.
+- **Speed:** a 9 second recording analyses in 201 ms on a developer machine (134 ms of it pitch tracking). Phones are several times slower. The 2 second target in section 9 is unmeasured on a device.
+- The syllabifier passes the section 3 vectors and the seed proverb. It has not been reviewed by a linguist (`OPEN_CONFLICTS.md` #17).

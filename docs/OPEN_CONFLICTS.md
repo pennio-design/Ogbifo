@@ -62,3 +62,14 @@ Building does not wait for these. Shipping to beta users does.
 5. **Counsel review** of consent, licensing and provenance wording (#5).
 6. **Number switch:** `showResonanceNumber` stays off until calibration passes (D-036).
 
+## 18. Findings from the scoring core — BEFORE BETA
+
+From Sprint 3 part 1 (`SCORING_SPEC.md` section 14). Tested on synthetic speech only.
+
+- **The score does not check words.** Same tones and timing with different words can score high. The results screen must say it measures tones and timing. Decide whether that is acceptable for the product promise, or whether a words check is needed later.
+- **Wrong-words detection is not possible with alignment cost** (it overlaps with legitimate voice differences). Not a goal of the current design.
+- **Very different voices align at higher cost.** Plan two reference voices, one lower and one higher, and score against the better alignment. Not built.
+- **Phone speed is unmeasured.** 201 ms for 9 s of audio on a developer machine; target is under 2 s on a Moto G-class phone. Test on a real device early in part 2.
+- **Range normalisation is my addition** to the approved metrics (clamp 0.6 to 1.67). It improved fairness on synthetic data and is one switch to turn off. Confirm it, or ask me to remove it before calibration.
+- **A perfect-rhythm monotone reading scores about 40**, at the edge of the calibration bar.
+

@@ -59,6 +59,8 @@ Card
 - reviewers[]          (named native-speaker reviewers; reviewed needs 2 or more, distinct)
 - reviewedAt?          (required when reviewed)
 - referenceAudioUrl?   (D-014; absent until recorded)
+- referenceAnnotation? (SCORING_SPEC.md: syllables with ms boundaries, reference pitch contour, MFCC, algorithmVersion; type in packages/speech)
+- referenceProvenance? (D-034: source, licence, rights holder, speaker consent, date; specified, not yet in code)
 
 ReadingSession
 - id
@@ -70,13 +72,17 @@ ReadingSession
 - targetLanguage       (en, D-023)
 - score                (null until scoring exists; scale per OPEN_CONFLICTS #7)
 
-ResonanceScore
+ResonanceScore         (D-031, SCORING_SPEC.md; specified, not yet in code)
 - id
 - sessionId
-- overall
-- clarity
+- overall              (0 to 100, always stored; shown only while showResonanceNumber is on, D-036)
+- tone
 - rhythm
-- boldness
+- coverage             (share of syllables measured)
+- pace                 (information only)
+- algorithmVersion
+- syllableMarkers[]    (first | close | higher | lower | unmeasured)
+- learnerContour       (normalised semitones; audio is never stored, D-019)
 - confidence
 
 Contribution
