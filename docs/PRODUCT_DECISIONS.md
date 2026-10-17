@@ -177,3 +177,7 @@ Sprint 4 builds the contribution flow local-first: validate, write to IndexedDB,
 ## D-039 Sign-in by email link
 
 Accounts use an emailed link, no passwords, no other provider in the first release. A link works once and expires after 15 minutes; a session lasts 30 days. Only hashes of tokens are stored. The link opens a page that needs one button press, so mail scanners cannot use it up. The answer to "send me a link" is the same whether or not the address has an account, and requests are rate limited per address and per IP. A user's display name is "Reader" until they choose one; it is never taken from the email address, and the address is never shown to other users. Sign-in stays closed (no faked success) until a real email provider is configured (`OPEN_CONFLICTS.md` #21). Google and Apple sign-in remain possible later behind the same `AuthService` seam.
+
+## D-040 PostgreSQL through `DATABASE_URL`; migrations are a deploy step
+
+The app talks to any PostgreSQL through a connection string, so the hosting choice stays open. Migrations are additive, run once each, and are applied by `npm run migrate -w @ogbifo/web` before a new version starts; an applied migration whose text has changed is refused. The app never migrates itself in production. Without `DATABASE_URL`: development uses memory, production keeps sign-in closed. The repositories sit behind the same ports as the in-memory ones and share one contract test.

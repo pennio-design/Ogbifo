@@ -19,6 +19,8 @@ npm run lint
 npm run build
 ```
 
+Accounts need PostgreSQL in production: set `DATABASE_URL` and run `npm run migrate -w @ogbifo/web` before starting (D-040).
+
 Developer seed Cards are unreviewed, so they show only under `next dev` or with `OGBIFO_ALLOW_UNREVIEWED=1` (see `apps/web/.env.example`). A production build without the flag shows no Cards, by design (D-012).
 
 Browser checks for the recording flow and the reviewer tool are in `apps/web/e2e` (`npm run e2e`, `e2e:annotate` and `e2e:community` in `apps/web`; they need a running app and a Chromium binary, see each file's header). `OGBIFO_ENABLE_REVIEWER_TOOLS=1` switches on `/reviewer/annotate`; `NEXT_PUBLIC_SHOW_RESONANCE_NUMBER=1` shows the score number in Live. Sign-in is by emailed link; with `OGBIFO_DEV_EMAIL=1` on a localhost site the sign-in page shows the link instead of emailing it, and without a configured email provider sign-in stays closed (see `apps/web/.env.example`).

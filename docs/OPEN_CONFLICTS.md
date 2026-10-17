@@ -104,12 +104,14 @@ From Sprint 4 part 1 (D-038). Browser-tested in Chromium only.
 From Sprint 4 part 2 (D-039). Browser-tested in Chromium only, against the development mailbox.
 
 - **No email provider.** Sign-in is closed outside the local development mailbox. Choose a sender (data location, deliverability to Nigerian and diaspora addresses, DPA) and name it in the privacy notice. Nobody can sign in on a real deployment until then.
-- **Storage is in memory.** Accounts, links, sessions and rate limits vanish on restart and are not shared across instances. Migration 0005 is ready; a Postgres adapter is not built. This blocks any real deployment.
+- **Storage is durable only with `DATABASE_URL`.** Postgres adapters now exist for accounts, links, sessions and rate limits (D-040). Without a database, development uses memory and production keeps sign-in closed. Still open: where the database and the app are hosted, backups, and connection limits on a serverless host (the pool is 5 connections per process).
 - **Email is personal data.** Counsel: lawful basis, retention (keep an account with no activity for how long?), deletion on request, privacy notice. Added to `COUNSEL_BRIEFING.md`.
 - **Rate limiting trusts `X-Forwarded-For`.** It is only as good as the proxy in front. Behind a platform that sets it reliably this is fine; otherwise per-IP limits can be dodged. Per-address limits still hold.
 - **Account deletion and email change are not built.**
 - **Display name** is "Reader" for everyone until a name can be chosen. Two Readers are indistinguishable in the community; choosing a name needs rules (uniqueness, impersonation, offensive names).
 - **Anonymous progress is not merged** into the account on sign-in (#16): it still lives in sessionStorage for the visit.
 - **Link in the email is a bearer secret.** Anyone with access to the inbox can sign in. Normal for email links; no second factor is planned.
+- **The `pg` driver adapter is checked by hand, not by a test in CI.** The repositories are tested against embedded Postgres (PGlite) with the same contract as the in-memory ones, and sign-in plus the browser checks were run once against a real Postgres 16, including a server restart. CI has no Postgres service yet.
+- **Contributions have no server tables in use.** The tables exist (0004); no repository or API writes to them, by design while the consent wording is a draft (D-038).
 - **Prefetch.** The Next.js router prefetches nav links in two waves on load. Harmless, but the pages never go "network idle", which matters for test design.
 - **Cookie `Secure`** is set only when `OGBIFO_BASE_URL` is https. Production must set it.

@@ -25,7 +25,7 @@ It is **not** a data business. No dataset selling, licensing, export or training
 | Accounts, server storage, database | **Not built.** Nothing about any user is stored on a server today. |
 | Analytics | **Not built.** Guardrails decided (D-028, D-035); vendor not chosen. |
 | Contributions (text only) | **Built, device-only.** Form, draft consent screen and licence fields exist and save to the contributor's own browser. Contributing requires an account, so every contribution is attributable to a person (sign-in itself is not built). Sync to a server is switched off in code until this wording is approved (D-038). |
-| Accounts | **Built, not deployable.** Sign-in by emailed link (no passwords). We store the email address and a display name ("Reader"). No email provider is chosen and nothing is stored durably yet. |
+| Accounts | **Built, not deployable.** Sign-in by emailed link (no passwords). We store the email address and a display name ("Reader"). No email provider is chosen and account data is stored in a PostgreSQL database whose host is not yet chosen. |
 | Archive, Community verification | **Not built.** Peer confirmation rules exist as tested logic, with no screen. |
 | Consent screens, privacy notice, terms of service | **Not written.** |
 

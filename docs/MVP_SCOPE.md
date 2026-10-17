@@ -77,4 +77,6 @@ Contributing needs an account, so anonymous readers see a plain explanation and 
 
 `packages/domain`: `AuthService` (request link, redeem once, sessions, sign-out, rate limits, no account enumeration), ports for users, tokens, sessions, rate limiting, email and crypto, in-memory adapters, migration 0005. Web: `/sign-in`, `/auth/verify` (button press to finish), `/api/auth/{request,redeem,signout,me}`, header account menu, Community reads the real session. Browser check: `npm run e2e:community -w @ogbifo/web` (app started with `OGBIFO_DEV_EMAIL=1` and `OGBIFO_BASE_URL`).
 
-Not built: a real email provider, durable storage, account deletion, choosing a display name, merging anonymous progress. See `OPEN_CONFLICTS.md` #21.
+Storage follow-up (D-040): Postgres repositories for users, links, sessions and rate limits (migration 0006), a migration runner with checksums, `npm run migrate`, `DATABASE_URL` wiring; sessions survive a server restart on a real Postgres 16.
+
+Not built: a real email provider, account deletion, choosing a display name, merging anonymous progress. See `OPEN_CONFLICTS.md` #21.
