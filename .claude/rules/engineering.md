@@ -6,4 +6,5 @@
 - Unicode: never truncate by bytes or code units; count and cut by grapheme. Store `originalText` as submitted; normalize only into `normalizedText`.
 - Errors: structured `{ error: { code, message } }`; never leak stack traces.
 - No destructive migrations. No hardcoded API assumptions.
+- Consent, license and rights fields are mandatory before storing a contribution; keep the grant scoped to Archive use.
 - Never commit lyrics, line sheets, verifier exports or reports; the repo is public (see `.gitignore`).

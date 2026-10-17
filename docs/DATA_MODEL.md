@@ -1,6 +1,6 @@
 # Ogbifọ — Data Model
 
-> Gap: no consent, license, rights-holder or retention fields exist yet. See `OPEN_CONFLICTS.md` #5. Add them to `Contribution` before it is persisted anywhere.
+> Gap: no consent, license, rights or retention fields exist yet. See `OPEN_CONFLICTS.md` #5. Add them to `Contribution` before it is persisted anywhere. Do not add dataset-export fields (`PRODUCT_DECISIONS.md`).
 
 ```
 User

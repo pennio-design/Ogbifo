@@ -6,7 +6,7 @@ MVP: proverb, greeting, daily speech, praise/song excerpt, market expression, cu
 
 The existing concept references proverbs, market calls and praise songs as source material.
 
-> Copyright: song excerpts need a rights position before ingestion. See `OPEN_CONFLICTS.md` #5.
+> Copyright: song excerpts need a rights position before ingestion; the Archive is not a dataset product. See `OPEN_CONFLICTS.md` #5.
 
 ## Content metadata
 

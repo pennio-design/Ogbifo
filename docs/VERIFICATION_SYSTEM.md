@@ -25,6 +25,10 @@ Verification may eventually incorporate: trusted speaker status, dialect experti
 
 Do not implement these until requirements are explicitly defined.
 
+## What verification is not
+
+Verification supports community trust and archive quality. It is not dataset certification, and `peer_verified` must never be exported or described as gold or certified.
+
 ## Trust principle
 
 Verification is not a popularity metric. Five confirmations should not imply universal linguistic truth. It means the submission has passed the platform's current community-verification threshold.

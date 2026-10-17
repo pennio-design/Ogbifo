@@ -8,7 +8,7 @@
 
 **Authentication:** Use an abstraction layer so the authentication provider can change without affecting domain logic.
 
-> The ML/ASR/MT workers described in `reference/ogbifo-architecture.md` are Python. See `OPEN_CONFLICTS.md` #10.
+> `reference/ogbifo-architecture.md` describes a separate project and is not this app's architecture. Speech/translation workers may be Python: `OPEN_CONFLICTS.md` #10.
 
 ## Architecture
 

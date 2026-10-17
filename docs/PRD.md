@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Ogbifọ is a language intelligence platform centered around authentic African language content and interpretation.
+Ogbifọ is a consumer language and cultural archive/interpreter product centered around authentic African language content and interpretation. It is not a data-engine business: the MVP has no dataset-selling model, and the Reading Room and contributions exist for learning, interpretation, preservation and cultural participation (`PRODUCT_DECISIONS.md`).
 
 The MVP consists of:
 
@@ -104,13 +104,13 @@ Users can submit: text, audio, video, external media URL.
 
 Metadata: language, dialect, context tags, source, contributor.
 
-> Open question: consent, license and rights fields are not yet specified. See `OPEN_CONFLICTS.md` #5. No contribution may be persisted server-side until they are.
+Contributions are for the Archive and Community, not commercial dataset production. Because users can contribute recordings, media, lyrics and cultural material, consent, license and rights fields are required (`OPEN_CONFLICTS.md` #5). No contribution may be persisted server-side until they exist.
 
 ### 3.9 Verification
 
 Every contribution initially enters `pending_review`.
 
-Community members can confirm it. Default peer threshold in the current implementation: **5 confirmations**. After reaching the threshold: `peer_verified`.
+Community members can confirm it. Verification supports community trust and archive quality; it is not dataset certification. Default peer threshold in the current implementation: **5 confirmations**. After reaching the threshold: `peer_verified`.
 
 ### 3.10 Offline-first contributions
 
@@ -168,6 +168,7 @@ Do not build initially:
 - marketplace
 - advertising system
 - unrestricted public AI chat
+- dataset export, licensing or selling
 - automatic deletion of unverified contributions
 - complex creator monetization
 - large enterprise administration system

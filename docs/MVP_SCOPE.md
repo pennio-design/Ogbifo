@@ -1,6 +1,6 @@
 # Ogbifọ — MVP Scope
 
-> Gate: `OPEN_CONFLICTS.md` #1 (which product) should be resolved before Phase 1 scope is final.
+> Product direction is settled: `PRODUCT_DECISIONS.md`. Consent and licensing (`OPEN_CONFLICTS.md` #5) gate Phase 3.
 
 ## Phase 1 — Foundation
 
@@ -34,7 +34,7 @@
 
 ## Not MVP
 
-marketplace, enterprise plans, advanced messaging, creator monetization, complex social graph, public unrestricted AI assistant, automatic cultural authority scoring.
+dataset selling or licensing, marketplace, enterprise plans, advanced messaging, creator monetization, complex social graph, public unrestricted AI assistant, automatic cultural authority scoring.
 
 ## Execution strategy
 

@@ -2,24 +2,17 @@
 
 Per `CLAUDE.md`: when requirements conflict, flag the conflict rather than silently choosing. Nothing below has been resolved in the specs. Each item needs an owner decision before the dependent work starts.
 
-Status key: **BLOCKING** (resolve before Sprint 1 scope is final), **BEFORE-PHASE-N** (resolve before that MVP phase), **MINOR**.
+Status key: **RESOLVED** (decided; see `PRODUCT_DECISIONS.md`), **BEFORE-PHASE-N** (resolve before that MVP phase), **MINOR**.
 
 ---
 
-## 1. Which product is this? — BLOCKING
+## 1. Which product is this? — RESOLVED
 
-Four artifacts describe four different centers of gravity:
+**Decision:** Ogbifọ is a consumer language and cultural archive/interpreter product. It is not a data-engine business. See `PRODUCT_DECISIONS.md` D-001 to D-005.
 
-| Source | Product | Primary user | Money |
-|---|---|---|---|
-| `README.md`, `bench/`, `audit/` (in this repo) | Yorùbá tone-restoration + translation + verification for songs, reels, films | Rights holders, media | Cost per verified line; demand gate |
-| `reference/ogbifo-architecture.md` | B2B pipeline: ASR → MT → human review → exports/search/API | Media teams, NGOs, researchers | Workspace/SaaS/API |
-| Pitch deck ($500K pre-seed) | Storytelling **data engine** for African language AI | Model builders, institutions | Dataset services → SaaS → API/licensing |
-| `docs/PRD.md` (this package) | Consumer reading/learning app with gamified progression and community archive | Learners, native speakers | Not defined |
+The repo's `bench/` and `audit/` (Yorùbá tone restoration for lyrics, reels and films), `reference/ogbifo-architecture.md` (B2B review pipeline) and the pitch deck (data engine, $500K) describe a different project. They stay in the repo for now but do not dictate Ogbifọ's product direction, scope or roadmap. Nothing in `docs/` depends on them.
 
-The spec's Sprints 1–6 build the fourth. The repo's Week 1 test (the benchmark) exists to decide whether the first is viable. The package defines no revenue model, and its MVP exclusions (marketplace, enterprise, monetization) remove every revenue path the deck describes.
-
-Relationship worth deciding explicitly: the consumer loop (Reading Room, contributions, peer verification) is plausibly the **supply side** of the data engine, not a separate business. If so, the PRD should say what data it produces, in what format, under what consent, and who buys it. Until that is written, building Sprints 1–3 is speculative.
+Still open: the revenue model for the consumer product is undefined. This is a business question, not a blocker for Phase 1.
 
 ## 2. Brand drift across artifacts — BEFORE-PHASE-1
 
@@ -39,24 +32,24 @@ Decision needed: redraw the seal with two loops, or rewrite the meaning for one.
 
 ## 4. Verification can be gamed — BEFORE-PHASE-4
 
-`peer_verified` at 5 confirmations has no sybil resistance: five throwaway accounts verify anything. This matters more if verified material feeds datasets or training. Also unspecified: who may confirm (any user? speakers of that language?), how a confirmer's competence is established, and what `flagged`/`rejected` transitions require.
+Peer verification supports community trust and archive quality. It is not dataset certification (D-004). That lowers the stakes, but the weakness remains: `peer_verified` at 5 confirmations has no sybil resistance, so five throwaway accounts can mark anything verified and degrade trust in the Archive.
 
-`VERIFICATION_SYSTEM.md` correctly says verification is not universal truth. Add: the label must never be exported to a dataset consumer as "gold" without a stronger tier (curator review).
+Still unspecified: who may confirm (any user, or speakers of that language), how a confirmer's competence is established, and what `flagged` and `rejected` require. Minimum before Phase 4: rate limits, one-account-per-person signals, and a moderation path to revoke `peer_verified`.
 
 ## 5. Consent, licensing and copyright — BEFORE-PHASE-3
 
-`DATA_MODEL.md` has no fields for contributor consent, license grant, speaker consent for audio, or copyright status. Contributions accept text, audio, video and **external media URLs**. Gaps:
+Not a dataset concern, but still required: users contribute recordings, media, lyrics and cultural material (D-003, D-005). `DATA_MODEL.md` has no consent, license, rights or retention fields.
 
-- Lyrics and songs are copyrighted (this repo's `.gitignore` already treats them so). "Praise/song excerpt" is a listed content type.
-- Audio is biometric-adjacent personal data; `AUDIO_SPEECH.md` leaves retention undefined.
-- If contributions will ever train models or be licensed (deck), the grant must be captured at submission. It cannot be added retroactively.
-- Nigeria's data protection law (NDPA) applies to voice and personal data.
+- Lyrics and songs are copyrighted. "Praise/song excerpt" is a listed content type, and external media URLs are accepted.
+- Voice recordings are personal data. Nigeria's data protection law (NDPA) applies.
+- Cultural material may carry community or family ownership that the contributor does not hold alone.
+- The grant must be scoped to what Ogbifọ actually does: display in the Archive, community verification, the contributor's own practice. Any use beyond that (training, licensing, sale) needs new, separate consent. It must not be bundled into the original terms.
 
-Minimum fields before any contribution is stored: `consentVersion`, `licenseGrant`, `rightsHolderDeclaration`, `speakerConsentForAudio`, `retentionPolicy`.
+Minimum fields before any contribution is stored: `consentVersion`, `licenseGrant` (scoped as above), `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, and a withdrawal path.
 
-## 6. Two data models — BEFORE-PHASE-3
+## 6. Two data models — RESOLVED
 
-`DATA_MODEL.md` (Contribution / Verification / ArchiveArtifact) and `reference/ogbifo-architecture.md` (workspace / job / transcript_segment / review_item / review_decision) overlap: `review_item`/`review_decision` vs. `Verification`/`PeerConfirmation`; `media_asset` vs. `ArchiveArtifact`. Pick one canonical vocabulary or define the mapping.
+`DATA_MODEL.md` is canonical. The B2B vocabulary in `reference/ogbifo-architecture.md` belongs to the separate project and is not used here.
 
 ## 7. Resonance Score depends on unmeasured Yorùbá ASR — BEFORE-PHASE-2
 
@@ -72,4 +65,4 @@ The early prototype has a reputation leaderboard ("Language champions", crowns).
 
 ## 10. Stack split — MINOR
 
-App spec: Node/TypeScript, REST. Architecture doc and `bench/`: Python for ML/ASR/MT workers. Plausible as TypeScript app + Python workers behind an API; state it so engineers don't pick one stack.
+App spec: Node/TypeScript, REST. Speech scoring and translation may need Python model workers behind the API; decide when Phase 2 starts.

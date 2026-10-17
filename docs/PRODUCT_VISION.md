@@ -85,8 +85,9 @@ Ogbifọ should evolve from a language experience into an African language intel
 - community knowledge systems
 - research
 - media
-- commerce
 - public services
 - conversational interfaces
 
-> Open question: the revenue model and the relationship to the data-engine thesis are undefined. See `OPEN_CONFLICTS.md` #1.
+Any use of Archive material beyond the Ogbifọ experience needs a new product decision and new contributor consent.
+
+> Scope: Ogbifọ is a consumer language and cultural archive/interpreter product, not a data-engine business, and the MVP has no dataset-selling model. See `PRODUCT_DECISIONS.md`. The consumer revenue model is not yet defined.
