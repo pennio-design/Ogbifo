@@ -1,6 +1,8 @@
 # Ogbifọ
 
-Ogbifọ makes Yorùbá text correctly tone-marked, translated and verified, starting with songs, reels and films.
+Ogbifọ is a consumer language and cultural archive/interpreter product for African languages: a Reading Room for learning and interpretation, and a community Archive for preservation. See [`docs/PRODUCT_DECISIONS.md`](docs/PRODUCT_DECISIONS.md).
+
+`bench/` and `audit/` below are a separate project (Yorùbá tone restoration for lyrics, reels and films) that lives in this repository for now. They do not drive Ogbifọ's roadmap.
 
 ## Contents
 
