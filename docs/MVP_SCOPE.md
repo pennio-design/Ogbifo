@@ -34,7 +34,7 @@
 
 ## Not MVP
 
-dataset selling or licensing, free-text machine translation, leaderboards, marketplace, enterprise plans, advanced messaging, creator monetization, complex social graph, public unrestricted AI assistant, automatic cultural authority scoring.
+dataset selling or licensing, free-text machine translation, a leaderboard before the contributor tier is live (D-042), marketplace, enterprise plans, advanced messaging, creator monetization, complex social graph, public unrestricted AI assistant, automatic cultural authority scoring.
 
 ## Execution strategy
 

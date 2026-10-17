@@ -29,7 +29,8 @@ I will record the Yorùbá phrases listed in Schedule A. My dialect and region a
 (These go beyond the minimum. Counsel should confirm each one is workable.)
 
 - No dataset: the recordings will not be sold, licensed, exported or offered as data (Product decision D-002).
-- No voice cloning: the recordings will not be used to train, tune or create a synthetic or cloned voice, or any speech model.
+- No voice cloning: the recordings will not be used to create a synthetic or cloned voice, or to make speech that sounds like me.
+- Improving tone detection (speaker's choice): [ ] I allow the Project to use my recordings, and measurements taken from them, to test and tune Ogbifọ's tone detection (never to produce or imitate a voice). [ ] I do not allow this.
 - No other use: no advertising, no film, music or third-party products, without my new written consent.
 - No misrepresenting me: my recordings will not be edited to make me say anything I did not say. Trimming silence and normalising volume is allowed.
 
@@ -92,7 +93,7 @@ Keep the signed licence somewhere private (never in this repository, which is pu
 ### Notes for counsel
 
 1. Is a licence from an individual to "the Project and its Successor" enough while no company exists, or should the licensee be the owner personally until incorporation, with assignment on incorporation?
-2. Does the no-cloning and no-dataset wording suit a product that also stores a Card's reference pitch contour? The contour is derived data, not audio.
+2. Does the no-cloning and no-dataset wording suit a product that also stores a Card's reference pitch contour? The contour is derived data, not audio. Is the separate tick-box for tuning tone detection the right way to ask for that use (D-042)?
 3. How should withdrawal treat copies cached on learners' devices (offline Decks)?
 4. Minimum age and a parent's consent for speakers under 18: the form says 18 or over; no minors are planned.
 5. Is the self-licence by the project owner worth anything legally, or is it only a record? We want it as a record that the owner consented in writing.

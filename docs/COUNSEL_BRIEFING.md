@@ -133,6 +133,10 @@ Each answer becomes either a recorded decision in `PRODUCT_DECISIONS.md`, a fiel
 
 `docs/legal/REFERENCE_VOICE_LICENCE_DRAFT.md` (for every recorded voice, including the owner's own) and `docs/legal/VOLUNTEER_AGREEMENT_DRAFT.md` (teachers, reviewers, annotators). Each ends with questions for counsel. Extra questions raised by them: may the licence run to "the Project and its Successor" before a company exists; is a no-voice-cloning and no-dataset promise workable; how should withdrawal treat copies cached offline on learners' devices; can a paid volunteer be treated as an employee.
 
+## 9b. Tone game (D-042)
+
+A game in which qualified speakers mark tones and may opt in to let their recordings tune the app's tone detection. See `docs/TONE_LEXICON_PROPOSAL.md`. For counsel: (a) how to word a separate, unbundled, withdrawable opt-in for voice, and whether a clear terms of service can sit alongside it; (b) retention for opted-in audio and what withdrawal removes from a trained or tuned system; (c) whether tone measurements derived from audio are still personal data; (d) age limits for the game; (e) the leaderboard and display names.
+
 ## 10. Source documents (available on request)
 
 `docs/PRODUCT_DECISIONS.md`, `docs/OPEN_CONFLICTS.md`, `docs/SECURITY.md`, `docs/DATA_MODEL.md`, `docs/AUDIO_SPEECH.md`, `docs/SCORING_SPEC.md` (technical; section 10 is the calibration plan).

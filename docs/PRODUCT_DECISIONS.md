@@ -185,3 +185,13 @@ The app talks to any PostgreSQL through a connection string, so the hosting choi
 ## D-041 The founder's roles, and the people around them
 
 The owner is a native Yorùbá speaker and may act as Card author, annotator, first reviewer and one reference voice. Limits that keep that honest: nobody reviews a Card they wrote; every Card still needs two different named reviewers (D-012), so a second fluent speaker, ideally a Yorùbá teacher, is required; and the owner counts as one calibration speaker among at least twenty, never as the judge of whether calibration passes. A second reference voice with a clearly different pitch range is required (`OPEN_CONFLICTS.md` #18); the plan is a female speaker. Every recorded voice, the owner's included, is licensed in writing to the Ogbifọ project and its successor, not to a person; the licence names the project so it transfers to a company if one is formed. Drafts for counsel: `docs/legal/REFERENCE_VOICE_LICENCE_DRAFT.md` and `docs/legal/VOLUNTEER_AGREEMENT_DRAFT.md`. The seed Cards were written by the assistant and have not been checked by any Yorùbá speaker; they are developer content only until two named reviewers approve them (D-012).
+
+## D-042 Tone lexicon and tone game: direction
+
+Answers to `TONE_LEXICON_PROPOSAL.md` section 9:
+
+1. **Audio is in scope**, as an explicit, separate opt-in. Audio from games is never used without it. Learners' own readings keep being analysed on the device (D-019). Opted-in audio may be used to test and tune tone detection, never to create or imitate a voice and never sold or licensed (D-002). Reference voices carry the same choice as a tick-box in their licence.
+2. **Leaderboard: after the contributor tier is live and abuse controls exist** (`OPEN_CONFLICTS.md` #4), not in the beta. It counts accepted answers only. The "Not MVP" list is amended to say so.
+3. **Qualification tests competence, not birth.** See the proposal, section 3. Nativeness cannot be proved and does not need to be.
+4. **One lexicon standard: Standard Yorùbá.** Dialects are not modelled in the lexicon. Game copy says "Standard Yorùbá". Revisit if reviewers or contributors report that a regional form is being marked wrong. (The Language Map keeps its own dialect view, D-013.)
+5. **Terms are necessary but not sufficient.** The terms of service explain the product plainly. Using people's recordings to tune the app also needs a separate, unbundled, withdrawable opt-in, in plain language, worded by counsel. A single "I agree to the terms" box is not enough for voice.

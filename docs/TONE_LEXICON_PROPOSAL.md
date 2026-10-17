@@ -1,6 +1,6 @@
 # Tone Lexicon and Tone Game — PROPOSAL
 
-**Status: proposed, not decided, nothing built.** Raised by the owner. Decisions needed are in section 9. Conflicts with existing decisions are in `OPEN_CONFLICTS.md` #23.
+**Status: direction decided in D-042; nothing built.** Remaining open items are in `OPEN_CONFLICTS.md` #23. Where this text says "dialect", D-042 applies: one Standard Yorùbá lexicon.
 
 ## 1. Goal
 
@@ -15,15 +15,18 @@ Two parts, neither a black box:
 
 Training a statistical model on crowd audio is not proposed. It is not needed for either part and it collides with consent (section 7).
 
-## 3. Two tiers, so learners cannot pollute the data
+## 3. Two tiers, and a simple competence check
 
 - **Learner tier (everyone, including the diaspora heritage learner of D-011).** Plays the games, gets feedback, earns progress. Answers stay on the device and in the learner's own progress. They never enter the lexicon.
 - **Contributor tier (qualified speakers only).** Their answers can count towards the lexicon.
 
-Native-speaker status cannot be proved, only made likely. A speaker qualifies by **all** of:
-1. being vouched for by a named reviewer;
-2. passing a qualification of 20 items from the reviewed lexicon at 90% or better (proposed number);
-3. staying accurate: about one item in ten is a hidden known answer, and falling below 85% over the last 40 pauses their contributions until a reviewer looks.
+Being a native speaker cannot be proved, and the product does not need it: what matters is whether someone reliably knows the tones. So the check tests **competence**:
+
+1. **Listening test.** 20 items drawn at random from the reviewed lexicon. Each plays a recorded word, and the person picks its correct tone-marked spelling from four. Pass at 18 of 20. Guessing gets that by luck about once in 600 million tries, so it cannot be gamed, and reading the answer does not help because it is the sound that is tested. A failed attempt can be retried after 24 hours with different items.
+2. **Staying accurate.** About one item in ten is a hidden known answer. Falling below 85% over the last 40 pauses their contributions until a reviewer looks.
+3. **For the first contributors only,** while the lexicon is small, a named reviewer also vouches for them.
+
+A learner who has studied and passes is welcome: the data needs competence, and the leaderboard and ranks reward accepted answers, not birthplace.
 
 ## 4. When an answer becomes data
 
@@ -33,14 +36,14 @@ Same two labels as everywhere else (D-021):
 
 Never labelled gold, certified or authoritative.
 
-**Disagreement is not an error.** Yorùbá varies by dialect. "The common tone becomes the standard" must not erase a regional form: entries carry a dialect label, and the Standard Yorùbá layer is one labelled layer among them (D-013; principle 2, preserve linguistic identity).
+**One standard (D-042).** The lexicon is Standard Yorùbá. Known limit: regional speech can differ in tone for some words, so a contributor from such a region may disagree with an entry that is correct for Standard Yorùbá. Disagreement is therefore never treated as the contributor's error on its own; a reviewer decides. If this happens often, add dialect labels (the earlier proposal) in a later version.
 
 **Ambiguity.** Many words differ only in tone and meaning. Show each item with an English gloss and a short context sentence, never a bare word, or contributors will be marking different words.
 
 ## 5. The games
 
 1. **Tone-mark it (text).** Given a word or phrase without tone marks, plus its gloss, type or tap the marks. Needs no audio and no microphone. The first game to build.
-2. **Say the tone (voice).** Given a word with its tone marks, say it. The app compares the speaker-normalised contour with the lexicon entry and the reference, on the device, as the Reading Room does now. Audio is not uploaded (D-019). It is a learner game first; it adds nothing to the lexicon.
+2. **Say the tone (voice).** Given a word with its tone marks, say it. The app compares the speaker-normalised contour with the lexicon entry and the reference, on the device, as the Reading Room does now. By default audio is not uploaded (D-019). A contributor may separately opt in to let their recordings, and measurements from them, tune tone detection (D-042). Opt-in audio is the most sensitive data in the product: stored apart from account details, with a stated retention period, deletable on withdrawal.
 3. **Check a word (contributors).** See someone's answer and confirm or dispute it. This is where agreement comes from. Needs the abuse controls in `OPEN_CONFLICTS.md` #4.
 
 ## 6. Reward and leaderboard
@@ -48,12 +51,12 @@ Never labelled gold, certified or authoritative.
 - The count that matters is **accepted** answers (Peer confirmed or Reviewed), not attempts. A revoked entry removes its points.
 - Volume still matters, so a contributor sees their accepted total, their agreement rate and a daily cap. The cap blunts speed-spamming and burnout.
 - Ranks (Listener, Reader, Interpreter, Keeper, Ogbifọ) can follow accepted counts and agreement.
-- A leaderboard, if any: opt-in display name, weekly, accepted counts only, not in the beta. **It conflicts with MVP_SCOPE "Not MVP: leaderboards".** The owner's request is the newer statement, so it is flagged for a decision, not silently built.
+- Leaderboard (D-042): after the contributor tier is live and abuse controls exist. Opt-in display name, weekly, accepted counts only. Personal progress and ranks come first; a board with a handful of people motivates nobody.
 
 ## 7. Consent and law (counsel)
 
-- The licence in D-020 covers displaying, preserving and community verification. Using answers to **train or tune the app's intelligence** is another use and needs new, explicit consent and a decision recorded here (D-005).
-- Tone-marked text answers are low risk (no audio). Audio is high risk. The draft reference-voice licence promises **no model training and no voice cloning**; crowd audio for training would contradict it. Proposal: no audio from the games is stored or uploaded.
+- The licence in D-020 covers displaying, preserving and community verification. Using answers to **tune the app's tone detection** is another use. D-042 decides it is allowed **only through a separate opt-in**, plain language, unbundled from the terms, withdrawable. A clear terms page is required for the product but is not valid consent for voice on its own.
+- Tone-marked text answers are low risk. Audio is high risk. The reference-voice licence now has a tick-box for tuning, and still forbids creating or imitating a voice.
 - Each contributor is identifiable (accounts, D-039). Withdrawal needs a defined effect on entries already confirmed.
 
 ## 8. Sequencing
@@ -64,10 +67,8 @@ Never labelled gold, certified or authoritative.
 4. **Say the tone**, after calibration shows tone classification works across voices.
 5. **Check a word and the leaderboard**, after abuse controls (#4).
 
-## 9. Decisions needed
+## 9. Decided (D-042)
 
-1. Text answers only (recommended), or also audio?
-2. Is a leaderboard in scope, and when? (overrides "Not MVP")
-3. How is a native speaker qualified: vouching plus test plus ongoing checks (recommended), or something simpler?
-4. Entries per dialect (recommended), or one standard only?
-5. May contributor answers ever tune the app's tone intelligence? If yes, that is new consent and counsel.
+Audio opt-in in scope. Leaderboard later. Competence test instead of proof of nativeness. One standard. Terms plus a separate opt-in for voice.
+
+Still open: opt-in wording and retention (counsel), the pass marks (calibrate on real people), how a lexicon entry is revoked, and the abuse controls (#4).

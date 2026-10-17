@@ -125,13 +125,15 @@ Raised by the owner: as the learner speaks, show the Yorùbá and the English to
 
 Recommendation: do not build either before the beta gates (#17). After a real-speech test, decide whether the bounded follow-along is the signature interaction. It reuses most of what exists; the unbounded one does not belong in this product yet.
 
-## 23. Tone lexicon and tone game — NOT DECIDED
+## 23. Tone lexicon and tone game — DIRECTION DECIDED (D-042), details open
 
-Proposal in `TONE_LEXICON_PROPOSAL.md`. It collides with existing decisions in four places:
+Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later, competence test, one Standard Yorùbá lexicon, terms plus separate opt-in. Still open:
 
-- **Leaderboard.** MVP_SCOPE lists leaderboards under "Not MVP". The owner has asked for a small one. Newer request, so flagged, not built.
-- **Training on contributions.** D-005 and D-020 limit the grant to display, preservation and community verification. Teaching the app from contributors' answers needs new explicit consent and a recorded decision.
-- **Audio.** D-019 keeps audio on the device, and the draft reference-voice licence forbids training and cloning. Crowd audio for training contradicts both.
-- **Majority as standard.** Consensus can erase dialect forms and conflicts with principle 2 and D-013 unless entries are dialect-labelled.
-
-Also unproved: that a speaker is native. Any gate is probabilistic. Learners and contributors must be separate tiers so a learner's mistakes never enter the data.
+- **Consent for voice.** A clear terms page does not by itself make voice consent valid under NDPA or GDPR: consent must be specific, unbundled and withdrawable. Counsel words the opt-in. Retention for opt-in audio. Minors.
+- **Audio storage was against D-019.** D-019 (audio stays on the device by default) still holds; opted-in audio is the exception and needs its own storage and deletion path. Not built.
+- **Reference-voice licence changed.** The draft now asks for a tick-box for tuning; counsel to confirm.
+- **One standard and dialects.** The owner's view is that dialects do not change tonal accuracy. Some regional speech does differ in tone for some words, so a regional speaker may be marked against Standard Yorùbá. Accepted for now; watch for it in reviewer feedback.
+- **A learner can pass the competence test.** Intended, but it means the leaderboard rewards competence, not heritage. Say so in game copy.
+- **Pass marks** (18 of 20, 85% over 40 hidden checks) are proposals. Calibrate with real people.
+- **Revoking an entry** and how points are removed.
+- **Abuse controls** (#4) before any contributor tier.
