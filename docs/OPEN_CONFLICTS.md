@@ -18,17 +18,9 @@ D-021 sets who may confirm and splits "Peer confirmed" from "Reviewed". Still to
 
 Policy is decided (D-005, D-019, D-020). Still to build and word: `Contribution` fields (`consentVersion`, `licenseGrant`, `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, `withdrawnAt`); the consent screen copy, reviewed by a lawyer; the withdrawal flow and what it does to entries already confirmed or reviewed; and the rights declaration for lyrics. Voice recordings are personal data under Nigeria's data protection law (NDPA) and, for diaspora users, likely GDPR or UK GDPR as well. Counsel needed on lawful basis and retention before Phase 3.
 
-## 7. Define the pitch-contour metrics — BEFORE-PHASE-2
+## 7. Pitch-contour metrics — DRAFT SPEC AWAITING APPROVAL (blocks Sprint 3)
 
-D-014 settles the approach: compare the learner's pitch contour and timing to a native reference, syllable by syllable. Still undefined, and each needs a deterministic spec and tests before UI:
-
-- Syllable segmentation of tone-marked text (derivable from orthography: Yorùbá syllables are V, CV or syllabic nasal) and alignment of audio to it.
-- Pitch extraction method (F0 algorithm), voiced/unvoiced handling, and noisy phone-mic input.
-- Speaker normalization: tone is relative, so compare in semitones against the speaker's own range, not absolute Hz. Men, women and children must score fairly against the same reference.
-- Tone model: three level tones (high, mid, low) plus the contour effects of context. Whether to score the three levels, or the contour shape against the reference.
-- What replaces Clarity, Rhythm and Boldness. Proposed: Tone (contour match), Rhythm (timing match), and an overall that is not a bare average. Needs your approval.
-- Thresholds and the wording shown to the learner. The score is guidance and never says a reading is "correct" or "authentic".
-- Reference audio: who records it, in which dialect, under what licence and fee (see D-012).
+`SCORING_SPEC.md` defines the metrics (Tone and Rhythm, replacing Clarity and Boldness), pitch tracking, alignment, the 0 to 100 scale, learner-facing wording, and ship criteria from a calibration set. Seven owner decisions are listed in its section 12. The thresholds are initial values until calibrated.
 
 ## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 
