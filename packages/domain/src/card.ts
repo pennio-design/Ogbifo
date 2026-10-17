@@ -1,4 +1,6 @@
+import type { ReferenceAnnotation } from "@ogbifo/speech";
 import { isTier, type Tier } from "./deck";
+import { validateProvenance, type ReferenceProvenance } from "./provenance";
 import { fail, ok, type Result } from "./result";
 import { isBlank } from "./text";
 
@@ -39,6 +41,10 @@ export interface Card {
   readonly reviewedAt?: string;
   /** Native reference recording (D-014). Absent until recorded. */
   readonly referenceAudioUrl?: string;
+  /** Reviewer-confirmed syllables, reference pitch contour and features. Needs audio. */
+  readonly referenceAnnotation?: ReferenceAnnotation;
+  /** Where the reference came from and under what licence (D-034). Required with audio. */
+  readonly referenceProvenance?: ReferenceProvenance;
 }
 
 export function isCardCategory(value: string): value is CardCategory {
@@ -69,6 +75,22 @@ export function createCard(input: Card): Result<Card> {
     }
   } else if (input.reviewStatus !== "unreviewed") {
     return fail("CARD_INVALID", "Unknown review status.", "reviewStatus");
+  }
+  const hasAudio = input.referenceAudioUrl !== undefined && input.referenceAudioUrl.trim() !== "";
+  if (hasAudio && input.referenceAnnotation === undefined) {
+    return fail("CARD_INVALID", "Reference audio needs a reviewer-confirmed annotation.", "referenceAnnotation");
+  }
+  if (input.referenceAnnotation !== undefined && !hasAudio) {
+    return fail("CARD_INVALID", "A reference annotation needs its audio.", "referenceAudioUrl");
+  }
+  if (hasAudio) {
+    if (input.referenceProvenance === undefined) {
+      return fail("CARD_INVALID", "Reference audio needs a provenance record.", "referenceProvenance");
+    }
+    const provenance = validateProvenance(input.referenceProvenance, { reviewed: input.reviewStatus === "reviewed" });
+    if (!provenance.ok) return fail(provenance.error.code, provenance.error.message, "referenceProvenance");
+  } else if (input.referenceProvenance !== undefined) {
+    return fail("CARD_INVALID", "A provenance record needs reference audio.", "referenceAudioUrl");
   }
   return ok({ ...input, reviewers: [...input.reviewers] });
 }

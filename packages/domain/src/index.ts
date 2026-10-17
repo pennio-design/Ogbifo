@@ -9,6 +9,7 @@ export * from "./seed";
 export * from "./text";
 export * from "./identity";
 export * from "./progress";
+export * from "./provenance";
 export * from "./progress-store";
 export * from "./reading-room";
 export * from "./reading-session";

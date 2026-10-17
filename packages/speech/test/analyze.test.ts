@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { analyzeAttempt, REFUSAL_MESSAGES, type AttemptScored } from "../src/analyze";
 import { buildReferenceAnnotation, type ReferenceAnnotation } from "../src/annotation";
-import { KAAARO, LONG_PHRASE, mulberry32, synthUtterance, type SynthOptions, type SynthSyllable } from "./synth";
+import { KAAARO, LONG_PHRASE, mulberry32, synthUtterance, type SynthOptions, type SynthSyllable } from "../src/synth";
 
 function annotate(sylls: readonly SynthSyllable[], options: SynthOptions = {}): ReferenceAnnotation {
   const t = synthUtterance(sylls, { seed: 1, ...options });

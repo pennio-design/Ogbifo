@@ -11,5 +11,8 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.10",
     "@ogbifo/config": "*"
+  },
+  "dependencies": {
+    "@ogbifo/speech": "*"
   }
 }

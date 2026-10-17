@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { medianHz, SAMPLE_RATE, toSemitoneContour, trackPitch } from "../src/pitch";
 import { resampleTo16k } from "../src/resample";
 import { yinFrame } from "../src/yin";
-import { mulberry32 } from "./synth";
+import { mulberry32 } from "../src/synth";
 
 function harmonic(hz: number, seconds: number, sr = SAMPLE_RATE, harmonics = 10): Float32Array {
   const out = new Float32Array(Math.round(seconds * sr));

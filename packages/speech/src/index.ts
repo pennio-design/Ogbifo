@@ -8,3 +8,5 @@ export * from "./resample";
 export * from "./result";
 export * from "./syllabify";
 export * from "./yin";
+export * from "./labels";
+export * from "./synth";

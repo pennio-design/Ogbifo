@@ -1,10 +1,10 @@
 /**
- * Synthetic speech for tests: harmonic voices with a controllable pitch contour,
+ * Synthetic voice for tests and for the development reference recording: harmonic voices with a controllable pitch contour,
  * syllable timing, vowel colour (formants), register and noise. Known ground
- * truth, deterministic. It is NOT a substitute for real recordings: calibration
+ * truth, deterministic. It is NOT a Yorùbá voice and NOT a substitute for real recordings: calibration
  * on volunteer speakers is still a ship gate (OPEN_CONFLICTS #17).
  */
-import type { Tone } from "../src/syllabify";
+import type { Tone } from "./syllabify";
 
 export const SR = 16000;
 

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { alignOpenEnded } from "../src/dtw";
 import { linearCredit, resonanceScore, rhythmScore, toneScore } from "../src/metrics";
 import { computeMfcc, MFCC_DIMS, normalizeCepstra } from "../src/mfcc";
-import { synthUtterance, KAAARO } from "./synth";
+import { synthUtterance, KAAARO } from "../src/synth";
 
 describe("credit", () => {
   it("is full, zero, and linear between", () => {
