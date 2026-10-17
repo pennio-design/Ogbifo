@@ -18,7 +18,7 @@ The seal uses a 100 × 100 construction grid. Components:
 2. one ochre loop (stroke 4.5, `#D49B41`)
 3. central fulcrum (r = 5, `#D49B41`)
 
-The seal is a single loop (`OPEN_CONFLICTS.md` #3, resolved). Canonical file: [`brand/royal-seal.svg`](brand/royal-seal.svg). Spokes use `currentColor`: Bone on Clay, Clay on Bone. The loop and fulcrum are always Ochre.
+The seal is a single loop (`PRODUCT_DECISIONS.md` D-007). Canonical file: [`brand/royal-seal.svg`](brand/royal-seal.svg). Spokes use `currentColor`: Bone on Clay, Clay on Bone. The loop and fulcrum are always Ochre.
 
 **Proposed meaning (unconfirmed):** the waveform is the voice; the loop is the passage meaning moves through; the fulcrum is the Ogbifọ, the trusted center. This replaces the retired two-domains reading.
 
@@ -63,18 +63,17 @@ Production SVG:
 
 ## Typography
 
-- **Fraunces** — Ogbifọ wordmark, editorial headlines, language artifacts, quotations.
+- **Fraunces** — Ogbifọ wordmark, editorial headlines, quotations in English.
+- **Noto Serif** — language artifacts (Card text, Archive entries, any Yorùbá, Igbo or Hausa passage). Deviation from the original guidelines, which assigned this role to Fraunces: see `OPEN_CONFLICTS.md` #11. Noto Sans is the fallback for missing glyphs.
 - **Space Grotesk** — controls, metadata, labels, telemetry, navigation.
 - **Plus Jakarta Sans** — body copy, descriptions, supporting interface text.
 
-Every face must render tone marks and dot-belows without clipping. Verify with: `Ogbifọ̀ Àmì Ẹ̀kọ́ ọ ẹ ṣ à á`.
+Every face must render tone marks and dot-belows without clipping. Verify with: `Ogbifọ̀ Àmì Ẹ̀kọ́ ọ ẹ ṣ à á` and with stacked marks such as `fẹ́ gbọdọ̀`.
+
+Measured, Sprint 1 (Chromium): Fraunces and Space Grotesk detach and shift a tone mark stacked on a dot-below letter. Noto Serif and Plus Jakarta Sans stack correctly. None of Fraunces, Space Grotesk or Plus Jakarta Sans contains Hausa `ɓ ɗ ƙ ƴ`; Noto supplies them. Fraunces also lacks `ṅ` and `ǹ`.
 
 ## Motion
 
 Motion should feel organic, restrained, rhythmic, alive. The seal may pulse in response to speech. Avoid excessive animation.
 
 Respect `@media (prefers-reduced-motion: reduce)`.
-
-## Retired styles
-
-The pitch deck (Yeseva One, orange/teal gradients), the early prototype (terracotta, Syne) and the motion bank's circle mark are not canonical. See `OPEN_CONFLICTS.md` #2.

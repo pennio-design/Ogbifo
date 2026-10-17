@@ -4,7 +4,7 @@
 
 - Keyboard navigation for every interactive control.
 - Semantic HTML controls; visible focus.
-- Sufficient contrast (verify Ash `#8A8D8A` on Clay `#121413` for body-size text before using it for anything but metadata).
+- Sufficient contrast (verified in `packages/ui/test/tokens.test.ts`: Bone, Ash and Ochre on Clay and Card, and Clay on Ochre, all pass WCAG AA for normal text).
 - Screen-reader labels, including for the recording state machine and the waveform.
 - Reduced-motion mode: respect `prefers-reduced-motion: reduce`; the seal pulse must have a static fallback.
 

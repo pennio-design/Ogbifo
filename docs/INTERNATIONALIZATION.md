@@ -8,4 +8,6 @@
 - Tone marks, dot-belows and correct glyph heights must render in every brand typeface (`BRAND_SYSTEM.md`).
 - Translation must not silently remove diacritics (`PRD.md` §3.4).
 
+Sprint 1 findings: language text is displayed NFC (stored text untouched) and set in Noto Serif because the brand faces mis-stack tone marks (`OPEN_CONFLICTS.md` #11). Fonts are single-file per face; never split by script.
+
 To define: UI language(s), locale fallbacks, right-to-left handling for Hausa Ajami (if in scope), input methods for tone-marked text, search normalization (diacritic-insensitive matching without altering stored text), and character/word counting by grapheme.

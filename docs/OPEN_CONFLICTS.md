@@ -1,34 +1,12 @@
-# Ogbifọ — Open Conflicts and Decisions
+# Ogbifọ — Open Questions
 
-Per `CLAUDE.md`: when requirements conflict, flag the conflict rather than silently choosing. Nothing below has been resolved in the specs. Each item needs an owner decision before the dependent work starts.
+Per `CLAUDE.md`: when requirements conflict, flag rather than silently choose. Only unresolved items are listed. Decided items live in `PRODUCT_DECISIONS.md`. Numbers are stable so other documents can cite them.
 
-Status key: **RESOLVED** (decided; see `PRODUCT_DECISIONS.md`), **BEFORE-PHASE-N** (resolve before that MVP phase), **MINOR**.
+Status key: **BEFORE-PHASE-N** (resolve before that MVP phase), **MINOR**.
+
+Also open: the revenue model for the consumer product is undefined. Not a Phase 1 blocker.
 
 ---
-
-## 1. Which product is this? — RESOLVED
-
-**Decision:** Ogbifọ is a consumer language and cultural archive/interpreter product. It is not a data-engine business. See `PRODUCT_DECISIONS.md` D-001 to D-005.
-
-The repo's `bench/` and `audit/` (Yorùbá tone restoration for lyrics, reels and films), `reference/ogbifo-architecture.md` (B2B review pipeline) and the pitch deck (data engine, $500K) describe a different project. They stay in the repo for now but do not dictate Ogbifọ's product direction, scope or roadmap. Nothing in `docs/` depends on them.
-
-Still open: the revenue model for the consumer product is undefined. This is a business question, not a blocker for Phase 1.
-
-## 2. Brand drift across artifacts — BEFORE-PHASE-1
-
-`CLAUDE.md` bans excessive gradients and generic SaaS styling. Existing artifacts violate it:
-
-- Pitch deck: Yeseva One / Instrument Serif, orange→gold→teal gradient headlines, glow orbs, custom cursor.
-- Early prototype (`ogbifo-1.html`): terracotta palette, Syne / Space Mono, grain overlay.
-- Motion bank: Inter, a plain circle mark rather than the Royal Seal.
-
-Decision: the brand guidelines palette and type (Clay / Ochre / Bone; Fraunces / Space Grotesk / Plus Jakarta) are canonical. Others are to be retired, not ported. The pitch deck should be rebuilt on the brand system before it is shown again.
-
-## 3. Royal Seal: one loop or two? — RESOLVED
-
-**Decision:** one loop. The canonical seal is `brand/royal-seal.svg`: a 16-spoke radial waveform (`currentColor`), a single ochre lens-shaped loop, and a central ochre fulcrum. The earlier "two intersecting loops" wording is retired. An eye-shaped candidate (almond with pupil, fixed dark spokes) was considered and rejected; it read as an eye, which conflicts with the guidelines' rejection of surveillance aesthetics.
-
-Still open (MINOR): the brand copy's meaning for the loop ("left loop = oral statecraft, right loop = foreign technical registers") no longer fits one shape. `BRAND_SYSTEM.md` carries a proposed replacement; the owner should confirm or rewrite it.
 
 ## 4. Verification can be gamed — BEFORE-PHASE-4
 
@@ -47,22 +25,20 @@ Not a dataset concern, but still required: users contribute recordings, media, l
 
 Minimum fields before any contribution is stored: `consentVersion`, `licenseGrant` (scoped as above), `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, and a withdrawal path.
 
-## 6. Two data models — RESOLVED
-
-`DATA_MODEL.md` is canonical. The B2B vocabulary in `reference/ogbifo-architecture.md` belongs to the separate project and is not used here.
-
 ## 7. Resonance Score depends on unmeasured Yorùbá ASR — BEFORE-PHASE-2
 
-Clarity, Rhythm and Boldness are undefined as computations, and any transcript-based score needs ASR that works on Yorùbá, which the architecture doc lists as an open evaluation question. Ship Phase 2 behind an explicit "guidance" label (already required by the PRD), and define each metric as a deterministic function of named audio features before building UI around the numbers.
+Clarity, Rhythm and Boldness are undefined as computations, and any transcript-based score needs ASR that works on Yorùbá, which has not been evaluated. Ship Phase 2 behind an explicit "guidance" label (already required by the PRD), and define each metric as a deterministic function of named audio features before building UI around the numbers.
 
 ## 8. "Sovereign" has two meanings — MINOR
 
-Brand: "Sovereign Accord System", sovereign courts (the *client* of the interpreter). Product: top progression rank and "first Sovereign" of a language. The user is cast as the king in one place and the interpreter in another. Pick one stance; the Ogbifọ is the interpreter, so rank titles are arguably better drawn from the interpreter's role (Keeper, Interpreter) than from the court.
+Brand: sovereign courts (the *client* of the interpreter). Product: top progression rank and "first Sovereign" of a language. The user is cast as the king in one place and the interpreter in another. Pick one stance; the Ogbifọ is the interpreter, so rank titles are arguably better drawn from the interpreter's role (Keeper, Interpreter) than from the court.
 
-## 9. Leaderboard vs. "don't gamify culture" — MINOR
+## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 
-The early prototype has a reputation leaderboard ("Language champions", crowns). `UX_SPEC.md` and `GAMIFICATION.md` reject likes, followers and competitive framing. Drop the leaderboard from MVP.
+The guidelines assign language artifacts to Fraunces and claim Space Grotesk never clips diacritics. Measured in Sprint 1: both mis-position a tone mark stacked on a dot-below letter (`ẹ́`, `ọ̀`, as in the Reading Room's own proverb), in NFC and NFD, and neither contains Hausa `ɓ ɗ ƙ ƴ`. Interim: language text is set in Noto Serif (`LanguageText` component); Fraunces stays for the wordmark and English headlines.
 
-## 10. Stack split — MINOR
+Decide: (a) keep Noto Serif for language text, (b) choose another serif that passes the stacked-mark test and includes Hausa, (c) commission Fraunces anchor fixes. Whichever is chosen must pass `Ẹni tó bá fẹ́ jẹun, kò gbọdọ̀ jẹkí` rendered in Chromium, Safari and Firefox. Only Chromium has been checked.
 
-App spec: Node/TypeScript, REST. Speech scoring and translation may need Python model workers behind the API; decide when Phase 2 starts.
+## 12. Tier versus difficulty — MINOR
+
+A Card shows "TIER 2" in the UX spec, but the data model has `Deck.tier` and `Card.difficulty` as separate fields. Sprint 1 shows `Card.difficulty` on the Card and `Deck.tier` on the Deck. Confirm they are meant to differ.

@@ -1,0 +1,18 @@
+/* Ogbifọ design tokens. Single source for brand colour and type roles. */
+:root {
+  --ogb-clay: #121413;
+  --ogb-ochre: #d49b41;
+  --ogb-bone: #faf9f6;
+  --ogb-charcoal: #1a1c1b;
+  --ogb-forest: #1b2e24;
+  --ogb-ash: #8a8d8a;
+  --ogb-card: #161817;
+
+  --ogb-font-serif: "Fraunces", "Noto Serif", Georgia, serif;
+  /* Language artifacts. Fraunces cannot stack tone marks on dot-below letters (ẹ́, ọ̀). */
+  --ogb-font-language: "Noto Serif", Georgia, serif;
+  --ogb-font-ui: "Space Grotesk", "Noto Sans", system-ui, sans-serif;
+  --ogb-font-body: "Plus Jakarta Sans", "Noto Sans", system-ui, sans-serif;
+
+  --ogb-hairline: color-mix(in srgb, var(--ogb-bone) 10%, transparent);
+}

@@ -24,4 +24,4 @@ Do not finalize rank thresholds until product analytics are available.
 
 A Pioneer can be associated with contributing to underrepresented languages or archive gaps. This should reward preservation rather than popularity.
 
-> See `OPEN_CONFLICTS.md` #8 (Sovereign) and #9 (leaderboards).
+> Open: `OPEN_CONFLICTS.md` #8 (meaning of Sovereign). No leaderboards or competitive ranking in the MVP (`PRODUCT_DECISIONS.md` D-009).

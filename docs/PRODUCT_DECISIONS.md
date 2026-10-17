@@ -25,3 +25,15 @@ Users may contribute recordings, media, lyrics and cultural material, so consent
 ## D-006 The benchmark project
 
 `bench/`, `audit/`, `docs/reference/ogbifo-architecture.md` and the pitch deck belong to a separate project. They do not drive Ogbifọ's roadmap. They stay in this repository until the owner moves or drops them. App work does not modify them.
+
+## D-007 Royal Seal
+
+One loop. The canonical seal is `brand/royal-seal.svg`: a 16-spoke radial waveform (`currentColor`), a single Ochre loop, and a central Ochre fulcrum. Do not redraw it or add a loop. The earlier "two intersecting loops" wording is retired, and an eye-shaped candidate was rejected because it reads as an eye, against the brand's rejection of surveillance aesthetics.
+
+## D-008 Canonical sources
+
+`docs/` is the single source of truth. The brand guidelines palette and typography (Clay / Ochre / Bone; Fraunces / Space Grotesk / Plus Jakarta Sans) are canonical. `DATA_MODEL.md` is the canonical data model. No earlier prototype, deck or pipeline document is a source.
+
+## D-009 No leaderboards
+
+No leaderboards or competitive ranking in the MVP.

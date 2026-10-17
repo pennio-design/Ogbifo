@@ -120,3 +120,4 @@ Ogbifọ is a consumer language and cultural archive/interpreter product, not a 
 - `docs/reference/ogbifo-architecture.md` — B2B pipeline architecture.
 
 These belong to a separate project (kept, or to be dropped, at the owner's discretion). They do not drive Ogbifọ's direction. Do not modify them as part of app work. The repository is public and lyrics are copyrighted: never commit line sheets, lyrics, verifier exports or reports (see `.gitignore`).
+ 
