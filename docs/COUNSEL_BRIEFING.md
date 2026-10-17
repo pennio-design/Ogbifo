@@ -24,10 +24,11 @@ It is **not** a data business. No dataset selling, licensing, export or training
 | Reviewer annotation tool | Built, switched off by default, no login yet. Used by volunteers to mark syllable boundaries on reference recordings. |
 | Accounts, server storage, database | **Not built.** Nothing about any user is stored on a server today. |
 | Analytics | **Not built.** Guardrails decided (D-028, D-035); vendor not chosen. |
-| Contributions, Archive, Community verification | **Not built.** Blocked on the consent and licence work in this briefing. |
+| Contributions (text only) | **Built, device-only.** Form, draft consent screen and licence fields exist and save to the contributor's own browser. Sync to a server is switched off in code until this wording is approved (D-038). |
+| Archive, Community verification, accounts | **Not built.** Peer confirmation rules exist as tested logic, with no screen. |
 | Consent screens, privacy notice, terms of service | **Not written.** |
 
-Consequence for counsel: **today the product collects no personal data.** The legal exposure arises at the next stages (volunteer calibration, reference voices, accounts, analytics, contributions). We would rather settle the rules before building those than after.
+Consequence for counsel: **today the product collects no personal data on any server.** A contributor's text is stored only in their own browser. The legal exposure arises at the next stages (volunteer calibration, reference voices, accounts, analytics, contributions). We would rather settle the rules before building those than after.
 
 ## 3. Data flows (what touches what)
 

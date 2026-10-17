@@ -169,3 +169,7 @@ A Live attempt is **finished when the recording is clear enough to analyse**, wh
 ## D-037 Pitch-range correction kept
 
 Approved by the owner. The learner's pitch steps are rescaled to the reference's spread, clamped to 0.6 to 1.67 (`RANGE_SCALE_MIN`, `RANGE_SCALE_MAX` in `packages/speech/src/metrics.ts`), before Tone is scored. It stays on through calibration. If calibration shows it rewards flat readings or hides real differences, retune the clamp or switch it off by setting both bounds to 1. That is a calibration decision, to be recorded here.
+
+## D-038 Contributions stay on the device until counsel signs off
+
+Sprint 4 builds the contribution flow local-first: validate, write to IndexedDB, queue in an outbox, render at once. The consent screen and licence wording are a marked DRAFT (`CONSENT_IS_DRAFT`, version `draft-0.1`). While that flag is true, `guardTransport` forces the sync transport off, so nothing a contributor writes leaves their device. Flipping it requires counsel-reviewed wording, a new `CONSENT_VERSION`, and a decision here. Contributions are text only (phrase, proverb, greeting, lyric); audio, video and links wait for speaker-consent handling (`OPEN_CONFLICTS.md` #20). Peer confirmation exists as tested domain logic only; there is no confirm UI until accounts exist.

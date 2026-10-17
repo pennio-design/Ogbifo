@@ -85,3 +85,16 @@ From Sprint 3 part 2 (`SCORING_SPEC.md` section 15). Browser-tested with synthet
 - **The tool trusts the reviewer's boundaries.** It proposes an even split of the speech and shows a pitch-found percentage, but it does not check that the boundaries are plausible. A poor annotation would quietly mis-score every learner on that Card. Consider a second reviewer confirming each annotation (D-012 already needs two reviewers per Card).
 - **No real reference voice has been tested.** The only reference is a synthetic tone sequence.
 
+## 20. Findings from the contribution flow — BEFORE-PHASE-3 launch
+
+From Sprint 4 part 1 (D-038). Browser-tested in Chromium only.
+
+- **Contributions have no owner without accounts.** `userId` is null. Contributions live in one browser's IndexedDB; clearing site data loses them. Decide whether drafts without an account are allowed, and what happens when the contributor signs in (claim, merge, discard). D-022 says contributing needs an account.
+- **The consent wording is a draft.** Sync is off in code until counsel reviews it (`CONSENT_IS_DRAFT`). `docs/COUNSEL_BRIEFING.md` lists the questions.
+- **Rights note rule is a guess.** A note is required for lyrics and for anything not the contributor's own work. Counsel may want more (or a stronger warranty). Communal knowledge such as proverbs and oriki may not belong to one person; the "I wrote or said it myself" option may be wrong for them.
+- **Contribution kinds are inferred.** Phrase, proverb and greeting come from the Community page copy; lyric from D-020. The PRD names types text, audio, video and external URL, which are not built.
+- **Audio contributions are blocked** on `speakerConsentForAudio` handling: who the speaker is, whether the uploader is the speaker, local storage of large blobs.
+- **Label conflict.** D-021 and VERIFICATION_SYSTEM say "Peer confirmed"; UX_SPEC says "Peer verified". The product uses "Peer confirmed" (D-021, newer).
+- **Withdrawal after confirmation** is implemented as hide-and-queue. What the server keeps of confirmations, and whether withdrawal can be refused for reviewed material, is for counsel (briefing Q9).
+- **No server.** The outbox, backoff and idempotency are tested against a fake transport only. The SQL schema (migration 0004) exists but nothing writes to it. Self-confirmation is enforced in the domain function, not in SQL.
+- **Dialect is free text.** The Language Map has no dialect list yet (D-013), so Pioneer and gap counts cannot use it.

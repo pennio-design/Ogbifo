@@ -77,4 +77,52 @@ describe("migrations", () => {
       ).rejects.toThrow();
     });
   });
+
+  describe("0004_contributions", () => {
+    let db: PGlite;
+    const cols = "id, client_id, type, kind, language_id, content_text, consent_version, consent_accepted_at, licence_grant, rights_declaration, rights_note, retention_policy, created_at";
+    const grant = `'{"scope":"archive_display_and_verification","exclusive":false,"platform":"ogbifo_only","revocable":true}'::jsonb`;
+    const row = (id: string, over: Record<string, string> = {}) => {
+      const v: Record<string, string> = {
+        id: `'${id}'`, client_id: `'${id}'`, type: "'text'", kind: "'proverb'", language_id: "'yo'", content_text: "'Ẹ káàbọ̀'",
+        consent_version: "'draft-0.1'", consent_accepted_at: "now()", licence_grant: grant, rights_declaration: "'own_work'",
+        rights_note: "NULL", retention_policy: "'until_withdrawn'", created_at: "now()", ...over,
+      };
+      return `INSERT INTO contributions (${cols}) VALUES (${cols.split(", ").map((c) => v[c]).join(", ")})`;
+    };
+    beforeAll(async () => {
+      db = new PGlite();
+      for (const f of files) await db.exec(readFileSync(join(dir, f), "utf8"));
+      await db.exec("INSERT INTO languages (id, name, code, native_name, writing_system, status) VALUES ('yo', 'Yorùbá', 'yo', 'Yorùbá', 'Latin', 'active')");
+    });
+    it("accepts a complete contribution and defaults to pending_review", async () => {
+      await db.exec(row("a"));
+      const { rows } = await db.query<{ verification_status: string }>("SELECT verification_status FROM contributions WHERE id = 'a'");
+      expect(rows[0]?.verification_status).toBe("pending_review");
+    });
+    it("treats client_id as an idempotency key", async () => {
+      await expect(db.exec(row("b", { client_id: "'a'" }))).rejects.toThrow();
+    });
+    it.each([
+      ["no consent version", { consent_version: "' '" }],
+      ["a different licence grant", { licence_grant: `'{"scope":"anything","exclusive":true}'::jsonb` }],
+      ["an unknown rights declaration", { rights_declaration: "'whatever'" }],
+      ["lyrics with no rights note", { kind: "'lyric'" }],
+      ["permission with no note", { rights_declaration: "'rights_holder_permission'" }],
+      ["a retention policy not yet defined", { retention_policy: "'forever'" }],
+    ])("rejects %s", async (_n, over) => {
+      await expect(db.exec(row("bad", over))).rejects.toThrow();
+    });
+    it("stores a lyric that names its rights holder", async () => {
+      await db.exec(row("l", { kind: "'lyric'", rights_note: "'Publisher X, by letter'" }));
+    });
+    it("stops one user confirming twice", async () => {
+      await db.exec("INSERT INTO peer_confirmations (id, contribution_id, user_id, created_at) VALUES ('p1', 'a', 'u1', now())");
+      await expect(db.exec("INSERT INTO peer_confirmations (id, contribution_id, user_id, created_at) VALUES ('p2', 'a', 'u1', now())")).rejects.toThrow();
+    });
+    it("keeps peer_verified and its time together", async () => {
+      await expect(db.exec("UPDATE contributions SET verification_status = 'peer_verified' WHERE id = 'a'")).rejects.toThrow();
+      await db.exec("UPDATE contributions SET verification_status = 'peer_verified', verified_at = now() WHERE id = 'a'");
+    });
+  });
 });

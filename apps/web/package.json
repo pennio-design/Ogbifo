@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc -p tsconfig.json",
     "e2e": "tsx e2e/recording.e2e.ts",
-    "e2e:annotate": "tsx e2e/annotation.e2e.ts"
+    "e2e:annotate": "tsx e2e/annotation.e2e.ts",
+    "e2e:community": "tsx e2e/community.e2e.ts"
   },
   "dependencies": {
     "@ogbifo/domain": "*",

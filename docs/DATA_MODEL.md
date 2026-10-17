@@ -1,6 +1,6 @@
 # Ogbifọ — Data Model
 
-> Gap: no consent, license, rights or retention fields exist yet. See `OPEN_CONFLICTS.md` #5. Add them to `Contribution` before it is persisted anywhere. Do not add dataset-export fields (`PRODUCT_DECISIONS.md`).
+> Consent, licence, rights and retention fields now exist on `Contribution` (`packages/domain/src/contribution.ts`, migration 0004). The wording behind them is an unreviewed draft: `OPEN_CONFLICTS.md` #5, #20, D-038. Do not add dataset-export fields (`PRODUCT_DECISIONS.md`).
 
 ```
 User

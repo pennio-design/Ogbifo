@@ -14,3 +14,8 @@ export * from "./reference-file";
 export * from "./progress-store";
 export * from "./reading-room";
 export * from "./reading-session";
+export * from "./consent";
+export * from "./contribution";
+export * from "./contribution-service";
+export * from "./outbox";
+export * from "./verification";

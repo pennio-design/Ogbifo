@@ -66,3 +66,9 @@ Sprint 3 scope is `SCORING_SPEC.md` section 13 (metrics approved). Nothing block
 Microphone capture and permission flow, Live and Studio recording, on-device analysis in a Web Worker, contour and marker results with the "tones and timing, not words" statement, `showResonanceNumber` switch, finishing a Card on an analysable Live attempt, reference playback with slow mode, reference provenance and annotation on Cards, migration 0003, Audacity label import, and the in-app annotation tool. See `SCORING_SPEC.md` section 15, including what is not verified.
 
 Not built: reference audio offline caching (D-017), server storage for references and for attempts, accounts, the second reference voice, and anything that needs real speech: calibration, the linguist review and real reference voices (`OPEN_CONFLICTS.md` #17).
+
+### Sprint 4 part 1 as built: local-first contributions
+
+`packages/domain`: consent and licence fields (`consent.ts`, DRAFT wording), `Contribution` with validation and withdrawal, the outbox state machine with backoff and manual retry, `ContributionService`, peer confirmation rules and labels, migration 0004. Web: Community page with contribution form, draft consent screen, IndexedDB store, offline banner, local list with verification and sync states, withdraw. Browser check: `npm run e2e:community -w @ogbifo/web`.
+
+Nothing syncs: the transport is forced off while the consent wording is a draft (D-038). Not built: accounts, server API, background sync worker, confirm UI, community feed, moderation, audio/video/link contributions. See `OPEN_CONFLICTS.md` #20.
