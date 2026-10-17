@@ -2,7 +2,7 @@
 
 ## Vision
 
-Build a living language intelligence platform that allows African languages, oral traditions, dialects, stories, proverbs, expressions, and speech patterns to be encountered, understood, practiced, contributed to, and preserved.
+Build a living language intelligence platform that allows the Yorùbá language, its oral traditions, dialects, stories, proverbs, expressions, and speech patterns to be encountered, understood, practiced, contributed to, and preserved.
 
 ## The problem
 
@@ -42,7 +42,7 @@ Ogbifọ combines:
 
 ### Learner
 
-A person learning an African language.
+A person learning Yorùbá.
 
 Needs: authentic material, understandable translations, pronunciation practice, progressive difficulty, repetition.
 
@@ -77,7 +77,7 @@ Ogbifọ succeeds when:
 
 ## Long-term vision
 
-Ogbifọ should evolve from a language experience into an African language intelligence layer capable of powering:
+Ogbifọ should evolve from a language experience into a Yorùbá language intelligence layer capable of powering:
 
 - education
 - cultural archives

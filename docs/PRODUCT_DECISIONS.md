@@ -38,11 +38,15 @@ One loop. The canonical seal is `brand/royal-seal.svg`: a 16-spoke radial wavefo
 
 No leaderboards or competitive ranking in the MVP.
 
-## D-010 Yorùbá only (WITHDRAWN)
+## D-010 Yorùbá at launch, multi-language by design
 
-Withdrawn by the owner. Ogbifọ is a multi-language product for African languages, not a Yorùbá-only one. Hausa, Igbo and Pidgin are back in scope alongside Yorùbá, as in the original PRD. The data model stays keyed by `languageId`.
+Ogbifọ launches with Yorùbá only. The MVP's content, Decks, Archive, scoring, copy and fonts cover Yorùbá. Hausa, Igbo, Pidgin and other languages are out of the MVP, and nothing is seeded or designed for them. The architecture stays multi-language: `languageId` on every entity, so adding a language does not rewrite the schema.
 
-Decisions D-011 to D-030 were made while D-010 was in force. They are kept, and each is in force for Yorùbá. Whether it extends to the other languages is tracked in `OPEN_CONFLICTS.md` #15 and must not be assumed.
+Public framing is "Yorùbá first", never "African languages", while one language ships.
+
+A language is added only through the gate in `LANGUAGE_EXPANSION.md`, and adding one needs a new decision here. Planned order, by cost: Igbo, Hausa, then Pidgin.
+
+D-011 to D-030 were decided for Yorùbá and apply to Yorùbá without qualification. Each later language re-confirms the ones that depend on language (D-012, D-014, D-015, D-016, D-024).
 
 ## D-011 Launch user
 

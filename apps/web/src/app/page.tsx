@@ -10,7 +10,7 @@ export default async function HomePage() {
   return (
     <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
       <section>
-        <p className="font-ui text-xs uppercase tracking-[0.3em] text-ochre">African languages</p>
+        <p className="font-ui text-xs uppercase tracking-[0.3em] text-ochre">Yorùbá</p>
         <h1 className="mt-4 font-serif text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
           Enter the language.
         </h1>

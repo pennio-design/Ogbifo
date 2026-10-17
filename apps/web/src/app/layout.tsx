@@ -9,7 +9,7 @@ import { NavLinks } from "./nav-links";
 
 export const metadata: Metadata = {
   title: { default: "Ogbifọ", template: "%s · Ogbifọ" },
-  description: "Enter the language. A Reading Room and a community Archive for African languages.",
+  description: "Enter the language. A Reading Room and a community Archive for Yorùbá.",
 };
 
 export const viewport: Viewport = { themeColor: "#121413", width: "device-width", initialScale: 1 };

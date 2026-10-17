@@ -32,9 +32,9 @@ D-014 settles the approach: compare the learner's pitch contour and timing to a 
 
 ## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 
-The guidelines assign language artifacts to Fraunces and claim Space Grotesk never clips diacritics. Measured in Sprint 1: both mis-position a tone mark stacked on a dot-below letter (`ẹ́`, `ọ̀`, as in the Reading Room's own proverb), in NFC and NFD, and neither contains Hausa `ɓ ɗ ƙ ƴ`. Interim: language text is set in Noto Serif (`LanguageText` component); Fraunces stays for the wordmark and English headlines.
+The guidelines assign language artifacts to Fraunces and claim Space Grotesk never clips diacritics. Measured in Sprint 1: both mis-position a tone mark stacked on a dot-below letter (`ẹ́`, `ọ̀`, as in the Reading Room's own proverb), in NFC and NFD. Fraunces also lacks `ǹ`. Interim: language text is set in Noto Serif (`LanguageText` component); Fraunces stays for the wordmark and English headlines.
 
-Decide: (a) keep Noto Serif for language text, (b) choose another serif that passes the stacked-mark test and includes Hausa, (c) commission Fraunces anchor fixes. Whichever is chosen must pass `Ẹni tó bá fẹ́ jẹun, kò gbọdọ̀ jẹkí` rendered in Chromium, Safari and Firefox. Only Chromium has been checked.
+Decide: (a) keep Noto Serif for language text, (b) choose another serif that passes the stacked-mark test, (c) commission Fraunces anchor fixes. Whichever is chosen must pass `Ẹni tó bá fẹ́ jẹun, kò gbọdọ̀ jẹkí` rendered in Chromium, Safari and Firefox. Only Chromium has been checked.
 
 ## 12. Tier versus difficulty — MINOR
 
@@ -48,15 +48,7 @@ D-028 fixes the guardrails. Open: which vendor (data location, DPA, replay maski
 
 D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Common Tongue has at least one completed Live attempt. Alternatives: every Card seen, or a minimum average score. Decide, and decide what an anonymous reader sees when they reach the end (an account prompt to keep progress and unlock the next Deck). Note: the gate adds a place to stall inside a 30 to 50 person beta, so read week-2 and week-4 return alongside the Deck-completion funnel, not instead of it.
 
-## 15. Which decisions extend beyond Yorùbá — BEFORE-PHASE-1
+## 15. Expansion gate thresholds — AFTER LAUNCH
 
-D-010 (Yorùbá only) is withdrawn, so Hausa, Igbo and Pidgin are in scope. D-011 to D-030 were decided for Yorùbá. Per decision, what changes for the other languages:
-
-- **D-011 launch user, D-026 beta:** the beta is two Yorùbá Decks. Which languages does the beta include, and is the learner the same person for each?
-- **D-012 reviewers, D-014 reference audio:** each language needs 2 or more named reviewers and its own reference voices before any Card ships.
-- **D-014 pitch scoring:** valid for Yorùbá, and plausible for Hausa and Igbo (both tonal). Pidgin is not tonal in the same way, so it needs a different metric or no score. Each language needs its own tone model (#7).
-- **D-013 Language Map:** with several languages it becomes languages by region, with dialects inside each. Confirm.
-- **D-015 orthography, D-016 dialect:** a named orthography standard per language (Hausa Boko, Igbo Onwu, and for Pidgin, there is no single standard).
-- **D-023, D-027, D-030:** apply as written to every language.
-- **Fonts:** Hausa `ɓ ɗ ƙ ƴ` and Igbo `ṅ` are missing from the brand faces and come from Noto; tone-mark stacking must be checked for Igbo as well as Yorùbá (#11).
+`LANGUAGE_EXPANSION.md` defines the gate for adding a language. Still to set: the Yorùbá retention threshold that opens the gate (week-2 and week-4 return from D-026), the number of reviewers and voices per additional language, and whether Igbo, Hausa and Pidgin keep the planned order once real demand is known.
 

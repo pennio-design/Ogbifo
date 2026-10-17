@@ -113,7 +113,7 @@ A feature is not complete until:
 
 ## Product decisions
 
-Ogbifọ is a consumer language and cultural archive/interpreter product, not a data-engine business. No dataset-selling model in the MVP; contributions serve the Archive and Community; peer verification is community trust, not dataset certification; consent and licensing still apply. Read `docs/PRODUCT_DECISIONS.md` before any work touching contributions, verification or storage.
+Ogbifọ is a Yorùbá language and cultural archive/interpreter product (Yorùbá first, `docs/PRODUCT_DECISIONS.md` D-010; multi-language by design, one language shipped), not a data-engine business. No dataset-selling model in the MVP; contributions serve the Archive and Community; peer verification is community trust, not dataset certification; consent and licensing still apply. Read `docs/PRODUCT_DECISIONS.md` before any work touching contributions, verification or storage.
 
 ## Separate project in this repo
 
