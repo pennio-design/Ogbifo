@@ -25,9 +25,17 @@ Not a dataset concern, but still required: users contribute recordings, media, l
 
 Minimum fields before any contribution is stored: `consentVersion`, `licenseGrant` (scoped as above), `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, and a withdrawal path.
 
-## 7. Resonance Score depends on unmeasured Yorùbá ASR — BEFORE-PHASE-2
+## 7. Define the pitch-contour metrics — BEFORE-PHASE-2
 
-Clarity, Rhythm and Boldness are undefined as computations, and any transcript-based score needs ASR that works on Yorùbá, which has not been evaluated. Ship Phase 2 behind an explicit "guidance" label (already required by the PRD), and define each metric as a deterministic function of named audio features before building UI around the numbers.
+D-014 settles the approach: compare the learner's pitch contour and timing to a native reference, syllable by syllable. Still undefined, and each needs a deterministic spec and tests before UI:
+
+- Syllable segmentation of tone-marked text (derivable from orthography: Yorùbá syllables are V, CV or syllabic nasal) and alignment of audio to it.
+- Pitch extraction method (F0 algorithm), voiced/unvoiced handling, and noisy phone-mic input.
+- Speaker normalization: tone is relative, so compare in semitones against the speaker's own range, not absolute Hz. Men, women and children must score fairly against the same reference.
+- Tone model: three level tones (high, mid, low) plus the contour effects of context. Whether to score the three levels, or the contour shape against the reference.
+- What replaces Clarity, Rhythm and Boldness. Proposed: Tone (contour match), Rhythm (timing match), and an overall that is not a bare average. Needs your approval.
+- Thresholds and the wording shown to the learner. The score is guidance and never says a reading is "correct" or "authentic".
+- Reference audio: who records it, in which dialect, under what licence and fee (see D-012).
 
 ## 8. "Sovereign" has two meanings — MINOR
 

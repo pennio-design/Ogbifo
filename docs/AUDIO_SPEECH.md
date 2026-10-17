@@ -23,7 +23,7 @@ MVP: Clarity, Rhythm, Boldness.
 
 Overall = (clarity + rhythm + boldness) / 3. The current prototype models the overall score as the average of the three.
 
-> Per-metric computation is undefined. See `OPEN_CONFLICTS.md` #7.
+> Superseded by `PRODUCT_DECISIONS.md` D-014: scoring compares pitch contour and timing to a native reference recording. Metric definitions: `OPEN_CONFLICTS.md` #7. The pipeline above lists ASR stages that are not used for scoring.
 
 ## Important product constraint
 

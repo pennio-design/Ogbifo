@@ -41,3 +41,21 @@ No leaderboards or competitive ranking in the MVP.
 ## D-010 Yorùbá only
 
 Ogbifọ is a Yorùbá product, not a Nigerian or African multi-language product. The MVP's content, Decks, Archive, translation, speech scoring, copy and fonts cover Yorùbá only. Hausa, Igbo, Pidgin and every other language are out of scope. The data model keeps `languageId` so the schema does not need rewriting later, but nothing is built, seeded or designed for a second language, and adding one needs a new decision here.
+
+## D-011 Launch user
+
+The first user is the diaspora heritage learner: a Yorùbá-descent adult, usually abroad, who understands some speech but cannot read or write it. English is the support language. Design, copy and pricing serve this user first. Native speakers are contributors and reviewers, not the primary audience. Not for launch: resident students on constrained data, researchers, children.
+
+## D-012 Content authority
+
+No Card reaches a user until at least two named native-speaker reviewers have approved it. Cards display who reviewed them. Community contributions live in a separate, clearly labelled Archive and never enter a Deck without the same review. Developer seed content is for building only and must not ship.
+
+Consequence: `Card` needs review fields (reviewers, review date, review status) before Sprint 2 ships Cards to users. Not yet in `DATA_MODEL.md`.
+
+## D-013 Language Map
+
+The Language Map is a map of Yorùbá dialects and regions, showing Archive coverage and gaps by dialect. Pioneer status rewards contributing to under-documented dialects. The page is named "Language Map" (terminology unchanged) but its content is Yorùbá-internal.
+
+## D-014 Speech scoring
+
+The Resonance Score compares the learner's pitch contour and timing against a native reference recording of the same Card, syllable by syllable, because tone carries meaning in Yorùbá. No ASR transcript is used for scoring. Every Card therefore needs reviewer-recorded reference audio. Clarity, Rhythm and Boldness as originally specified are replaced; the new metrics are defined in `OPEN_CONFLICTS.md` #7. The score stays labelled as guidance.

@@ -92,7 +92,7 @@ The system produces: overall Resonance Score, Clarity, Rhythm, Boldness.
 
 The score should be presented as guidance rather than absolute linguistic truth. Avoid wording that implies the score objectively determines whether a person is culturally or linguistically authentic.
 
-> Open question: how each metric is computed is undefined. See `OPEN_CONFLICTS.md` #7.
+> Scoring approach is decided (`PRODUCT_DECISIONS.md` D-014); metric definitions are open (`OPEN_CONFLICTS.md` #7).
 
 ### 3.7 Shareable Artifact
 
