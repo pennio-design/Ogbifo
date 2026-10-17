@@ -80,3 +80,9 @@ Contributing needs an account, so anonymous readers see a plain explanation and 
 Storage follow-up (D-040): Postgres repositories for users, links, sessions and rate limits (migration 0006), a migration runner with checksums, `npm run migrate`, `DATABASE_URL` wiring; sessions survive a server restart on a real Postgres 16.
 
 Not built: a real email provider, account deletion, choosing a display name, merging anonymous progress. See `OPEN_CONFLICTS.md` #21.
+
+### Lexicon workflow as built
+
+A spreadsheet-first way to fill the tone lexicon (D-042, D-043): `packages/domain` has a CSV reader, a dialect register, a tone-mark checker (a mark only on a vowel or n/m, one mark per letter, dot-below only on ẹ ọ ṣ, no letters outside the Yorùbá alphabet), and row validation (required cells, example needs a translation, duplicates, two different reviewers who speak the entry's dialect and are not the contributor, review date). Entries become Reviewed only when that holds; the rest stay drafts. `npm run lexicon -w @ogbifo/web -- check|export|template` checks a sheet and exports Reviewed entries (drafts only with `--drafts`). Sheets stay private: `.gitignore` keeps them out of this public repository. Instructions for the owner and the teacher: `apps/web/content/lexicon/README.md`.
+
+Not built: the Reading Room Cards import (Cards are still code), any lexicon storage in the database, qualification test, the games, contributor tier. The checker tests marks and completeness, not whether the Yorùbá is right.

@@ -23,3 +23,6 @@ export * from "./auth";
 export * from "./auth-service";
 export * from "./sql";
 export * from "./postgres-auth";
+export * from "./csv";
+export * from "./dialect";
+export * from "./lexicon";

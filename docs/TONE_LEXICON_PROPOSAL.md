@@ -61,7 +61,7 @@ Never labelled gold, certified or authoritative.
 
 ## 8. Sequencing
 
-1. **Seed the lexicon** with the teacher and the owner: a few hundred common words, tone-marked, glossed, dialect-labelled, two reviewers each. This is the known-good set for qualification.
+1. **Seed the lexicon** (the sheet workflow is built, see `apps/web/content/lexicon/README.md`) with the teacher and the owner: a few hundred common words, tone-marked, glossed, dialect-labelled, two reviewers each. This is the known-good set for qualification.
 2. **Tone-mark it, learner tier only.** Learners practise against the lexicon. No data collected, so no consent problem and a real learning benefit.
 3. **Qualification and contributor tier**, once server storage, consent wording and counsel are done.
 4. **Say the tone**, after calibration shows tone classification works across voices.

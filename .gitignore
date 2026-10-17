@@ -16,3 +16,8 @@ __pycache__/
 line-sheets/
 verifier-exports/
 reports/
+
+# Lexicon sheets hold contributors' work, licensed to the Project only. Keep them private.
+apps/web/content/lexicon/*.csv
+apps/web/content/lexicon/*.json
+!apps/web/content/lexicon/dialects.json
