@@ -86,3 +86,9 @@ Not built: a real email provider, account deletion, choosing a display name, mer
 A spreadsheet-first way to fill the tone lexicon (D-042, D-043): `packages/domain` has a CSV reader, a dialect register, a tone-mark checker (a mark only on a vowel or n/m, one mark per letter, dot-below only on ẹ ọ ṣ, no letters outside the Yorùbá alphabet), and row validation (required cells, example needs a translation, duplicates, two different reviewers who speak the entry's dialect and are not the contributor, review date). Entries become Reviewed only when that holds; the rest stay drafts. `npm run lexicon -w @ogbifo/web -- check|export|template` checks a sheet and exports Reviewed entries (drafts only with `--drafts`). Sheets stay private: `.gitignore` keeps them out of this public repository. Instructions for the owner and the teacher: `apps/web/content/lexicon/README.md`.
 
 Not built: the Reading Room Cards import (Cards are still code), any lexicon storage in the database, qualification test, the games, contributor tier. The checker tests marks and completeness, not whether the Yorùbá is right.
+
+### Cards sheet as built
+
+Same pattern as the lexicon, for Reading Room Cards (D-012, D-043): `packages/domain/src/card-sheet.ts` checks a CSV (id, Deck, category, dialect, Yorùbá text, translation, context, source, difficulty, contributor, reviewers) and `npm run cards -w @ogbifo/web -- check|export|template` exports Reviewed Cards (unreviewed only with `--unreviewed`) to `content/cards/cards.json`, which the app reads at start-up. Shared sign-off rule in `review.ts`. Song and praise-poem excerpts need a rights note (D-020). Sheets and exports are gitignored. Instructions: `apps/web/content/cards/README.md`.
+
+Not built: Decks from a sheet (Decks are still defined in code), reference voices and annotations from a sheet, database storage of Cards. Tokens default to a placeholder (`OPEN_CONFLICTS.md` #24).

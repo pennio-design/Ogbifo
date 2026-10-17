@@ -1,7 +1,10 @@
 import { syllabify, type Tone } from "@ogbifo/speech";
 import { parseCsv } from "./csv";
 import { resolveDialect, type DialectRegister } from "./dialect";
+import { checkReview, type Finding, type Reviewer } from "./review";
 import { countGraphemes, isBlank } from "./text";
+
+export type { Finding, Reviewer } from "./review";
 
 /**
  * Tone lexicon workflow (TONE_LEXICON_PROPOSAL.md, D-042, D-043). People fill in a
@@ -29,11 +32,6 @@ export type LexiconColumn = (typeof LEXICON_COLUMNS)[number];
 
 const REQUIRED_COLUMNS: readonly LexiconColumn[] = ["form", "gloss", "dialect", "source", "contributor"];
 
-export interface Finding {
-  readonly code: string;
-  readonly message: string;
-}
-
 const GRAVE = "̀";
 const ACUTE = "́";
 const MACRON = "̄";
@@ -41,11 +39,13 @@ const DOT_BELOW = "̣";
 const TONE_MARKS = new Set([GRAVE, ACUTE, MACRON]);
 const CAN_CARRY_TONE = new Set(["a", "e", "i", "o", "u", "n", "m"]);
 const CAN_TAKE_DOT = new Set(["e", "o", "s"]);
+// Sentence punctuation allowed in running text (Cards), not in single words.
+const PUNCTUATION = /[.,;:!?"“”‘’()…–—]/u;
 // Not in the Yorùbá alphabet.
 const NOT_YORUBA = new Set(["c", "q", "v", "x", "z"]);
 
 /** Checks the marks on one written form. Errors stop an entry; warnings do not. */
-export function checkToneMarks(form: string): { errors: Finding[]; warnings: Finding[] } {
+export function checkToneMarks(form: string, options: { punctuation?: boolean } = {}): { errors: Finding[]; warnings: Finding[] } {
   const errors: Finding[] = [];
   const warnings: Finding[] = [];
   const groups: { base: string; marks: string[] }[] = [];
@@ -61,6 +61,7 @@ export function checkToneMarks(form: string): { errors: Finding[]; warnings: Fin
   for (const { base, marks } of groups) {
     const lower = base.toLowerCase();
     if (/[\s'’-]/u.test(base)) continue;
+    if (options.punctuation && PUNCTUATION.test(base)) continue;
     if (!/\p{L}/u.test(base)) {
       errors.push({ code: "UNEXPECTED_CHARACTER", message: `Unexpected character “${base}”.` });
       continue;
@@ -100,11 +101,6 @@ export function stripToneMarks(form: string): string {
 
 export type LexiconStatus = "draft" | "reviewed";
 
-export interface Reviewer {
-  readonly name: string;
-  readonly dialects: readonly string[];
-}
-
 export interface LexiconEntry {
   /** Exactly as typed. */
   readonly form: string;
@@ -141,8 +137,6 @@ export interface LexiconReport {
   readonly counts: { rows: number; ok: number; withErrors: number; reviewed: number; draft: number };
 }
 
-const person = (name: string) => name.normalize("NFC").trim().replace(/\s+/g, " ").toLowerCase();
-
 function validateRow(
   cells: Record<LexiconColumn, string>,
   register: DialectRegister,
@@ -175,55 +169,19 @@ function validateRow(
   if (isBlank(cells.dialect)) errors.push({ code: "DIALECT_MISSING", message: "Name the dialect this is spoken in." });
   else if (dialect === null) errors.push({ code: "DIALECT_UNKNOWN", message: `“${cells.dialect.trim()}” is not in the dialect register. Ask a reviewer to add it.` });
 
-  // Review: two different people, neither the contributor, each speaking the entry's dialect.
-  const reviewers: Reviewer[] = [];
-  const slots = [
-    { name: cells.reviewer_1, dialects: cells.reviewer_1_dialect, n: 1 },
-    { name: cells.reviewer_2, dialects: cells.reviewer_2_dialect, n: 2 },
-  ];
-  for (const slot of slots) {
-    if (isBlank(slot.name)) {
-      if (!isBlank(slot.dialects)) errors.push({ code: "REVIEWER_NAME_MISSING", message: `reviewer_${slot.n}_dialect is filled but reviewer_${slot.n} is empty.` });
-      continue;
-    }
-    const spoken = slot.dialects
-      .split(/[;/]/)
-      .map((d) => resolveDialect(register, d))
-      .filter((d): d is string => d !== null);
-    if (isBlank(slot.dialects) || spoken.length === 0) {
-      errors.push({ code: "REVIEWER_DIALECT_MISSING", message: `Say which dialect reviewer ${slot.n} (${slot.name.trim()}) speaks, using the register.` });
-      continue;
-    }
-    if (dialect !== null && !spoken.includes(dialect)) {
-      errors.push({ code: "REVIEWER_DIALECT_MISMATCH", message: `${slot.name.trim()} does not speak this entry's dialect, so cannot review it.` });
-      continue;
-    }
-    if (person(slot.name) === person(cells.contributor)) {
-      errors.push({ code: "REVIEWER_IS_CONTRIBUTOR", message: `${slot.name.trim()} contributed this and cannot also review it.` });
-      continue;
-    }
-    reviewers.push({ name: slot.name.trim(), dialects: spoken });
-  }
-  if (reviewers.length === 2 && person(reviewers[0]!.name) === person(reviewers[1]!.name)) {
-    errors.push({ code: "SAME_REVIEWER_TWICE", message: "The same person is listed as both reviewers. A Card needs two different people." });
-    reviewers.pop();
-  }
-  let reviewedOn: string | null = null;
-  if (!isBlank(cells.reviewed_on)) {
-    reviewedOn = cells.reviewed_on.trim();
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(reviewedOn) || Number.isNaN(Date.parse(reviewedOn))) {
-      errors.push({ code: "REVIEWED_ON_INVALID", message: "reviewed_on must be a date like 2026-10-31." });
-      reviewedOn = null;
-    }
-  }
-  const signed = reviewers.length === 2;
-  if (signed && reviewedOn === null && !errors.some((e) => e.code === "REVIEWED_ON_INVALID")) {
-    errors.push({ code: "REVIEWED_ON_MISSING", message: "Two reviewers are listed. Add the date they reviewed it." });
-  }
-  if (reviewers.length === 1) warnings.push({ code: "NEEDS_SECOND_REVIEWER", message: "Only one reviewer so far. A second is needed before this is Reviewed." });
-  if (reviewers.length === 0 && !isBlank(cells.reviewed_on)) {
-    warnings.push({ code: "DATE_WITHOUT_REVIEWERS", message: "reviewed_on is set but there are no reviewers." });
-  }
+  const review = checkReview({
+    contributor: cells.contributor,
+    dialect,
+    register,
+    slots: [
+      { name: cells.reviewer_1, dialects: cells.reviewer_1_dialect },
+      { name: cells.reviewer_2, dialects: cells.reviewer_2_dialect },
+    ],
+    reviewedOn: cells.reviewed_on,
+    errors,
+    warnings,
+  });
+  const { reviewers, reviewedOn, signed } = review;
 
   if (errors.length > 0 || dialect === null) return null;
 
@@ -241,7 +199,7 @@ function validateRow(
     contributor: cells.contributor.trim(),
     reviewers,
     reviewedOn,
-    status: signed && reviewedOn !== null ? "reviewed" : "draft",
+    status: signed ? "reviewed" : "draft",
     tones: syl.syllables.map((s) => s.tone),
   };
 }

@@ -8,6 +8,7 @@ import {
   InMemoryCardRepository,
   InMemoryDeckRepository,
   InMemoryLanguageRepository,
+  parseCardFile,
   seedCards,
   seedDecks,
   seedLanguages,
@@ -38,6 +39,34 @@ function loadReferenceFiles(): Map<string, ReferenceFile> {
     }
   }
   return files;
+}
+
+/**
+ * Cards exported from a reviewed sheet (`npm run cards -- export`). Read from
+ * OGBIFO_CARDS_DIR or content/cards. They are private (gitignored); a file that
+ * fails validation is reported and skipped, never half-applied.
+ */
+function loadSheetCards(): Card[] {
+  const dir = process.env.OGBIFO_CARDS_DIR ?? join(process.cwd(), "content", "cards");
+  const cards: Card[] = [];
+  if (!existsSync(dir)) return cards;
+  for (const name of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
+    try {
+      const parsed = parseCardFile(JSON.parse(readFileSync(join(dir, name), "utf8")));
+      for (const r of parsed.rejected) console.error(`Card ${r.id} in ${name} rejected: ${r.reason}`);
+      cards.push(...parsed.cards);
+    } catch (error) {
+      console.error(`Skipping unreadable Card file ${name}`, error);
+    }
+  }
+  return cards;
+}
+
+/** Seed Cards (developer content) overridden by sheet Cards with the same id, plus the rest. */
+function allCards(): Card[] {
+  const byId = new Map<string, Card>(seedCards.map((c) => [c.id, c]));
+  for (const c of loadSheetCards()) byId.set(c.id, c);
+  return [...byId.values()];
 }
 
 /** Attach reference audio to Cards. A reference that fails validation is skipped, never half-applied. */
@@ -88,7 +117,7 @@ export function getContentService(): ContentService {
   service ??= new ContentService(
     new InMemoryLanguageRepository(seedLanguages),
     new InMemoryDeckRepository(seedDecks),
-    new InMemoryCardRepository(withReferences(seedCards)),
+    new InMemoryCardRepository(withReferences(allCards())),
     { allowUnreviewed },
   );
   return service;
@@ -109,7 +138,7 @@ export async function listCardsForReviewers(): Promise<ReviewerCard[]> {
   const all = new ContentService(
     new InMemoryLanguageRepository(seedLanguages),
     new InMemoryDeckRepository(seedDecks),
-    new InMemoryCardRepository(seedCards),
+    new InMemoryCardRepository(allCards()),
     { allowUnreviewed: true },
   );
   const out: ReviewerCard[] = [];

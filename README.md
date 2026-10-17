@@ -19,7 +19,7 @@ npm run lint
 npm run build
 ```
 
-The tone lexicon workflow (sheets for the owner and teacher to fill, with a checker) is described in `apps/web/content/lexicon/README.md`.
+The Cards sheet workflow (the Cards the beta ships on) is described in `apps/web/content/cards/README.md`, and the tone lexicon workflow (sheets for the owner and teacher to fill, with a checker) is described in `apps/web/content/lexicon/README.md`.
 
 Accounts need PostgreSQL in production: set `DATABASE_URL` and run `npm run migrate -w @ogbifo/web` before starting (D-040).
 

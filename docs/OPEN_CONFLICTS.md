@@ -141,3 +141,13 @@ Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later
 - **Pass marks** (18 of 20, 85% over 40 hidden checks) are proposals. Calibrate with real people.
 - **Revoking an entry** and how points are removed.
 - **Abuse controls** (#4) before any contributor tier.
+
+## 24. Findings from the Cards sheet — MINOR
+
+- **Token values are a placeholder.** Cards need a `tokenValue`; no rule exists for it (GAMIFICATION.md names tokens but gives no amounts). The sheet defaults to 10 and accepts an override. Decide the economy before it shows to users.
+- **Decks are still defined in code.** The sheet can only use `common-tongue-yo` and `proverb-house-yo`. A new Deck needs a code change until Decks come from data.
+- **Card ids are permanent.** Progress is stored against them. Renaming one orphans learners' progress; the checker only refuses duplicates.
+- **Reviewer dialect is self-declared** (D-043), as in the lexicon.
+- **Card files are read at server start** and live in a private folder. A deployment must supply them (a private volume or, later, the database). A restart is needed to pick up a new export.
+- **Dialect on a Card** is stored (`dialectId`) but the Reading Room does not yet show it or choose references by it.
+- **Build warning.** Reading Card files from a configurable folder makes Turbopack warn that the whole project is traced into the output. Harmless in development; may enlarge a deployment bundle. Fix when the deployment target is chosen (move Cards into the database, or pin the folder).

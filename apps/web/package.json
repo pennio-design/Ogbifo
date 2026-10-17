@@ -9,6 +9,7 @@
     "typecheck": "tsc -p tsconfig.json",
     "migrate": "tsx scripts/migrate.ts",
     "lexicon": "tsx scripts/lexicon.ts",
+    "cards": "tsx scripts/cards.ts",
     "e2e": "tsx e2e/recording.e2e.ts",
     "e2e:annotate": "tsx e2e/annotation.e2e.ts",
     "e2e:community": "tsx e2e/community.e2e.ts"
