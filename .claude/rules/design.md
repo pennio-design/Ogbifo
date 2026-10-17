@@ -5,4 +5,4 @@
 - No gradients as decoration, glassmorphism, glow orbs, custom cursors, or card-on-card rounding.
 - Motion is restrained; honor `prefers-reduced-motion: reduce` with a static fallback.
 - Mobile first: no horizontal overflow, thumb-reachable controls.
-- Do not build the Royal Seal component until `docs/OPEN_CONFLICTS.md` #3 is resolved.
+- Royal Seal: use `docs/brand/royal-seal.svg` exactly (single loop, `currentColor` spokes). Do not redraw it or add a second loop.

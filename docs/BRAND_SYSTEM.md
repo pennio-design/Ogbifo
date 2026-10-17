@@ -15,12 +15,14 @@ The brand system describes the radial waveform as replacing a rigid static bound
 The seal uses a 100 × 100 construction grid. Components:
 
 1. radial waveform (16 rounded spokes, stroke 3, `currentColor`)
-2. inner ochre loop(s) (stroke 4.5, `#D49B41`)
+2. one ochre loop (stroke 4.5, `#D49B41`)
 3. central fulcrum (r = 5, `#D49B41`)
 
-> The written meaning says two intersecting loops; the production SVG draws one. Unresolved: `OPEN_CONFLICTS.md` #3.
+The seal is a single loop (`OPEN_CONFLICTS.md` #3, resolved). Canonical file: [`brand/royal-seal.svg`](brand/royal-seal.svg). Spokes use `currentColor`: Bone on Clay, Clay on Bone. The loop and fulcrum are always Ochre.
 
-Production SVG (as currently shipped):
+**Proposed meaning (unconfirmed):** the waveform is the voice; the loop is the passage meaning moves through; the fulcrum is the Ogbifọ, the trusted center. This replaces the retired two-domains reading.
+
+Production SVG:
 
 ```svg
 <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">

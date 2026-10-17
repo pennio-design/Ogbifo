@@ -54,7 +54,7 @@ Typography:
 - Space Grotesk: interface, labels, metadata, controls
 - Plus Jakarta Sans: body/interface copy
 
-The Royal Seal consists of a radial waveform boundary, ochre inner loop(s), and a central ochre fulcrum/dot. It represents the convergence of two domains and the Ogbifọ as the trusted center. See `docs/OPEN_CONFLICTS.md` #3: a single-loop candidate exists (`docs/brand/royal-seal-candidate.svg`) but is not yet confirmed.
+The Royal Seal consists of a radial waveform boundary, one ochre loop, and a central ochre fulcrum/dot, with the Ogbifọ as the trusted center. Canonical file: `docs/brand/royal-seal.svg`.
 
 ## Engineering principles
 
