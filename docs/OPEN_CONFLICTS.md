@@ -39,3 +39,12 @@ Decide: (a) keep Noto Serif for language text, (b) choose another serif that pas
 ## 12. Tier versus difficulty — MINOR
 
 A Card shows "TIER 2" in the UX spec, but the data model has `Deck.tier` and `Card.difficulty` as separate fields. Sprint 1 shows `Card.difficulty` on the Card and `Deck.tier` on the Deck. Confirm they are meant to differ.
+
+## 13. Analytics vendor and consent design — BEFORE-PHASE-1 launch
+
+D-028 fixes the guardrails. Open: which vendor (data location, DPA, replay masking support); banner copy and default state; how consent is stored and withdrawn; GDPR/UK GDPR for diaspora users and NDPA for Nigeria; and an automated test that proves no event payload contains audio, pitch data or typed language text.
+
+## 14. Define "finished" for Common Tongue — BEFORE-PHASE-2
+
+D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Common Tongue has at least one completed Live attempt. Alternatives: every Card seen, or a minimum average score. Decide, and decide what an anonymous reader sees when they reach the end (an account prompt to keep progress and unlock the next Deck). Note: the gate adds a place to stall inside a 30 to 50 person beta, so read week-2 and week-4 return alongside the Deck-completion funnel, not instead of it.
+

@@ -107,3 +107,19 @@ Ranks are Listener, Reader, Interpreter, Keeper, and Ogbifọ as the highest. "S
 ## D-026 Launch bar
 
 A private beta with 30 to 50 diaspora learners: two Decks (Proverb House and Common Tongue) of about 30 Cards each, all reviewer-approved (D-012) with reference audio from two voices. The success measure is the share of learners who return in week 2 and week 4.
+
+## D-027 Translation placement
+
+The reviewer-approved English translation is always visible beneath the Yorùbá text, as in the UX sketch. The Yorùbá is always first in reading order and visually dominant. There is no hide or reveal control in the MVP.
+
+## D-028 Analytics
+
+Full product analytics, behind a consent banner. Analytics are off until the user consents, and consent can be withdrawn at any time. Hard guardrails, regardless of vendor: no audio and no pitch data are ever sent; session replay masks the recording interface, the contribution form and any typed language text; no Yorùbá text a user types leaves the product through analytics; the vendor is named in the privacy notice. The vendor and the banner design are open (`OPEN_CONFLICTS.md` #13).
+
+## D-029 Deck unlocks
+
+Proverb House is locked until the learner has finished Common Tongue. Common Tongue is open, and is the free sample Deck for anonymous readers (D-022). The lock is progression only (D-018). "Finished" is defined in `OPEN_CONFLICTS.md` #14.
+
+## D-030 Interface language
+
+The interface is English. Yorùbá appears as Card content, the Ogbifọ name, and rank names with English glosses. Build string handling so a Yorùbá interface could be added later, but ship English only. Any Yorùbá UI string is reviewed content (D-012).

@@ -11,4 +11,6 @@
 
 Ogbifọ does not sell or license contributed material (`PRODUCT_DECISIONS.md` D-002). Consent covers Archive display, community verification and the contributor's own use only; anything broader needs new consent.
 
+Analytics (`PRODUCT_DECISIONS.md` D-028): off until consent; never receive audio, pitch data or typed language text; replay masks the recording UI and contribution form.
+
 To define before Phase 3 (see `OPEN_CONFLICTS.md` #4, #5): consent and license capture, retention periods, data-subject deletion, rate limiting and abuse controls on `/contribute` and `/verification/:id/confirm`, sybil resistance, media upload scanning, and storage of locally-queued contributions on shared devices.
