@@ -88,6 +88,8 @@ Ogbifọ should evolve from a language experience into a Yorùbá language intel
 - public services
 - conversational interfaces
 
+Direction, not MVP: ease of writing Yorùbá digitally. Tone-marked typing and chat should feel as easy as speaking it. The MVP provides assisted tone-mark entry for contributions (D-015); a full keyboard or input method is a later product.
+
 Any use of Archive material beyond the Ogbifọ experience needs a new product decision and new contributor consent.
 
 > Scope: Ogbifọ is a consumer language and cultural archive/interpreter product, not a data-engine business, and the MVP has no dataset-selling model. See `PRODUCT_DECISIONS.md`. The consumer revenue model is not yet defined.

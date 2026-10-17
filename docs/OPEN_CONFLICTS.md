@@ -18,9 +18,9 @@ D-021 sets who may confirm and splits "Peer confirmed" from "Reviewed". Still to
 
 Policy is decided (D-005, D-019, D-020). Still to build and word: `Contribution` fields (`consentVersion`, `licenseGrant`, `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, `withdrawnAt`); the consent screen copy, reviewed by a lawyer; the withdrawal flow and what it does to entries already confirmed or reviewed; and the rights declaration for lyrics. Voice recordings are personal data under Nigeria's data protection law (NDPA) and, for diaspora users, likely GDPR or UK GDPR as well. Counsel needed on lawful basis and retention before Phase 3.
 
-## 7. Pitch-contour metrics — DRAFT SPEC AWAITING APPROVAL (blocks Sprint 3)
+## 7. Pitch-contour metrics — APPROVED, fallback pending
 
-`SCORING_SPEC.md` defines the metrics (Tone and Rhythm, replacing Clarity and Boldness), pitch tracking, alignment, the 0 to 100 scale, learner-facing wording, and ship criteria from a calibration set. Seven owner decisions are listed in its section 12. The thresholds are initial values until calibrated.
+Metrics approved (D-031): Tone and Rhythm. `SCORING_SPEC.md` is the design. Still open: what Live does if calibration fails (a numberless fallback or a delay). Ship gates are in #17.
 
 ## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 
@@ -50,4 +50,15 @@ D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Co
 - Anonymous progress lasts for one visit (D-022). Decide what happens to it when the learner creates an account mid-visit: merge into the new account, or discard.
 - Cards inside a Deck are ordered easiest first, then by id. This was not specified; confirm.
 - The Decks catalogue page cannot show whether a Deck is unlocked, because progress lives in the browser. The Reading Room picker does.
+
+## 17. Ship gates for the beta — BEFORE BETA
+
+Building does not wait for these. Shipping to beta users does.
+
+1. **Linguist review** of the syllable and tone rules (`SCORING_SPEC.md` section 3) by volunteer Yorùbá linguists from the open call (D-032).
+2. **Calibration** against the pass bars in `SCORING_SPEC.md` section 10, with at least 20 volunteer speakers. Their recordings are voice data: written consent, a stated purpose (calibration only), a storage location, and a deletion date, reviewed by counsel. Any reward paid to them is separate from, and never a condition of, the consent.
+3. **Reference voices** with provenance records (D-034): two voices, licensed.
+4. **Reviewers** for every beta Card (D-012): two per Card.
+5. **Counsel review** of consent, licensing and provenance wording (#5).
+6. **Calibration-failure fallback** decided (#7).
 

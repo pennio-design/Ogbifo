@@ -1,6 +1,6 @@
 # Ogbifọ — Resonance Score Specification
 
-**Status: DRAFT for owner approval.** Resolves `OPEN_CONFLICTS.md` #7 for Yorùbá. Nothing here is built. On approval it replaces the Clarity, Rhythm and Boldness metrics in `AUDIO_SPEECH.md` and `DATA_MODEL.md`, and fixes Sprint 3's scope.
+**Status: metrics APPROVED (D-031). One open decision: the calibration-failure fallback (section 10, item 4).** Nothing here is built. It replaces the Clarity, Rhythm and Boldness metrics in `AUDIO_SPEECH.md` and `DATA_MODEL.md`, and fixes Sprint 3's scope.
 
 Governed by: D-014 (pitch contour against a native reference), D-019 (on-device, audio not uploaded), D-024 (Studio unscored, Live scored), D-028 (no audio or pitch data to analytics).
 
@@ -103,7 +103,7 @@ Stored per attempt: `overall`, `tone`, `rhythm`, `coverage` (share of syllables 
 
 - Recorded in a quiet room, WAV, 44.1 kHz or higher, 16-bit or higher, one Card per file, natural speed. Two voices across the beta (D-026).
 - **Slow version** for Studio playback: use the browser's pitch-preserving `playbackRate`. No separate slow recording.
-- **Annotation for the beta uses Audacity labels, not a custom tool.** The reviewer marks syllable boundaries in Audacity (free), exports the label file, and we import it. We compute and store the reference pitch contour at import. A purpose-built annotation tool is revisited only if volume demands it.
+- **Annotation (D-033):** an in-app, reviewer-only tool built on wavesurfer.js regions: the reviewer clicks to place syllable boundaries on the waveform and confirms each syllable's text and tone. Audacity label files are also imported. Either way we compute and store the reference pitch contour on save. Build order: label import first (small), then the in-app tool.
 - Stored on the Card: `referenceAudioUrl`, `referenceAnnotation` (syllables with text, tone, start and end ms, the contour, `pitchAlgorithmVersion`).
 - Reviewers confirm both the audio and the syllable boundaries (D-012).
 
@@ -132,9 +132,13 @@ The thresholds above are guesses until measured. Before the score ships to beta 
 
 - Audio lives in memory and is freed after analysis unless the learner explicitly keeps it (D-019).
 - Saved with progress: scores, per-syllable markers and the normalised contour. **Not saved:** audio.
-- Analytics (D-028): never audio or pitch data. Recommendation: send only that an attempt completed, and not the score, so a number cannot be linked back to a person. Needs your confirmation.
+- Analytics (D-028): never audio or pitch data. Decided (D-035): analytics carries only that an attempt completed, never the score.
 
-## 12. Decisions needed from you
+## 12. Decisions
+
+Resolved: 1 metrics approved (D-031); 2 and 4 reviewers, linguists and calibration speakers come from the volunteer call, so they are ship gates (D-032, `OPEN_CONFLICTS.md` #17); 3 annotation tool (D-033); 5 reference provenance (D-034); 6 analytics (D-035). Open: 7.
+
+Original list, for the record:
 
 1. **Metric names and weights.** Tone and Rhythm, Overall at 70 percent Tone and 30 percent Rhythm, Clarity and Boldness dropped. Approve or change.
 2. **Yorùbá linguist review** of §3 (syllabification and tone rules) before build. Who?
@@ -146,4 +150,4 @@ The thresholds above are guesses until measured. Before the score ships to beta 
 
 ## 13. Sprint 3 scope if approved
 
-Microphone capture and permission flow; YIN pitch tracker; syllabifier; MFCC and DTW alignment; Tone, Rhythm and Resonance Score; contour and marker UI; Audacity label importer; reference playback with slow mode; enabling Live to finish a Card (which makes the Proverb House unlock reachable); Live and Studio states per `UX_SPEC.md`; synthetic-signal and syllabifier tests. Calibration is a gate on shipping to beta users, not a code task.
+Microphone capture and permission flow; YIN pitch tracker; syllabifier; MFCC and DTW alignment; Tone, Rhythm and Resonance Score; contour and marker UI; Audacity label importer, then the in-app annotation tool (D-033); reference provenance fields (D-034); reference playback with slow mode; enabling Live to finish a Card (which makes the Proverb House unlock reachable); Live and Studio states per `UX_SPEC.md`; synthetic-signal and syllabifier tests. Calibration is a gate on shipping to beta users, not a code task.

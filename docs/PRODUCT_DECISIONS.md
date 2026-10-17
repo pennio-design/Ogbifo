@@ -129,3 +129,33 @@ Proverb House is locked until the learner has finished Common Tongue. Common Ton
 ## D-030 Interface language
 
 The interface is English. Yorùbá appears as Card content, the Ogbifọ name, and rank names with English glosses. Build string handling so a Yorùbá interface could be added later, but ship English only. Any Yorùbá UI string is reviewed content (D-012).
+
+## D-031 Score metrics
+
+Approved: **Tone** and **Rhythm**. Clarity and Boldness are dropped. Resonance Score is 0.7 x Tone + 0.3 x Rhythm as an integer 0 to 100, with weights and thresholds subject to calibration (`SCORING_SPEC.md`). The weights were not discussed separately and are treated as accepted; change them here if not.
+
+## D-032 Who reviews, annotates and calibrates
+
+Reviewers, linguists, annotators and calibration speakers come from an open volunteer call, published once the build sprints are done. Sponsors are sought to fund rewards for volunteers. The search for investors, donors and contributors runs in parallel. Funding must not bring data rights: no sponsor or investor receives licences to contributions or recordings (D-002, D-020).
+
+Consequence: the build proceeds before reviewers exist. Review and calibration are therefore **ship gates for the beta**, not prerequisites for building (see `OPEN_CONFLICTS.md` #17).
+
+## D-033 Reference annotation tool
+
+Build an in-app, reviewer-only annotation tool so volunteers need no outside software. It uses permissive open-source components (wavesurfer.js, BSD-3-Clause, with its regions plugin). Audacity label files (tab-separated start, end, label) are also imported, at little cost, for anyone who prefers Audacity.
+
+Audacity code is not copied or forked: it is GPLv3, so copying it would require the whole app to be released under GPLv3, and it is a C++ desktop program that cannot be moved into a web app. Ideas and the label file format are free to use. LGPL (peaks.js) and AGPL components are avoided for the same reason.
+
+## D-034 Reference audio provenance
+
+Reference recordings (D-014) may come only from:
+
+1. a speaker recorded for Ogbifọ under a written consent and licence;
+2. an existing recording whose rights holder gives written permission for this use; or
+3. a clip published under CC BY or CC0, with attribution kept and no third-party music or lyrics in it.
+
+Nothing is downloaded or used because it is "found online". Every reference carries a provenance record: source, licence, rights holder, speaker consent, date. Quality bar: one clean speaker, no music, no heavy compression, because the pitch analysis needs a clean signal. Most video-platform content fails that bar, so it is used chiefly to find speakers and creators to approach for permission or a fresh recording. Counsel reviews this before launch (`OPEN_CONFLICTS.md` #5).
+
+## D-035 Analytics carries no score
+
+Analytics events never include a score, only that an attempt completed (confirms D-028).
