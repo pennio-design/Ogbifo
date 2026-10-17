@@ -1,6 +1,6 @@
 # Ogbifọ
 
-Ogbifọ is a consumer language and cultural archive/interpreter product for African languages: a Reading Room for learning and interpretation, and a community Archive for preservation. See [`docs/PRODUCT_DECISIONS.md`](docs/PRODUCT_DECISIONS.md).
+Ogbifọ is a consumer language and cultural archive/interpreter product for Yorùbá: a Reading Room for learning and interpretation, and a community Archive for preservation. See [`docs/PRODUCT_DECISIONS.md`](docs/PRODUCT_DECISIONS.md).
 
 `bench/` and `audit/` below are a separate project (Yorùbá tone restoration for lyrics, reels and films) that lives in this repository for now. They do not drive Ogbifọ's roadmap.
 
