@@ -6,6 +6,8 @@ Allow users to speak/read language naturally and receive useful interpretation a
 
 ## Recording
 
+> Built (`SCORING_SPEC.md` section 15). The `ready` state is not used; echo cancellation and noise suppression are off.
+
 Browser capabilities: MediaRecorder, Web Audio API. Request microphone permission only when necessary.
 
 Recording states: `idle`, `requesting_permission`, `ready`, `recording`, `processing`, `complete`, `error`.

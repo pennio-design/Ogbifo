@@ -10,3 +10,8 @@ export * from "./syllabify";
 export * from "./yin";
 export * from "./labels";
 export * from "./synth";
+export * from "./overlay";
+export * from "./recorder-state";
+export * from "./summary";
+export * from "./wav";
+export * from "./proposal";

@@ -191,3 +191,31 @@ Fluent and monotone readings separate completely across five voices.
 - A child-like voice scored 100 but only aligns with a relaxed cost limit (cost 4.7). Reference voices should include a lower and a higher voice, and scoring should use the better alignment of the two. Not built.
 - **Speed:** a 9 second recording analyses in 201 ms on a developer machine (134 ms of it pitch tracking). Phones are several times slower. The 2 second target in section 9 is unmeasured on a device.
 - The syllabifier passes the section 3 vectors and the seed proverb. It has not been reviewed by a linguist (`OPEN_CONFLICTS.md` #17).
+
+---
+
+## 15. Built in Sprint 3 part 2: recording, results, and the reviewer tool
+
+**What a learner can now do** (Reading Room, on any Card that has a reference): hear the reference at normal or slow speed (the browser's pitch-preserving rate), press Record, read, press Stop, and see the result. Studio shows the contour and markers, no number, nothing saved. Live is one attempt per Card; an attempt clear enough to analyse finishes the Card (D-036) and is saved with its score; a refused attempt does not finish it and can be retried. The number appears only in Live and only when `NEXT_PUBLIC_SHOW_RESONANCE_NUMBER=1` (D-036). The header score shows the average of this Deck's Live readings, again only while the number is on. The results screen always says: "This checks the tones and timing of your reading, not the words."
+
+**How it works.**
+
+- The microphone is requested only when Record is pressed (tested: it is not requested on page load). Echo cancellation and noise suppression are off because they can bend pitch; automatic gain is on. Recording stops by itself at 20 seconds.
+- Audio is collected in memory by an audio worklet, resampled to 16 kHz, analysed in a Web Worker, then dropped. It is not stored or uploaded, and progress holds only scores and markers (tested).
+- The reference annotation is fetched on demand from `/api/references/[cardId]`, so Card pages stay small.
+- Recorder states are idle, requesting permission, recording, processing, complete and error. `ready` from `AUDIO_SPEECH.md` is not used.
+- Results show the reference and learner contours on one time axis (the learner stretched onto the reference's syllables), one marker per syllable in words as well as symbols, and a plain sentence ("4 of 4 pitch steps were close to the reference"). No band sentence is shown without the number.
+
+**Reviewer annotation tool** at `/reviewer/annotate` (D-033; 404 unless `OGBIFO_ENABLE_REVIEWER_TOOLS=1`, because there are no accounts): choose a Card, load a recording, and the tool proposes syllable boundaries from the speech span. Reviewers adjust them on a waveform (wavesurfer.js, BSD-3-Clause) or in a keyboard-accessible table, can import Audacity labels, must complete a provenance record (D-034), and download a JSON file and the renamed audio. The app validates the JSON with the same rules it uses at load. Files are placed by hand (`content/references/` and `public/references/`) until there is storage and accounts. An invalid file is skipped with a logged reason and never half-applied.
+
+**Verified in a real browser** (`apps/web/e2e`, Chromium with a fake microphone playing synthetic readings): 25 checks on the recording flow and 22 on the annotation tool, run with the number on and off. They cover a matching reading, a monotone reading, silence (refused), a refused microphone, no microphone request on page load, Live finishing a Card and unlocking Proverb House, no audio in storage, Audacity import (good and bad files), provenance being required, and the downloaded file validating.
+
+**Not verified, and what that means.**
+
+- **No real speech, no real devices.** Everything ran on synthetic voices through a fake microphone. Phone microphones, room noise, and real accents are untested.
+- **Chromium only.** Safari and Firefox are untested, and AudioWorklet and Web Worker behaviour differs between them.
+- **Microphone settings** (echo cancellation and noise suppression off, gain on) are a reasoned choice and have not been compared on devices.
+- **Speed on a phone** is still unmeasured.
+- **The development reference is a synthetic tone sequence**, labelled as such, shown only in development, and barred from reviewed Cards by `synthetic_test`.
+- **A screen reader has not been run over any of it.** The chart has a text alternative and every marker is in words, but that is design, not testing.
+- **Reference audio does not yet work offline** (D-017): it streams from the server and is not cached.

@@ -61,4 +61,8 @@ Sprint 3 scope is `SCORING_SPEC.md` section 13 (metrics approved). Nothing block
 
 `packages/speech`: syllabifier, pitch tracker, resampler, MFCC, DTW alignment, Tone, Rhythm, Resonance Score, reference annotation builder and `analyzeAttempt`, with 82 tests on synthetic speech. See `SCORING_SPEC.md` section 14 for results and the changes testing forced.
 
-Part 2, not started: microphone capture and permission flow, the Live and Studio recording UI, contour and marker display, the "tones and timing, not words" statement, the Audacity label importer, the in-app annotation tool (D-033), reference provenance fields and playback with slow mode, `showResonanceNumber` switch, Card fields for the annotation, and finishing a Card on an analysable Live attempt (D-036).
+### Sprint 3 part 2 as built: recording, results and the reviewer tool
+
+Microphone capture and permission flow, Live and Studio recording, on-device analysis in a Web Worker, contour and marker results with the "tones and timing, not words" statement, `showResonanceNumber` switch, finishing a Card on an analysable Live attempt, reference playback with slow mode, reference provenance and annotation on Cards, migration 0003, Audacity label import, and the in-app annotation tool. See `SCORING_SPEC.md` section 15, including what is not verified.
+
+Not built: reference audio offline caching (D-017), server storage for references and for attempts, accounts, the second reference voice, and anything that needs real speech: calibration, the linguist review and real reference voices (`OPEN_CONFLICTS.md` #17).

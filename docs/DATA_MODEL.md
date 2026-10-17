@@ -59,8 +59,8 @@ Card
 - reviewers[]          (named native-speaker reviewers; reviewed needs 2 or more, distinct)
 - reviewedAt?          (required when reviewed)
 - referenceAudioUrl?   (D-014; absent until recorded)
-- referenceAnnotation? (SCORING_SPEC.md: syllables with ms boundaries, reference pitch contour, MFCC, algorithmVersion; type in packages/speech)
-- referenceProvenance? (D-034: source, licence, rights holder, speaker consent, date; specified, not yet in code)
+- referenceAnnotation? (in code, migration 0003: syllables with ms boundaries, reference pitch contour, MFCC, algorithmVersion; type in packages/speech)
+- referenceProvenance? (in code, migration 0003, D-034: source, licence, rights holder, speaker consent, date, attribution)
 
 ReadingSession
 - id

@@ -72,6 +72,15 @@ export class ContentService {
     );
   }
 
+  /** One Card, if a learner may see it. Unreviewed Cards are hidden by policy (D-012). */
+  async getCard(cardId: string): Promise<Result<Card>> {
+    const card = await this.cards.getById(cardId);
+    if (!card || (!this.policy.allowUnreviewed && card.reviewStatus !== "reviewed")) {
+      return fail("CARD_NOT_FOUND", "Card could not be found.");
+    }
+    return ok(card);
+  }
+
   async getDeck(deckId: string): Promise<Result<DeckDetail>> {
     const deck = await this.decks.getById(deckId);
     if (!deck) return fail("DECK_NOT_FOUND", "Deck could not be found.");

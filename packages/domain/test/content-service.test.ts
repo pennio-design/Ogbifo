@@ -52,6 +52,14 @@ describe("ContentService", () => {
     expect(detail.ok && detail.value.cards.map((c) => c.id)).toEqual(["r1"]);
   });
 
+  it("returns a Card only if a learner may see it", async () => {
+    const found = await service(true).getCard("card-yo-greeting-1");
+    expect(found.ok && found.value.id).toBe("card-yo-greeting-1");
+    const hidden = await service(false).getCard("card-yo-greeting-1");
+    expect(hidden).toEqual({ ok: false, error: { code: "CARD_NOT_FOUND", message: "Card could not be found." } });
+    expect((await service(true).getCard("nope")).ok).toBe(false);
+  });
+
   it("orders Cards easiest first, then by id", async () => {
     const detail = await service().getDeck("proverb-house-yo");
     const diffs = detail.ok ? detail.value.cards.map((c) => c.difficulty) : [];

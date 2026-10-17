@@ -5,21 +5,39 @@ import { useEffect, useReducer } from "react";
 import {
   currentCardId,
   deckProgress,
+  finishedCardIds,
   initialReadingRoom,
   isDeckLocked,
   readingRoomReducer,
-  type Card,
+  type CardCategory,
   type Deck,
   type ReadingMode,
+  type ReviewStatus,
+  type Tier,
 } from "@ogbifo/domain";
 import { EmptyState, LanguageText } from "@ogbifo/ui";
+import { showResonanceNumber } from "@/lib/config";
 import { categoryLabel } from "@/lib/labels";
+import { SayItAloud, type ClientReference } from "./say-it-aloud";
 import { useProgress } from "./use-progress";
+
+/** What the page needs of a Card. The reference annotation is fetched on demand, not sent with the page. */
+export interface ClientCard {
+  id: string;
+  sourceText: string;
+  translation: string;
+  context: string;
+  category: CardCategory;
+  difficulty: Tier;
+  reviewStatus: ReviewStatus;
+  reviewers: string[];
+  reference: ClientReference | null;
+}
 
 export interface ReadingRoomProps {
   deck: Deck;
   language: { name: string; code: string };
-  cards: Card[];
+  cards: ClientCard[];
   requiredDeck: { id: string; name: string; cardIds: string[] } | null;
   unlocks: { id: string; name: string }[];
 }
@@ -101,6 +119,14 @@ function Player({ deck, language, cards, unlocks }: ReadingRoomProps) {
 
   const total = cards.length;
   const own = deckProgress(cardIds, progress.sessions);
+  // The header score is the average of this Deck's Live readings, and only while the number is shown (D-036).
+  const liveScores = state.sessions
+    .filter((s) => s.mode === "live" && s.completedAt !== undefined && s.score !== null && cardIds.includes(s.cardId))
+    .map((s) => s.score as number);
+  const headerScore =
+    showResonanceNumber && liveScores.length > 0
+      ? String(Math.round(liveScores.reduce((a, b) => a + b, 0) / liveScores.length))
+      : null;
 
   if (state.status === "ended") {
     return (
@@ -163,9 +189,13 @@ function Player({ deck, language, cards, unlocks }: ReadingRoomProps) {
             </div>
             <div className="flex gap-2">
               <dt className="text-ash">Score</dt>
-              <dd className="text-bone">
-                <span aria-hidden="true">—</span>
-                <span className="sr-only">No score yet</span>
+              <dd className="text-bone" data-testid="header-score">
+                {headerScore ?? (
+                  <>
+                    <span aria-hidden="true">—</span>
+                    <span className="sr-only">No score yet</span>
+                  </>
+                )}
               </dd>
             </div>
           </dl>
@@ -240,24 +270,23 @@ function Player({ deck, language, cards, unlocks }: ReadingRoomProps) {
             {card.context}
           </p>
         ) : null}
+        {finishedCardIds(state.sessions).has(card.id) ? (
+          <p className="mt-6 font-ui text-xs text-ochre">Finished in Live</p>
+        ) : null}
         {card.reviewStatus === "reviewed" ? (
           <p className="mt-6 font-ui text-xs text-ash">Reviewed by {card.reviewers.join(", ")}</p>
         ) : null}
       </article>
 
-      <section aria-label="Say it aloud" className="mt-6 border border-bone/10 p-6">
-        <h2 className="font-ui text-xs uppercase tracking-[0.2em] text-ash">Say it aloud</h2>
-        <div className="mt-4 flex flex-wrap items-center gap-4">
-          <button type="button" disabled aria-disabled="true" className={secondary}>
-            Record
-          </button>
-          <p className="max-w-prose font-body text-sm text-ash">
-            {state.mode === "studio"
-              ? "Hearing a native reference and recording yourself open in the next update."
-              : "Scored attempts open with recording in the next update. Until then, Live cannot finish a Card."}
-          </p>
-        </div>
-      </section>
+      <SayItAloud
+        key={card.id}
+        cardId={card.id}
+        languageCode={language.code}
+        reference={card.reference}
+        mode={state.mode}
+        liveFinished={finishedCardIds(state.sessions).has(card.id)}
+        onLiveAttempt={(session) => dispatch({ type: "attemptCompleted", session })}
+      />
 
       <nav aria-label="Cards" className="mt-8 flex items-center justify-between gap-4">
         <button type="button" className={secondary} disabled={state.index === 0} onClick={() => dispatch({ type: "previous" })}>

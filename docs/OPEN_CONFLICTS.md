@@ -55,7 +55,7 @@ D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Co
 
 Building does not wait for these. Shipping to beta users does.
 
-1. **Linguist review** of the syllable and tone rules (`SCORING_SPEC.md` section 3) by volunteer Yorùbá linguists from the open call (D-032).
+1. **Linguist review** of the syllable and tone rules (`SCORING_SPEC.md` section 3) by volunteer Yorùbá linguists from the open call (D-032). Reviewers will also use the annotation tool, so they should try it on a real recording first.
 2. **Calibration** against the pass bars in `SCORING_SPEC.md` section 10, with at least 20 volunteer speakers. Their recordings are voice data: written consent, a stated purpose (calibration only), a storage location, and a deletion date, reviewed by counsel. Any reward paid to them is separate from, and never a condition of, the consent.
 3. **Reference voices** with provenance records (D-034): two voices, licensed.
 4. **Reviewers** for every beta Card (D-012): two per Card.
@@ -72,4 +72,16 @@ From Sprint 3 part 1 (`SCORING_SPEC.md` section 14). Tested on synthetic speech 
 - **Phone speed is unmeasured.** 201 ms for 9 s of audio on a developer machine; target is under 2 s on a Moto G-class phone. Test on a real device early in part 2.
 - **Range normalisation is my addition** to the approved metrics (clamp 0.6 to 1.67). It improved fairness on synthetic data and is one switch to turn off. Confirm it, or ask me to remove it before calibration.
 - **A perfect-rhythm monotone reading scores about 40**, at the edge of the calibration bar.
+
+## 19. Findings from recording and the reviewer tool — BEFORE BETA
+
+From Sprint 3 part 2 (`SCORING_SPEC.md` section 15). Browser-tested with synthetic voices and a fake microphone, in Chromium only.
+
+- **Safari and Firefox are untested.** Recording uses an audio worklet and a Web Worker. Safari on iPhone matters most for diaspora learners. Test there before beta.
+- **Microphone settings are a guess.** Echo cancellation and noise suppression are off to protect pitch; real phones may need different settings. Compare on devices during calibration.
+- **Reference audio is not cached for offline use** (D-017). A learner without a connection cannot hear or be scored against a reference.
+- **References are files placed by hand.** The tool's output goes into `content/references/` and `public/references/`. Fine for a beta of 60 Cards; not a process for a platform. Needs storage and accounts later.
+- **The reviewer tool is protected by a deployment switch, not a login.** Until accounts exist, switch it on only on a private deployment.
+- **The tool trusts the reviewer's boundaries.** It proposes an even split of the speech and shows a pitch-found percentage, but it does not check that the boundaries are plausible. A poor annotation would quietly mis-score every learner on that Card. Consider a second reviewer confirming each annotation (D-012 already needs two reviewers per Card).
+- **No real reference voice has been tested.** The only reference is a synthetic tone sequence.
 
