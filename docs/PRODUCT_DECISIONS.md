@@ -165,3 +165,7 @@ Analytics events never include a score, only that an attempt completed (confirms
 If calibration fails, Live shows the pitch contour overlay and per-syllable markers and **no number**. The number stays hidden until calibration passes. Build it behind a switch (`showResonanceNumber`, default off) so it can be enabled without a code change.
 
 A Live attempt is **finished when the recording is clear enough to analyse**, whether or not a number is shown. A recording refused for poor audio, or a failed alignment, does not finish a Card. This makes the Deck unlock rule (D-029) work with or without a number, and it settles the finished rule in `OPEN_CONFLICTS.md` #14 for attempts: finished means one analysable Live attempt per Card.
+
+## D-037 Pitch-range correction kept
+
+Approved by the owner. The learner's pitch steps are rescaled to the reference's spread, clamped to 0.6 to 1.67 (`RANGE_SCALE_MIN`, `RANGE_SCALE_MAX` in `packages/speech/src/metrics.ts`), before Tone is scored. It stays on through calibration. If calibration shows it rewards flat readings or hides real differences, retune the clamp or switch it off by setting both bounds to 1. That is a calibration decision, to be recorded here.

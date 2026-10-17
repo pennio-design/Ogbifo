@@ -70,7 +70,7 @@ From Sprint 3 part 1 (`SCORING_SPEC.md` section 14). Tested on synthetic speech 
 - **Wrong-words detection is not possible with alignment cost** (it overlaps with legitimate voice differences). Not a goal of the current design.
 - **Very different voices align at higher cost.** Plan two reference voices, one lower and one higher, and score against the better alignment. Not built.
 - **Phone speed is unmeasured.** 201 ms for 9 s of audio on a developer machine; target is under 2 s on a Moto G-class phone. Test on a real device early in part 2.
-- **Range normalisation is my addition** to the approved metrics (clamp 0.6 to 1.67). It improved fairness on synthetic data and is one switch to turn off. Confirm it, or ask me to remove it before calibration.
+- **Range normalisation** (clamp 0.6 to 1.67) is approved and kept (D-037). Calibration decides whether the clamp needs retuning.
 - **A perfect-rhythm monotone reading scores about 40**, at the edge of the calibration bar.
 
 ## 19. Findings from recording and the reviewer tool — BEFORE BETA
