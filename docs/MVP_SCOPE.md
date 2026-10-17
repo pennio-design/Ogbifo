@@ -1,6 +1,6 @@
 # Ogbifọ — MVP Scope
 
-> Product direction is settled: `PRODUCT_DECISIONS.md`. Consent and licensing (`OPEN_CONFLICTS.md` #5) gate Phase 3.
+> Product direction is settled: `PRODUCT_DECISIONS.md`. Launch bar: D-026 (private beta, two Decks of about 30 Cards). Consent and licensing (`OPEN_CONFLICTS.md` #5) gate Phase 3.
 
 ## Phase 1 — Foundation
 
@@ -10,7 +10,7 @@
 
 ## Phase 2 — Language interaction
 
-**Must have:** translation, target-language selection, audio recording, transcript, Resonance Score, shareable waveform.
+**Must have:** reviewed translations on Cards, Studio and Live modes, audio recording, on-device pitch analysis and Resonance Score (D-014, D-019, D-024), reference audio playback, shareable waveform.
 
 **Exit:** a user can read a card aloud and receive an interpretable result.
 
@@ -34,7 +34,7 @@
 
 ## Not MVP
 
-dataset selling or licensing, marketplace, enterprise plans, advanced messaging, creator monetization, complex social graph, public unrestricted AI assistant, automatic cultural authority scoring.
+dataset selling or licensing, free-text machine translation, leaderboards, marketplace, enterprise plans, advanced messaging, creator monetization, complex social graph, public unrestricted AI assistant, automatic cultural authority scoring.
 
 ## Execution strategy
 

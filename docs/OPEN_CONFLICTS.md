@@ -2,6 +2,8 @@
 
 Per `CLAUDE.md`: when requirements conflict, flag rather than silently choose. Only unresolved items are listed. Decided items live in `PRODUCT_DECISIONS.md`. Numbers are stable so other documents can cite them.
 
+Resolved and removed: #8 (Sovereign retired, D-025).
+
 Status key: **BEFORE-PHASE-N** (resolve before that MVP phase), **MINOR**.
 
 Also open: the revenue model for the consumer product is undefined. Not a Phase 1 blocker.
@@ -27,10 +29,6 @@ D-014 settles the approach: compare the learner's pitch contour and timing to a 
 - What replaces Clarity, Rhythm and Boldness. Proposed: Tone (contour match), Rhythm (timing match), and an overall that is not a bare average. Needs your approval.
 - Thresholds and the wording shown to the learner. The score is guidance and never says a reading is "correct" or "authentic".
 - Reference audio: who records it, in which dialect, under what licence and fee (see D-012).
-
-## 8. "Sovereign" has two meanings — MINOR
-
-Brand: sovereign courts (the *client* of the interpreter). Product: top progression rank and "first Sovereign" of a language. The user is cast as the king in one place and the interpreter in another. Pick one stance; the Ogbifọ is the interpreter, so rank titles are arguably better drawn from the interpreter's role (Keeper, Interpreter) than from the court.
 
 ## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 

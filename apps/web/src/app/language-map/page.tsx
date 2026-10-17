@@ -25,7 +25,7 @@ export default async function LanguageMapPage() {
               </div>
               <p className="font-ui text-sm text-ash sm:text-right">
                 {language.archiveCount === 0 ? (
-                  <span className="text-bone">This language is waiting for its first Sovereign.</span>
+                  <span className="text-bone">This dialect is waiting for its first Pioneer.</span>
                 ) : (
                   <span>
                     <span className="text-bone">{language.archiveCount}</span> in the Archive
