@@ -64,13 +64,13 @@ Production SVG:
 ## Typography
 
 - **Fraunces** — Ogbifọ wordmark, editorial headlines, quotations in English.
-- **Noto Serif** — language artifacts (Card text, Archive entries, any Yorùbá passage). Deviation from the original guidelines, which assigned this role to Fraunces: see `OPEN_CONFLICTS.md` #11. Noto Sans is the fallback for missing glyphs.
+- **Noto Serif** — language artifacts (Card text, Archive entries, any Yorùbá, Igbo or Hausa passage). Deviation from the original guidelines, which assigned this role to Fraunces: see `OPEN_CONFLICTS.md` #11. Noto Sans is the fallback for missing glyphs.
 - **Space Grotesk** — controls, metadata, labels, telemetry, navigation.
 - **Plus Jakarta Sans** — body copy, descriptions, supporting interface text.
 
 Every face must render tone marks and dot-belows without clipping. Verify with: `Ogbifọ̀ Àmì Ẹ̀kọ́ ọ ẹ ṣ à á` and with stacked marks such as `fẹ́ gbọdọ̀`.
 
-Measured, Sprint 1 (Chromium): Fraunces and Space Grotesk detach and shift a tone mark stacked on a dot-below letter. Noto Serif and Plus Jakarta Sans stack correctly. Fraunces also lacks `ǹ` and the combining dot-below; Noto supplies them.
+Measured, Sprint 1 (Chromium): Fraunces and Space Grotesk detach and shift a tone mark stacked on a dot-below letter. Noto Serif and Plus Jakarta Sans stack correctly. None of Fraunces, Space Grotesk or Plus Jakarta Sans contains Hausa `ɓ ɗ ƙ ƴ`; Noto supplies them. Fraunces also lacks `ṅ` and `ǹ`.
 
 ## Motion
 

@@ -4,7 +4,7 @@
 # features kept. Do not split by script: a base letter and its tone mark in
 # different files cannot attach, and Yorùbá renders wrongly.
 #
-# Fraunces lacks Yorùbá ǹ and the combining dot-below. Noto is the fallback
+# The brand faces lack Hausa ɓ ɗ ƙ ƴ, Igbo ṅ and Yorùbá ǹ. Noto is the fallback
 # that supplies them (OFL licensed, see src/fonts/README.md).
 #
 # Usage: subset-fonts.sh <dir containing node_modules/@expo-google-fonts/...>
@@ -31,12 +31,12 @@ for w in 400Regular:400 500Medium:500 600SemiBold:600; do
   face noto-sans "${w%%:*}" "NotoSans_${w%%:*}" "noto-sans-${w##*:}"
 done
 
-# Coverage guard: every Yorùbá letter must resolve in the brand
+# Coverage guard: every Yorùbá, Igbo and Hausa letter must resolve in the brand
 # face or its Noto fallback, within a single file.
 python3 - "$OUT" <<'PY'
 import sys, glob
 from fontTools.ttLib import TTFont
-need = set("ẹẸọỌṣṢàáèéìíòóùúǹńÀÁÈÉÌÍÒÓÙÚŃǸ") | {"\u0300", "\u0301", "\u0304"}
+need = set("ẹẸọỌṣṢàáèéìíòóùúǹńịỊụỤṅṄɓƁɗƊƙƘƴƳ") | {"\u0300", "\u0301", "\u0304"}
 pairs = [("fraunces", "noto-serif"), ("space-grotesk", "noto-sans"), ("plus-jakarta-sans", "noto-sans")]
 bad = False
 for brand, fallback in pairs:

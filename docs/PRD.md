@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Ogbifọ is a consumer language and cultural archive/interpreter product centered around authentic Yorùbá content and interpretation. It is not a data-engine business: the MVP has no dataset-selling model, and the Reading Room and contributions exist for learning, interpretation, preservation and cultural participation (`PRODUCT_DECISIONS.md`).
+Ogbifọ is a consumer language and cultural archive/interpreter product centered around authentic African language content and interpretation. It is not a data-engine business: the MVP has no dataset-selling model, and the Reading Room and contributions exist for learning, interpretation, preservation and cultural participation (`PRODUCT_DECISIONS.md`).
 
 The MVP consists of:
 
@@ -60,7 +60,7 @@ Examples in the source product: Proverb House, Common Tongue.
 
 Cards may contain: language, tier, category, source text, translation, metadata, token value.
 
-MVP content is Yorùbá only (`PRODUCT_DECISIONS.md` D-010).
+The prototype models cards including Yoruba, Hausa, Igbo and Pidgin content.
 
 **Deck selection.** A deck may have: language, region, difficulty, number of cards, reward multiplier, locked/unlocked state.
 

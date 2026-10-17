@@ -10,7 +10,7 @@ export default async function LanguageMapPage() {
   return (
     <>
       <p className="font-ui text-xs uppercase tracking-[0.3em] text-ochre">Language Map</p>
-      <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Where Yorùbá lives.</h1>
+      <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Where the languages live.</h1>
       {languages.length === 0 ? (
         <EmptyState title="No languages yet">Languages and their regions will be listed here.</EmptyState>
       ) : (
