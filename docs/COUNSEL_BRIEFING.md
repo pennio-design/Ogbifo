@@ -129,6 +129,10 @@ Plain-language starting points only. They are not in the product. Nothing will s
 
 Each answer becomes either a recorded decision in `PRODUCT_DECISIONS.md`, a field or rule in the data model, or reviewed wording in the consent screens. Contribution storage (Sprint 4) will not persist anything off-device until the consent and licence wording is approved.
 
+## 9a. Draft agreements attached
+
+`docs/legal/REFERENCE_VOICE_LICENCE_DRAFT.md` (for every recorded voice, including the owner's own) and `docs/legal/VOLUNTEER_AGREEMENT_DRAFT.md` (teachers, reviewers, annotators). Each ends with questions for counsel. Extra questions raised by them: may the licence run to "the Project and its Successor" before a company exists; is a no-voice-cloning and no-dataset promise workable; how should withdrawal treat copies cached offline on learners' devices; can a paid volunteer be treated as an employee.
+
 ## 10. Source documents (available on request)
 
 `docs/PRODUCT_DECISIONS.md`, `docs/OPEN_CONFLICTS.md`, `docs/SECURITY.md`, `docs/DATA_MODEL.md`, `docs/AUDIO_SPEECH.md`, `docs/SCORING_SPEC.md` (technical; section 10 is the calibration plan).

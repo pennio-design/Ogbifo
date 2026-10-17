@@ -115,3 +115,12 @@ From Sprint 4 part 2 (D-039). Browser-tested in Chromium only, against the devel
 - **Contributions have no server tables in use.** The tables exist (0004); no repository or API writes to them, by design while the consent wording is a draft (D-038).
 - **Prefetch.** The Next.js router prefetches nav links in two waves on load. Harmless, but the pages never go "network idle", which matters for test design.
 - **Cookie `Secure`** is set only when `OGBIFO_BASE_URL` is https. Production must set it.
+
+## 22. Idea: live follow-along captions — NOT DECIDED
+
+Raised by the owner: as the learner speaks, show the Yorùbá and the English together, and mark which syllables landed. Two very different things hide in that:
+
+- **Follow-along on a known Card (bounded).** The Card's reviewed Yorùbá text and reviewed English translation are already on screen. As the learner speaks, highlight progress through the syllables and colour each one for its pitch step. The alignment and per-syllable markers already exist (SCORING_SPEC); what is missing is running them on partial audio as it arrives. Fits the core loop (step 5, subtitles and feedback), D-014 and "translation always visible". Open questions: delay on a Moto G-class phone (analysis of 9 s took 201 ms on a developer machine, but it runs once, not continuously), what to show when the learner skips or repeats words, and the results screen staying the record.
+- **Open captions of any Yorùbá speech (unbounded).** Recognise free speech, write it with correct tone marks, and translate it live. That is free-text machine translation (MVP_SCOPE "Not MVP"), depends on speech recognition and tone restoration that are research-grade for Yorùbá, and a confident wrong caption damages the product's promise of preserving tone marks. The earlier tone-restoration benchmark that was removed from this repository (D-006) was about exactly this difficulty. Not planned.
+
+Recommendation: do not build either before the beta gates (#17). After a real-speech test, decide whether the bounded follow-along is the signature interaction. It reuses most of what exists; the unbounded one does not belong in this product yet.
