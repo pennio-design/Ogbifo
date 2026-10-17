@@ -19,3 +19,5 @@ export * from "./contribution";
 export * from "./contribution-service";
 export * from "./outbox";
 export * from "./verification";
+export * from "./auth";
+export * from "./auth-service";

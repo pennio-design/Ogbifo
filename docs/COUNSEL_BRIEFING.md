@@ -25,7 +25,8 @@ It is **not** a data business. No dataset selling, licensing, export or training
 | Accounts, server storage, database | **Not built.** Nothing about any user is stored on a server today. |
 | Analytics | **Not built.** Guardrails decided (D-028, D-035); vendor not chosen. |
 | Contributions (text only) | **Built, device-only.** Form, draft consent screen and licence fields exist and save to the contributor's own browser. Contributing requires an account, so every contribution is attributable to a person (sign-in itself is not built). Sync to a server is switched off in code until this wording is approved (D-038). |
-| Archive, Community verification, accounts | **Not built.** Peer confirmation rules exist as tested logic, with no screen. |
+| Accounts | **Built, not deployable.** Sign-in by emailed link (no passwords). We store the email address and a display name ("Reader"). No email provider is chosen and nothing is stored durably yet. |
+| Archive, Community verification | **Not built.** Peer confirmation rules exist as tested logic, with no screen. |
 | Consent screens, privacy notice, terms of service | **Not written.** |
 
 Consequence for counsel: **today the product collects no personal data on any server.** A contributor's text is stored only in their own browser. The legal exposure arises at the next stages (volunteer calibration, reference voices, accounts, analytics, contributions). We would rather settle the rules before building those than after.
@@ -79,6 +80,11 @@ Numbered so you can answer by number. Where we have a leaning, it is stated; ple
 16. **Volunteer agreement** for reviewers, linguists, annotators and calibration speakers (D-032): unpaid vs rewarded, tax or employment characterisation of rewards, IP in annotations they create, and publication of their names.
 17. **Sponsors and investors.** D-032 says funding brings no data rights. What clause in a sponsorship or investment document makes that binding, and does it survive a change of control?
 18. **Entity.** Which entity should be the contracting party and data controller (company, non-profit, or the founder personally until incorporation)? Is a pre-incorporation beta advisable?
+
+**D2. Accounts and email addresses**
+18a. Lawful basis and retention for email addresses; how long may an inactive account be kept; what an erasure request must remove (account, contributions, confirmations).
+18b. The email provider is a processor and may sit outside Nigeria: what must the contract and notice say?
+18c. Display names are public and chosen by users: terms for impersonation and offensive names.
 
 **E. Public-facing terms and statements**
 19. **Terms of service and privacy notice.** Scope and who drafts. We will supply the facts from this document.

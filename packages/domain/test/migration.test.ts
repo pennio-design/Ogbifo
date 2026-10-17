@@ -94,6 +94,7 @@ describe("migrations", () => {
       db = new PGlite();
       for (const f of files) await db.exec(readFileSync(join(dir, f), "utf8"));
       await db.exec("INSERT INTO languages (id, name, code, native_name, writing_system, status) VALUES ('yo', 'Yorùbá', 'yo', 'Yorùbá', 'Latin', 'active')");
+      await db.exec("INSERT INTO users (id, email, display_name, created_at) VALUES ('u-author', 'a@example.com', 'Reader', now()), ('u1', 'b@example.com', 'Reader', now())");
     });
     it("accepts a complete contribution and defaults to pending_review", async () => {
       await db.exec(row("a"));
@@ -126,6 +127,31 @@ describe("migrations", () => {
     it("keeps peer_verified and its time together", async () => {
       await expect(db.exec("UPDATE contributions SET verification_status = 'peer_verified' WHERE id = 'a'")).rejects.toThrow();
       await db.exec("UPDATE contributions SET verification_status = 'peer_verified', verified_at = now() WHERE id = 'a'");
+    });
+  });
+
+  describe("0005_accounts", () => {
+    let db: PGlite;
+    beforeAll(async () => {
+      db = new PGlite();
+      for (const f of files) await db.exec(readFileSync(join(dir, f), "utf8"));
+      await db.exec("INSERT INTO users (id, email, display_name, created_at) VALUES ('u1', 'ada@example.com', 'Reader', now())");
+    });
+    it("keeps one account per email, and only normalised emails", async () => {
+      await expect(db.exec("INSERT INTO users (id, email, display_name, created_at) VALUES ('u2', 'ada@example.com', 'Reader', now())")).rejects.toThrow();
+      await expect(db.exec("INSERT INTO users (id, email, display_name, created_at) VALUES ('u3', 'Ada@Example.com', 'Reader', now())")).rejects.toThrow();
+    });
+    it("ties sessions to a real user and refuses an expiry before creation", async () => {
+      await expect(db.exec("INSERT INTO sessions (token_hash, user_id, created_at, expires_at) VALUES ('h', 'nobody', now(), now() + interval '1 day')")).rejects.toThrow();
+      await expect(db.exec("INSERT INTO sessions (token_hash, user_id, created_at, expires_at) VALUES ('h', 'u1', now(), now() - interval '1 day')")).rejects.toThrow();
+      await db.exec("INSERT INTO sessions (token_hash, user_id, created_at, expires_at) VALUES ('h', 'u1', now(), now() + interval '1 day')");
+    });
+    it("stops a contribution being filed under a user that does not exist", async () => {
+      await db.exec("INSERT INTO languages (id, name, code, native_name, writing_system, status) VALUES ('yo', 'Yorùbá', 'yo', 'Yorùbá', 'Latin', 'active')");
+      await expect(
+        db.exec(`INSERT INTO contributions (id, client_id, user_id, type, kind, language_id, content_text, consent_version, consent_accepted_at, licence_grant, rights_declaration, retention_policy, created_at)
+                 VALUES ('c', 'c', 'ghost', 'text', 'phrase', 'yo', 'x', 'draft-0.1', now(), '{"scope":"archive_display_and_verification","exclusive":false,"platform":"ogbifo_only","revocable":true}'::jsonb, 'own_work', 'until_withdrawn', now())`),
+      ).rejects.toThrow();
     });
   });
 });

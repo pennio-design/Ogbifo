@@ -89,7 +89,7 @@ From Sprint 3 part 2 (`SCORING_SPEC.md` section 15). Browser-tested with synthet
 
 From Sprint 4 part 1 (D-038). Browser-tested in Chromium only.
 
-- **Contributing is closed until sign-in exists.** Settled: no anonymous contributions (D-038). The consequence is that accounts are now on the critical path for any contribution beta: provider choice (Google, Apple, email link), the server session, and what an account stores. Until then the form is reachable only with `NEXT_PUBLIC_DEV_ACCOUNT=1`, a development stand-in that must never be set in a deployment. Contributions are stored per browser in IndexedDB, filtered by `userId`; a signed-in user on a second device sees nothing until sync exists.
+- **Contributing needs an account** (D-038), and sign-in by email link now exists (D-039, #21). Contributions are stored per browser in IndexedDB, filtered by `userId`; a signed-in user on a second device sees nothing until sync exists. Signing out leaves that browser's contributions on the device; on a shared device they are visible again to the same account on sign-in. Decide whether sign-out should clear them (it would lose unsynced work).
 - **The consent wording is a draft.** Sync is off in code until counsel reviews it (`CONSENT_IS_DRAFT`). `docs/COUNSEL_BRIEFING.md` lists the questions.
 - **Rights note rule is a guess.** A note is required for lyrics and for anything not the contributor's own work. Counsel may want more (or a stronger warranty). Communal knowledge such as proverbs and oriki may not belong to one person; the "I wrote or said it myself" option may be wrong for them.
 - **Contribution kinds are inferred.** Phrase, proverb and greeting come from the Community page copy; lyric from D-020. The PRD names types text, audio, video and external URL, which are not built.
@@ -98,3 +98,18 @@ From Sprint 4 part 1 (D-038). Browser-tested in Chromium only.
 - **Withdrawal after confirmation** is implemented as hide-and-queue. What the server keeps of confirmations, and whether withdrawal can be refused for reviewed material, is for counsel (briefing Q9).
 - **No server.** The outbox, backoff and idempotency are tested against a fake transport only. The SQL schema (migration 0004) exists but nothing writes to it. Self-confirmation is enforced in the domain function, not in SQL.
 - **Dialect is free text.** The Language Map has no dialect list yet (D-013), so Pioneer and gap counts cannot use it.
+
+## 21. Findings from email-link sign-in — BEFORE-PHASE-3 launch
+
+From Sprint 4 part 2 (D-039). Browser-tested in Chromium only, against the development mailbox.
+
+- **No email provider.** Sign-in is closed outside the local development mailbox. Choose a sender (data location, deliverability to Nigerian and diaspora addresses, DPA) and name it in the privacy notice. Nobody can sign in on a real deployment until then.
+- **Storage is in memory.** Accounts, links, sessions and rate limits vanish on restart and are not shared across instances. Migration 0005 is ready; a Postgres adapter is not built. This blocks any real deployment.
+- **Email is personal data.** Counsel: lawful basis, retention (keep an account with no activity for how long?), deletion on request, privacy notice. Added to `COUNSEL_BRIEFING.md`.
+- **Rate limiting trusts `X-Forwarded-For`.** It is only as good as the proxy in front. Behind a platform that sets it reliably this is fine; otherwise per-IP limits can be dodged. Per-address limits still hold.
+- **Account deletion and email change are not built.**
+- **Display name** is "Reader" for everyone until a name can be chosen. Two Readers are indistinguishable in the community; choosing a name needs rules (uniqueness, impersonation, offensive names).
+- **Anonymous progress is not merged** into the account on sign-in (#16): it still lives in sessionStorage for the visit.
+- **Link in the email is a bearer secret.** Anyone with access to the inbox can sign in. Normal for email links; no second factor is planned.
+- **Prefetch.** The Next.js router prefetches nav links in two waves on load. Harmless, but the pages never go "network idle", which matters for test design.
+- **Cookie `Secure`** is set only when `OGBIFO_BASE_URL` is https. Production must set it.

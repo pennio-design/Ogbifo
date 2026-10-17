@@ -96,7 +96,7 @@ Any signed-in user who declares fluency may confirm a contribution, and five con
 
 ## D-022 Accounts
 
-Anyone can read anonymously, including the Reading Room and a free sample Deck. An account (Google, Apple or an email link, no passwords) is required to keep progress, download Decks, contribute or confirm. Phone-number sign-in is not part of the first release.
+Anyone can read anonymously, including the Reading Room and a free sample Deck. An account (Google, Apple or an email link, no passwords) is required to keep progress, download Decks, contribute or confirm. Phone-number sign-in is not part of the first release. First provider: **email link** (D-039).
 
 ## D-023 Translation
 
@@ -173,3 +173,7 @@ Approved by the owner. The learner's pitch steps are rescaled to the reference's
 ## D-038 Contributions stay on the device until counsel signs off
 
 Sprint 4 builds the contribution flow local-first: validate, write to IndexedDB, queue in an outbox, render at once. The consent screen and licence wording are a marked DRAFT (`CONSENT_IS_DRAFT`, version `draft-0.1`). While that flag is true, `guardTransport` forces the sync transport off, so nothing a contributor writes leaves their device. Flipping it requires counsel-reviewed wording, a new `CONSENT_VERSION`, and a decision here. Contributing needs an account (D-022), so there are no anonymous contributions: without a signed-in user the Community page offers no form, and every contribution carries a `userId`. This makes consent, withdrawal and confirmation attributable to a person. Contributions are text only (phrase, proverb, greeting, lyric); audio, video and links wait for speaker-consent handling (`OPEN_CONFLICTS.md` #20). Peer confirmation exists as tested domain logic only; there is no confirm UI until accounts exist.
+
+## D-039 Sign-in by email link
+
+Accounts use an emailed link, no passwords, no other provider in the first release. A link works once and expires after 15 minutes; a session lasts 30 days. Only hashes of tokens are stored. The link opens a page that needs one button press, so mail scanners cannot use it up. The answer to "send me a link" is the same whether or not the address has an account, and requests are rate limited per address and per IP. A user's display name is "Reader" until they choose one; it is never taken from the email address, and the address is never shown to other users. Sign-in stays closed (no faked success) until a real email provider is configured (`OPEN_CONFLICTS.md` #21). Google and Apple sign-in remain possible later behind the same `AuthService` seam.

@@ -1,9 +1,9 @@
 /**
- * End-to-end check of local-first contributions (Sprint 4 part 1).
+ * End-to-end check of email-link sign-in and local-first contributions (Sprint 4).
  *
- *   BASE_URL=http://localhost:3000 GATED_URL=http://localhost:3001 CHROMIUM_PATH=... npm run e2e:community -w @ogbifo/web
- * BASE_URL: app built with NEXT_PUBLIC_DEV_ACCOUNT=1 (a stand-in signed-in user).
- * GATED_URL: app built without it, where contributing must be closed to anonymous readers.
+ *   OGBIFO_BASE_URL=http://localhost:3000 OGBIFO_DEV_EMAIL=1 npx next start   (the app under test)
+ *   BASE_URL=http://localhost:3000 CHROMIUM_PATH=... npm run e2e:community -w @ogbifo/web
+ * The dev mailbox shows the sign-in link on the page instead of sending email.
  */
 import { chromium } from "playwright-core";
 
@@ -27,19 +27,70 @@ async function main() {
     if (r.method() !== "GET" && r.url().startsWith(BASE)) posts.push(`${r.method()} ${r.url()}`);
   });
 
-  if (process.env.GATED_URL) {
-    const anon = await context.newPage();
-    await anon.goto(`${process.env.GATED_URL}/community`, { waitUntil: "networkidle" });
-    const text = await anon.locator("main").innerText();
-    check(/needs an account/.test(text), "anonymous readers are told contributing needs an account");
-    check((await anon.locator("main textarea").count()) === 0, "anonymous readers get no contribution form");
-    await anon.close();
-  }
+  // --- sign in by email link ---
+  const anon = await context.newPage();
+  await anon.goto(`${BASE}/community`, { waitUntil: "load" });
+  await anon.getByText(/needs an account/).waitFor();
+  const anonText = await anon.locator("main").innerText();
+  check(/needs an account/.test(anonText), "anonymous readers are told contributing needs an account");
+  check((await anon.locator("main textarea").count()) === 0, "anonymous readers get no contribution form");
+  check((await anon.request.get(`${BASE}/api/auth/me`)).status() === 401, "/api/auth/me is 401 when signed out");
+  const crossSite = await anon.request.post(`${BASE}/api/auth/request`, { data: { email: "x@example.com" }, headers: { Origin: "https://evil.example" } });
+  check(crossSite.status() === 403, "a cross-site sign-in request is refused");
 
-  await page.goto(`${BASE}/community`, { waitUntil: "networkidle" });
+  await anon.goto(`${BASE}/sign-in`, { waitUntil: "load" });
+  await anon.getByLabel("Email address").fill("not-an-email");
+  await anon.getByRole("button", { name: "Send me a link" }).click();
+  await anon.getByRole("alert").filter({ hasText: "name@example.com" }).waitFor();
+  check(true, "a malformed address is refused with plain copy");
+  await anon.getByLabel("Email address").fill("  Ada@Example.com ");
+  await anon.getByRole("button", { name: "Send me a link" }).click();
+  await anon.getByText("Check your email").waitFor();
+  check(!(await anon.locator("main").innerText()).includes("ada@example.com"), "the page does not echo whether the address has an account");
+  const link = await anon.getByRole("link", { name: "open the sign-in link" }).getAttribute("href");
+  check(!!link && link.includes("/auth/verify?token="), "the dev mailbox holds a sign-in link");
+
+  // A scanner that only opens the link must not use it up.
+  const scan = await anon.request.get(link!);
+  check(scan.ok() && (await anon.request.get(`${BASE}/api/auth/me`)).status() === 401, "opening the link alone does not sign anyone in");
+  await anon.goto(link!, { waitUntil: "load" });
+  await anon.getByRole("button", { name: "Sign in", exact: true }).click();
+  await anon.waitForURL(`${BASE}/community`);
+  const cookies = await context.cookies();
+  const session = cookies.find((c) => c.name === "ogbifo_session");
+  check(!!session && session.httpOnly && session.sameSite === "Lax", "session cookie is HttpOnly and SameSite=Lax");
+  check(!/^[0-9a-f-]{36}$/.test(session?.value ?? ""), "session value is an opaque token");
+  const me = await anon.request.get(`${BASE}/api/auth/me`);
+  check(me.status() === 200 && (await me.json()).user.email === "ada@example.com", "signed in as the normalised address");
+  await anon.getByLabel("In Yorùbá").waitFor();
+  check(true, "the contribution form opens once signed in");
+
+  // The link is single use.
+  const second = await context.newPage();
+  await context.clearCookies();
+  await second.goto(link!, { waitUntil: "load" });
+  await second.getByRole("button", { name: "Sign in", exact: true }).click();
+  await second.waitForURL(/\/sign-in\?problem=link/);
+  check(await second.getByRole("alert").filter({ hasText: "expired or was already used" }).isVisible(), "a used link says so and offers a new one");
+  await second.close();
+  await anon.close();
+
+  // Sign in again for the rest of the run.
+  const again = await context.newPage();
+  await again.goto(`${BASE}/sign-in`, { waitUntil: "load" });
+  await again.getByLabel("Email address").fill("ada@example.com");
+  await again.getByRole("button", { name: "Send me a link" }).click();
+  const link2 = await again.getByRole("link", { name: "open the sign-in link" }).getAttribute("href");
+  await again.goto(link2!, { waitUntil: "load" });
+  await again.getByRole("button", { name: "Sign in", exact: true }).click();
+  await again.waitForURL(`${BASE}/community`);
+  await again.close();
+
+  await page.goto(`${BASE}/community`, { waitUntil: "load" });
   const main = page.locator("main");
   const mine = main.locator("section[aria-labelledby=mine]");
-  check(await main.getByText("Nothing added yet").isVisible(), "empty state shown before anything is added");
+  await main.getByText("Nothing added yet").waitFor();
+  check(true, "empty state shown before anything is added");
   check(await main.getByText(/Draft · draft-0.1/).isVisible(), "consent screen is labelled as a draft");
   check(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), "no horizontal overflow at 390px");
 
@@ -94,7 +145,8 @@ async function main() {
   check(row?.consentVersion === "draft-0.1", "consent version stored with the contribution");
 
   // Survives a reload.
-  await page.reload({ waitUntil: "networkidle" });
+  await page.reload({ waitUntil: "load" });
+  await mine.locator("li").first().waitFor();
   check((await mine.locator("li").first().innerText()).includes(text), "contribution survives a reload");
 
   // Nothing leaves the device while the wording is a draft.
@@ -120,6 +172,15 @@ async function main() {
       }),
   );
   check(after[0]?.withdrawnAt != null, "withdrawal is recorded, not deleted, so it can sync later");
+
+  // Sign out.
+  await page.reload({ waitUntil: "load" });
+  await page.getByRole("button", { name: "Sign out" }).click();
+  await page.waitForURL(`${BASE}/`);
+  check((await page.request.get(`${BASE}/api/auth/me`)).status() === 401, "signing out ends the session");
+  await page.goto(`${BASE}/community`, { waitUntil: "load" });
+  await page.getByText(/needs an account/).waitFor();
+  check(/needs an account/.test(await page.locator("main").innerText()), "after sign-out the form is closed again");
 
   check(errors.length === 0, "no page errors", errors.join("; "));
   await browser.close();

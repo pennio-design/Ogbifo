@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Wordmark } from "@ogbifo/ui";
+import { AccountMenu } from "./account-menu";
 import { NavLinks } from "./nav-links";
 
 export const metadata: Metadata = {
@@ -29,7 +30,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Link href="/" aria-label="Ogbifọ, home">
               <Wordmark />
             </Link>
-            <NavLinks />
+            <div className="flex items-center gap-6">
+              <AccountMenu />
+              <NavLinks />
+            </div>
           </div>
         </header>
         <main id="main" className="mx-auto max-w-6xl px-4 pb-28 pt-10 sm:px-6 md:pb-16 md:pt-16">

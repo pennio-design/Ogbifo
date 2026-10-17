@@ -71,4 +71,10 @@ Not built: reference audio offline caching (D-017), server storage for reference
 
 `packages/domain`: consent and licence fields (`consent.ts`, DRAFT wording), `Contribution` with validation and withdrawal, the outbox state machine with backoff and manual retry, `ContributionService`, peer confirmation rules and labels, migration 0004. Web: Community page with contribution form, draft consent screen, IndexedDB store, offline banner, local list with verification and sync states, withdraw. Browser check: `npm run e2e:community -w @ogbifo/web`.
 
-Contributing needs an account, so anonymous readers see a plain explanation instead of the form. Nothing syncs: the transport is forced off while the consent wording is a draft (D-038). Not built: accounts, server API, background sync worker, confirm UI, community feed, moderation, audio/video/link contributions. See `OPEN_CONFLICTS.md` #20.
+Contributing needs an account, so anonymous readers see a plain explanation and a sign-in link instead of the form. Nothing syncs: the transport is forced off while the consent wording is a draft (D-038). Not built: accounts, server API, background sync worker, confirm UI, community feed, moderation, audio/video/link contributions. See `OPEN_CONFLICTS.md` #20.
+
+### Sprint 4 part 2 as built: email-link sign-in
+
+`packages/domain`: `AuthService` (request link, redeem once, sessions, sign-out, rate limits, no account enumeration), ports for users, tokens, sessions, rate limiting, email and crypto, in-memory adapters, migration 0005. Web: `/sign-in`, `/auth/verify` (button press to finish), `/api/auth/{request,redeem,signout,me}`, header account menu, Community reads the real session. Browser check: `npm run e2e:community -w @ogbifo/web` (app started with `OGBIFO_DEV_EMAIL=1` and `OGBIFO_BASE_URL`).
+
+Not built: a real email provider, durable storage, account deletion, choosing a display name, merging anonymous progress. See `OPEN_CONFLICTS.md` #21.

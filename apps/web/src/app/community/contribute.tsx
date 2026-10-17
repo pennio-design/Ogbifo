@@ -18,7 +18,8 @@ import {
   type SyncState,
 } from "@ogbifo/domain";
 import { EmptyState, LanguageText } from "@ogbifo/ui";
-import { currentIdentity } from "@/lib/identity";
+import Link from "next/link";
+import { useAccount } from "@/lib/use-account";
 import { IndexedDbArchiveStore } from "@/lib/indexeddb-archive-store";
 
 const KIND_LABEL: Record<ContributionKind, string> = { phrase: "Phrase", proverb: "Proverb", greeting: "Greeting", lyric: "Lyric" };
@@ -40,17 +41,24 @@ const languageField = `${fieldBase} font-language py-3`;
 const label = "block font-ui text-xs uppercase tracking-wider text-ash";
 
 export function Contribute() {
-  const identity = currentIdentity();
-  if (identity.kind !== "account") return <SignInRequired />;
-  return <ContributeSignedIn userId={identity.userId} />;
+  const state = useAccount();
+  if (state.status === "loading") return <p role="status" className="mt-8 font-ui text-sm text-ash">Checking your account…</p>;
+  if (state.status === "anonymous") return <SignInRequired />;
+  return <ContributeSignedIn userId={state.account.id} />;
 }
 
 function SignInRequired() {
   return (
-    <EmptyState title="Add to the Archive with an account">
+    <EmptyState
+      title="Add to the Archive with an account"
+      action={
+        <Link href="/sign-in" className="inline-flex min-h-12 items-center bg-ochre px-6 font-ui text-sm font-semibold text-clay hover:brightness-110">
+          Sign in with email
+        </Link>
+      }
+    >
       Adding to the Archive needs an account, so that what you add is yours: you can find it again, withdraw it,
       and the community can see who stands behind it. Reading, and the Reading Room, stay open to everyone.
-      Sign-in is not open yet.
     </EmptyState>
   );
 }
