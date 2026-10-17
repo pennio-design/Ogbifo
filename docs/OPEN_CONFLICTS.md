@@ -24,11 +24,17 @@ Still open: the revenue model for the consumer product is undefined. This is a b
 
 Decision: the brand guidelines palette and type (Clay / Ochre / Bone; Fraunces / Space Grotesk / Plus Jakarta) are canonical. Others are to be retired, not ported. The pitch deck should be rebuilt on the brand system before it is shown again.
 
-## 3. Royal Seal: one loop or two? — BEFORE-PHASE-1
+## 3. Royal Seal: one loop or two? — CANDIDATE RECEIVED, NEEDS CONFIRMATION
 
-The brand copy and this spec say "two intersecting ochre loops" (left = oral statecraft, right = foreign technical registers). The production SVG draws a **single** lens-shaped loop (`M 32 50 C 32 36, 68 36, 68 50 C 68 64, 32 64, 32 50 Z`) plus the central dot. The shipped asset and the written meaning disagree.
+The brand copy and spec say "two intersecting ochre loops". The shipped SVG (`BRAND_SYSTEM.md`) draws one lens plus a dot. A new candidate, `brand/royal-seal-candidate.svg`, also draws **one** loop, so a single loop looks like the direction. Not yet confirmed as canonical, so the `packages/ui` Seal component is still blocked.
 
-Decision needed: redraw the seal with two loops, or rewrite the meaning for one. The `packages/ui` Seal component must not be built until this is settled.
+What the candidate changes versus the shipped seal:
+
+- Spokes are 16 identical short strokes rotated about the center, inside r 27–34, instead of the outer, irregular r 33–38 ring. It reads as a dial or sun-ray ring, less like a waveform.
+- Heavier: spoke stroke 3.5 (was 3), loop stroke 6 (was 4.5), pupil r 6.5 (was 5).
+- Spokes are hardcoded `#1a1a1a`. On Clay (`#121413`) they are effectively invisible. They need `currentColor` and a Bone/Clay theme pair, as in the shipped asset. The file is saved unchanged; fix it when confirmed.
+
+Concern to decide before confirming: an almond with a round center reads as an **eye**. The brand guidelines say the seal "rejects the surveillance aesthetic of cold technology tools" and presents Ogbifọ as a protective guard rail. An eye with a pupil, combined with microphone recording and scoring, can read as watching. This may be fine (the all-seeing interpreter, a watchful guardian), but if so, state it in `BRAND_SYSTEM.md` and say why it is not surveillance. Also decide whether the "two domains converging" meaning survives with one loop. The written meaning (left = oral statecraft, right = foreign register) does not apply to a single shape.
 
 ## 4. Verification can be gamed — BEFORE-PHASE-4
 
