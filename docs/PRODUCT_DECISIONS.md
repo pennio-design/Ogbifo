@@ -59,3 +59,19 @@ The Language Map is a map of Yorùbá dialects and regions, showing Archive cove
 ## D-014 Speech scoring
 
 The Resonance Score compares the learner's pitch contour and timing against a native reference recording of the same Card, syllable by syllable, because tone carries meaning in Yorùbá. No ASR transcript is used for scoring. Every Card therefore needs reviewer-recorded reference audio. Clarity, Rhythm and Boldness as originally specified are replaced; the new metrics are defined in `OPEN_CONFLICTS.md` #7. The score stays labelled as guidance.
+
+## D-015 Orthography
+
+Every Deck Card is fully tone-marked and dot-below marked, and a reviewer checks the marking. Contributors get assisted tone-mark entry: a key palette plus lexicon-based suggestions. Archive entries may arrive unmarked but are flagged "needs marking" and cannot be confirmed by peers until marked. The reference standard for marking is still to be named (the 1966 Yorùbá orthography is the usual one).
+
+## D-016 Dialect policy
+
+Decks and reference recordings use standard Yorùbá. Dialect speech is collected, tagged and verified in the Archive. Dialect Decks (for example Ìjẹ̀bú or Ẹ̀kìtì) come later, once reviewers exist for that dialect. `dialectId` stays optional on Card.
+
+## D-017 Platform
+
+An installable web app (PWA) first, responsive, using the browser microphone. Offline: contribution drafts (per `OFFLINE_FIRST.md`) and any Deck the user has downloaded, including its reference audio. Native iOS and Android apps are revisited only if retention justifies them.
+
+## D-018 Business model
+
+None in the first release: free until the product shows retention. No paywalls. Locked Decks are progression only, not payment. Tokens are progress points with no cash value. Pricing is revisited with retention data.

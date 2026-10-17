@@ -1,5 +1,7 @@
 # Ogbifọ — Offline-First Specification
 
+> Platform (`PRODUCT_DECISIONS.md` D-017): installable web app. Downloaded Decks, including reference audio, must also work offline, not only contribution drafts.
+
 ## Principle
 
 Ogbifọ should remain useful when connectivity is poor. This is especially important for community contributions and language preservation.
