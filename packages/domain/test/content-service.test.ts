@@ -1,14 +1,16 @@
 import { describe, expect, it } from "vitest";
+import { createCard } from "../src/card";
 import {
   ContentService, InMemoryCardRepository, InMemoryDeckRepository, InMemoryLanguageRepository,
   seedCards, seedDecks, seedLanguages,
 } from "../src";
 
-const service = () =>
+const service = (allowUnreviewed = true) =>
   new ContentService(
     new InMemoryLanguageRepository(seedLanguages),
     new InMemoryDeckRepository(seedDecks),
     new InMemoryCardRepository(seedCards),
+    { allowUnreviewed },
   );
 
 describe("ContentService", () => {
@@ -28,6 +30,40 @@ describe("ContentService", () => {
   it("reports a missing deck with a structured error, not an exception", async () => {
     const result = await service().getDeck("nope");
     expect(result).toEqual({ ok: false, error: { code: "DECK_NOT_FOUND", message: "Deck could not be found." } });
+  });
+
+  it("shows no unreviewed Card to users by default (D-012)", async () => {
+    const summaries = await service(false).listDeckSummaries();
+    expect(summaries.every((s) => s.cardCount === 0)).toBe(true);
+    const detail = await service(false).getDeck("proverb-house-yo");
+    expect(detail.ok && detail.value.cards).toEqual([]);
+  });
+
+  it("shows a reviewed Card and hides an unreviewed one in the same Deck", async () => {
+    const seed = seedCards.find((c) => c.id === "card-yo-greeting-1")!;
+    const reviewed = createCard({ ...seed, id: "r1", reviewStatus: "reviewed", reviewers: ["A One", "B Two"], reviewedAt: "2026-10-18T00:00:00.000Z" });
+    if (!reviewed.ok) throw new Error("fixture");
+    const svc = new ContentService(
+      new InMemoryLanguageRepository(seedLanguages),
+      new InMemoryDeckRepository(seedDecks),
+      new InMemoryCardRepository([...seedCards, reviewed.value]),
+    );
+    const detail = await svc.getDeck("common-tongue-yo");
+    expect(detail.ok && detail.value.cards.map((c) => c.id)).toEqual(["r1"]);
+  });
+
+  it("orders Cards easiest first, then by id", async () => {
+    const detail = await service().getDeck("proverb-house-yo");
+    const diffs = detail.ok ? detail.value.cards.map((c) => c.difficulty) : [];
+    expect(diffs).toEqual([...diffs].sort((a, b) => a - b));
+  });
+
+  it("tells a locked Deck which Deck unlocks it, and the other way round (D-029)", async () => {
+    const locked = await service().getDeck("proverb-house-yo");
+    expect(locked.ok && locked.value.requiredDeck).toEqual({ id: "common-tongue-yo", name: "Common Tongue", cardIds: ["card-yo-greeting-1"] });
+    const opener = await service().getDeck("common-tongue-yo");
+    expect(opener.ok && opener.value.unlocks).toEqual([{ id: "proverb-house-yo", name: "Proverb House" }]);
+    expect(opener.ok && opener.value.requiredDeck).toBeNull();
   });
 
   it("skips decks whose language is missing instead of failing the list", async () => {

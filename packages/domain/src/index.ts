@@ -7,3 +7,8 @@ export * from "./repositories";
 export * from "./result";
 export * from "./seed";
 export * from "./text";
+export * from "./identity";
+export * from "./progress";
+export * from "./progress-store";
+export * from "./reading-room";
+export * from "./reading-session";

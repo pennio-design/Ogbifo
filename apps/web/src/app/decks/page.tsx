@@ -46,7 +46,7 @@ export default async function DecksPage() {
                 {deck.isLocked ? (
                   <div>
                     <dt className="text-xs uppercase tracking-wider">Status</dt>
-                    <dd className="text-ochre">Locked</dd>
+                    <dd className="text-ochre">Locked at first</dd>
                   </div>
                 ) : null}
               </dl>

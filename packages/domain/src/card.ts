@@ -14,6 +14,11 @@ export const CARD_CATEGORIES = [
 
 export type CardCategory = (typeof CARD_CATEGORIES)[number];
 
+export type ReviewStatus = "unreviewed" | "reviewed";
+
+/** D-012: a Card needs this many distinct named native-speaker reviewers before users see it. */
+export const MIN_REVIEWERS = 2;
+
 export interface Card {
   readonly id: string;
   readonly deckId: string;
@@ -28,6 +33,12 @@ export interface Card {
   readonly tokenValue: number;
   readonly difficulty: Tier;
   readonly createdAt: string;
+  readonly reviewStatus: ReviewStatus;
+  /** Named native-speaker reviewers, shown to learners. */
+  readonly reviewers: readonly string[];
+  readonly reviewedAt?: string;
+  /** Native reference recording (D-014). Absent until recorded. */
+  readonly referenceAudioUrl?: string;
 }
 
 export function isCardCategory(value: string): value is CardCategory {
@@ -48,5 +59,16 @@ export function createCard(input: Card): Result<Card> {
   if (Number.isNaN(Date.parse(input.createdAt))) {
     return fail("CARD_INVALID", "Created date must be an ISO date.", "createdAt");
   }
-  return ok({ ...input });
+  if (input.reviewStatus === "reviewed") {
+    const names = new Set(input.reviewers.map((name) => name.trim().toLocaleLowerCase()).filter((name) => name !== ""));
+    if (names.size < MIN_REVIEWERS) {
+      return fail("CARD_INVALID", `A reviewed Card needs at least ${MIN_REVIEWERS} distinct named reviewers.`, "reviewers");
+    }
+    if (input.reviewedAt === undefined || Number.isNaN(Date.parse(input.reviewedAt))) {
+      return fail("CARD_INVALID", "A reviewed Card needs a review date.", "reviewedAt");
+    }
+  } else if (input.reviewStatus !== "unreviewed") {
+    return fail("CARD_INVALID", "Unknown review status.", "reviewStatus");
+  }
+  return ok({ ...input, reviewers: [...input.reviewers] });
 }

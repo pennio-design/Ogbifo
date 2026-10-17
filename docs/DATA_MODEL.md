@@ -40,6 +40,7 @@ Deck
 - region
 - tokenMultiplier
 - isLocked
+- unlockedByDeckId?    (Sprint 2, D-029: finishing that Deck unlocks this one)
 
 Card
 - id
@@ -54,16 +55,20 @@ Card
 - tokenValue
 - difficulty
 - createdAt
+- reviewStatus         (Sprint 2, D-012: unreviewed | reviewed)
+- reviewers[]          (named native-speaker reviewers; reviewed needs 2 or more, distinct)
+- reviewedAt?          (required when reviewed)
+- referenceAudioUrl?   (D-014; absent until recorded)
 
 ReadingSession
 - id
 - userId
 - cardId
 - startedAt
-- completedAt
-- mode
-- targetLanguage
-- score
+- completedAt?
+- mode                 (studio | live, D-024)
+- targetLanguage       (en, D-023)
+- score                (null until scoring exists; scale per OPEN_CONFLICTS #7)
 
 ResonanceScore
 - id

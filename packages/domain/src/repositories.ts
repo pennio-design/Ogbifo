@@ -16,5 +16,4 @@ export interface DeckRepository {
 export interface CardRepository {
   getById(id: string): Promise<Card | null>;
   listByDeck(deckId: string): Promise<readonly Card[]>;
-  countByDeck(): Promise<ReadonlyMap<string, number>>;
 }

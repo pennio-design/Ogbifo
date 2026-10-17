@@ -22,3 +22,5 @@ npm run typecheck
 npm run lint
 npm run build
 ```
+
+Developer seed Cards are unreviewed, so they show only under `next dev` or with `OGBIFO_ALLOW_UNREVIEWED=1` (see `apps/web/.env.example`). A production build without the flag shows no Cards, by design (D-012).

@@ -48,3 +48,9 @@ Build in vertical slices, not one prompt.
 | 4 | Community + contribution + IndexedDB outbox + sync + verification |
 | 5 | Language Map + Deck discovery + archive gaps + Pioneer system |
 | 6 | Testing + accessibility + offline testing + mobile QA + performance + security |
+
+### Sprint 2 as built
+
+Reading Room: Deck picker, Card player (Yorùbá first, reviewer-approved translation always visible beneath, context note, reviewer credit), Studio and Live modes, progress indicator, keyboard navigation, Deck unlock rule, reviewer gate, progress for the visit (`sessionStorage`), reading-session domain model and SQL tables.
+
+Not in Sprint 2: recording, reference audio, scoring, accounts (Sprint 3 and later). Live therefore cannot finish a Card yet, so Proverb House cannot be unlocked in the running product until recording exists. The unlock rule is tested in the domain and was checked in the browser by injecting a completed Live attempt.

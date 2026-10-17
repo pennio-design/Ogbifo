@@ -46,9 +46,16 @@ D-028 fixes the guardrails. Open: which vendor (data location, DPA, replay maski
 
 ## 14. Define "finished" for Common Tongue — BEFORE-PHASE-2
 
-D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Common Tongue has at least one completed Live attempt. Alternatives: every Card seen, or a minimum average score. Decide, and decide what an anonymous reader sees when they reach the end (an account prompt to keep progress and unlock the next Deck). Note: the gate adds a place to stall inside a 30 to 50 person beta, so read week-2 and week-4 return alongside the Deck-completion funnel, not instead of it.
+D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Common Tongue has at least one completed Live attempt. Alternatives: every Card seen, or a minimum average score. Sprint 2 implements this proposed rule in `progress.ts` (one place to change). Decide, and decide what an anonymous reader sees when they reach the end (an account prompt to keep progress and unlock the next Deck). Note: the gate adds a place to stall inside a 30 to 50 person beta, so read week-2 and week-4 return alongside the Deck-completion funnel, not instead of it.
 
 ## 15. Expansion gate thresholds — AFTER LAUNCH
 
 `LANGUAGE_EXPANSION.md` defines the gate for adding a language. Still to set: the Yorùbá retention threshold that opens the gate (week-2 and week-4 return from D-026), the number of reviewers and voices per additional language, and whether Igbo, Hausa and Pidgin keep the planned order once real demand is known.
+
+## 16. Open items found in Sprint 2 — MINOR
+
+- A missing Deck URL shows the not-found page but returns HTTP 200, because the app-level loading state starts streaming before the page can return 404. Harmless for users; matters for search indexing and monitoring if Deck URLs are ever linked publicly.
+- Anonymous progress lasts for one visit (D-022). Decide what happens to it when the learner creates an account mid-visit: merge into the new account, or discard.
+- Cards inside a Deck are ordered easiest first, then by id. This was not specified; confirm.
+- The Decks catalogue page cannot show whether a Deck is unlocked, because progress lives in the browser. The Reading Room picker does.
 

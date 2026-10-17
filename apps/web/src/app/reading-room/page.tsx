@@ -1,25 +1,29 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { EmptyState } from "@ogbifo/ui";
+import { getContentService } from "@/server/content";
+import { DeckPicker } from "./deck-picker";
 
 export const metadata: Metadata = { title: "Reading Room" };
 
-export default function ReadingRoomPage() {
+export default async function ReadingRoomPage() {
+  const summaries = await getContentService().listDeckSummaries();
+
   return (
     <>
       <p className="font-ui text-xs uppercase tracking-[0.3em] text-ochre">Reading Room</p>
-      <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Read it in its own words.</h1>
-      <EmptyState
-        title="The Reading Room is being prepared"
-        action={
-          <Link href="/decks" className="bg-ochre px-6 py-3 font-ui text-sm font-semibold text-clay hover:brightness-110">
-            See the Decks
-          </Link>
-        }
-      >
-        Pick a Deck and a Card will appear in its own language first, with its meaning beneath. Until
-        it opens, you can look through the Decks that are waiting.
-      </EmptyState>
+      <h1 className="mt-4 font-serif text-4xl font-semibold tracking-tight sm:text-5xl">Choose a Deck.</h1>
+      {summaries.length === 0 ? (
+        <EmptyState title="No Decks yet">Decks are curated collections of Cards. When the first one opens, it will be here.</EmptyState>
+      ) : (
+        <DeckPicker
+          decks={summaries.map(({ deck, language, cardIds }) => ({
+            deck,
+            languageName: language.name,
+            languageCode: language.code,
+            cardIds: [...cardIds],
+          }))}
+        />
+      )}
     </>
   );
 }

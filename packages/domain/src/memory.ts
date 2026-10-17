@@ -36,9 +36,4 @@ export class InMemoryCardRepository implements CardRepository {
   async listByDeck(deckId: string) {
     return this.items.filter((item) => item.deckId === deckId).sort(byId);
   }
-  async countByDeck() {
-    const counts = new Map<string, number>();
-    for (const item of this.items) counts.set(item.deckId, (counts.get(item.deckId) ?? 0) + 1);
-    return counts;
-  }
 }

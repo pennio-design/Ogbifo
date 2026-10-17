@@ -18,15 +18,15 @@ function must<T>(result: Result<T>): T {
 
 const language = (input: Language) => must(createLanguage(input));
 const deck = (input: Deck) => must(createDeck(input));
-const card = (input: Omit<Card, "source" | "createdAt">) =>
-  must(createCard({ ...input, source: SEED_SOURCE, createdAt: SEEDED_AT }));
+const card = (input: Omit<Card, "source" | "createdAt" | "reviewStatus" | "reviewers">) =>
+  must(createCard({ ...input, source: SEED_SOURCE, createdAt: SEEDED_AT, reviewStatus: "unreviewed", reviewers: [] }));
 
 export const seedLanguages: readonly Language[] = [
   language({ id: "yo", name: "Yorùbá", code: "yo", nativeName: "Yorùbá", regions: ["South West Nigeria", "Benin", "Togo"], writingSystem: "Latin, tone-marked", status: "active", archiveCount: 0, archiveGapScore: 0.5 }),
 ];
 
 export const seedDecks: readonly Deck[] = [
-  deck({ id: "proverb-house-yo", name: "Proverb House", languageId: "yo", description: "Proverbs and the meaning carried inside them.", tier: 2, region: "South West Nigeria", tokenMultiplier: 1.5, isLocked: true }),
+  deck({ id: "proverb-house-yo", name: "Proverb House", languageId: "yo", description: "Proverbs and the meaning carried inside them.", tier: 2, region: "South West Nigeria", tokenMultiplier: 1.5, isLocked: true, unlockedByDeckId: "common-tongue-yo" }),
   deck({ id: "common-tongue-yo", name: "Common Tongue", languageId: "yo", description: "Everyday greetings and daily speech.", tier: 1, region: "South West Nigeria", tokenMultiplier: 1, isLocked: false }),
 ];
 
