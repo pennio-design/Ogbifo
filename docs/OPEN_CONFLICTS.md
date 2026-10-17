@@ -124,3 +124,14 @@ Raised by the owner: as the learner speaks, show the Yorùbá and the English to
 - **Open captions of any Yorùbá speech (unbounded).** Recognise free speech, write it with correct tone marks, and translate it live. That is free-text machine translation (MVP_SCOPE "Not MVP"), depends on speech recognition and tone restoration that are research-grade for Yorùbá, and a confident wrong caption damages the product's promise of preserving tone marks. The earlier tone-restoration benchmark that was removed from this repository (D-006) was about exactly this difficulty. Not planned.
 
 Recommendation: do not build either before the beta gates (#17). After a real-speech test, decide whether the bounded follow-along is the signature interaction. It reuses most of what exists; the unbounded one does not belong in this product yet.
+
+## 23. Tone lexicon and tone game — NOT DECIDED
+
+Proposal in `TONE_LEXICON_PROPOSAL.md`. It collides with existing decisions in four places:
+
+- **Leaderboard.** MVP_SCOPE lists leaderboards under "Not MVP". The owner has asked for a small one. Newer request, so flagged, not built.
+- **Training on contributions.** D-005 and D-020 limit the grant to display, preservation and community verification. Teaching the app from contributors' answers needs new explicit consent and a recorded decision.
+- **Audio.** D-019 keeps audio on the device, and the draft reference-voice licence forbids training and cloning. Crowd audio for training contradicts both.
+- **Majority as standard.** Consensus can erase dialect forms and conflicts with principle 2 and D-013 unless entries are dialect-labelled.
+
+Also unproved: that a speaker is native. Any gate is probabilistic. Learners and contributors must be separate tiers so a learner's mistakes never enter the data.
