@@ -8,7 +8,7 @@
 
 **Authentication:** Use an abstraction layer so the authentication provider can change without affecting domain logic.
 
-> `reference/ogbifo-architecture.md` describes a separate project and is not this app's architecture. Speech/translation workers may be Python: decide when Phase 2 starts.
+> Speech analysis runs in TypeScript on the device (D-019, `SCORING_SPEC.md`). Any server-side speech or translation worker is undecided.
 
 ## Architecture
 

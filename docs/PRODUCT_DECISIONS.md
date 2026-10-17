@@ -24,7 +24,7 @@ Users may contribute recordings, media, lyrics and cultural material, so consent
 
 ## D-006 The benchmark project
 
-`bench/`, `audit/`, `docs/reference/ogbifo-architecture.md` and the pitch deck belong to a separate project. They do not drive Ogbifọ's roadmap. They stay in this repository until the owner moves or drops them. App work does not modify them.
+`bench/`, `audit/`, `docs/reference/ogbifo-architecture.md` and the pitch deck belong to a separate project. They do not drive Ogbifọ's roadmap. The owner chose to delete them from this repository; they remain in git history (before the commit that removed them). Nothing in the app depends on them.
 
 ## D-007 Royal Seal
 

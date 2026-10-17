@@ -115,11 +115,6 @@ A feature is not complete until:
 
 Ogbifọ is a Yorùbá language and cultural archive/interpreter product (Yorùbá first, `docs/PRODUCT_DECISIONS.md` D-010; multi-language by design, one language shipped), not a data-engine business. No dataset-selling model in the MVP; contributions serve the Archive and Community; peer verification is community trust, not dataset certification; consent and licensing still apply. Read `docs/PRODUCT_DECISIONS.md` before any work touching contributions, verification or storage.
 
-## Separate project in this repo
+## Lyrics and copyright
 
-- `bench/` — Python tone-restoration benchmark (Yorùbá lyrics).
-- `audit/` — yearly audit of Yorùbá lyrics online and the demand test.
-- `docs/reference/ogbifo-architecture.md` — B2B pipeline architecture.
-
-These belong to a separate project (kept, or to be dropped, at the owner's discretion). They do not drive Ogbifọ's direction. Do not modify them as part of app work. The repository is public and lyrics are copyrighted: never commit line sheets, lyrics, verifier exports or reports (see `.gitignore`).
- 
+The repository is public and lyrics are copyrighted: never commit line sheets, lyrics, verifier exports or reports (see `.gitignore`). The earlier tone-restoration benchmark and lyrics audit were removed from this repository (D-006); they remain in git history.
