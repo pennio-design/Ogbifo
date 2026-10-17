@@ -159,3 +159,9 @@ Nothing is downloaded or used because it is "found online". Every reference carr
 ## D-035 Analytics carries no score
 
 Analytics events never include a score, only that an attempt completed (confirms D-028).
+
+## D-036 Calibration-failure fallback, and the default until calibration passes
+
+If calibration fails, Live shows the pitch contour overlay and per-syllable markers and **no number**. The number stays hidden until calibration passes. Build it behind a switch (`showResonanceNumber`, default off) so it can be enabled without a code change.
+
+A Live attempt is **finished when the recording is clear enough to analyse**, whether or not a number is shown. A recording refused for poor audio, or a failed alignment, does not finish a Card. This makes the Deck unlock rule (D-029) work with or without a number, and it settles the finished rule in `OPEN_CONFLICTS.md` #14 for attempts: finished means one analysable Live attempt per Card.

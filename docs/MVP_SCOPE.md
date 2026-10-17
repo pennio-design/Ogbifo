@@ -55,4 +55,4 @@ Reading Room: Deck picker, Card player (Yorùbá first, reviewer-approved transl
 
 Not in Sprint 2: recording, reference audio, scoring, accounts (Sprint 3 and later). Live therefore cannot finish a Card yet, so Proverb House cannot be unlocked in the running product until recording exists. The unlock rule is tested in the domain and was checked in the browser by injecting a completed Live attempt.
 
-Sprint 3 scope is `SCORING_SPEC.md` section 13 (metrics approved). One decision blocks the Live completion rule: the calibration-failure fallback (`OPEN_CONFLICTS.md` #7).
+Sprint 3 scope is `SCORING_SPEC.md` section 13 (metrics approved). Nothing blocks it: D-036 settles the fallback and the Live completion rule.

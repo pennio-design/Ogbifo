@@ -18,9 +18,9 @@ D-021 sets who may confirm and splits "Peer confirmed" from "Reviewed". Still to
 
 Policy is decided (D-005, D-019, D-020). Still to build and word: `Contribution` fields (`consentVersion`, `licenseGrant`, `rightsDeclaration`, `speakerConsentForAudio`, `retentionPolicy`, `withdrawnAt`); the consent screen copy, reviewed by a lawyer; the withdrawal flow and what it does to entries already confirmed or reviewed; and the rights declaration for lyrics. Voice recordings are personal data under Nigeria's data protection law (NDPA) and, for diaspora users, likely GDPR or UK GDPR as well. Counsel needed on lawful basis and retention before Phase 3.
 
-## 7. Pitch-contour metrics — APPROVED, fallback pending
+## 7. Pitch-contour metrics — RESOLVED (D-031, D-036)
 
-Metrics approved (D-031): Tone and Rhythm. `SCORING_SPEC.md` is the design. Still open: what Live does if calibration fails (a numberless fallback or a delay). Ship gates are in #17.
+Tone and Rhythm are approved. If calibration fails, Live shows contour and markers with no number. `SCORING_SPEC.md` is the design. Ship gates are in #17.
 
 ## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 
@@ -38,7 +38,7 @@ D-028 fixes the guardrails. Open: which vendor (data location, DPA, replay maski
 
 ## 14. Define "finished" for Common Tongue — BEFORE-PHASE-2
 
-D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Common Tongue has at least one completed Live attempt. Alternatives: every Card seen, or a minimum average score. Sprint 2 implements this proposed rule in `progress.ts` (one place to change). Decide, and decide what an anonymous reader sees when they reach the end (an account prompt to keep progress and unlock the next Deck). Note: the gate adds a place to stall inside a 30 to 50 person beta, so read week-2 and week-4 return alongside the Deck-completion funnel, not instead of it.
+D-029 gates Proverb House on finishing Common Tongue. Proposed: every Card in Common Tongue has at least one completed Live attempt. Alternatives: every Card seen, or a minimum average score. Partly settled by D-036: an attempt is finished when its recording is clear enough to analyse. Sprint 2 implements the Card-level rule in `progress.ts` (one place to change). Decide, and decide what an anonymous reader sees when they reach the end (an account prompt to keep progress and unlock the next Deck). Note: the gate adds a place to stall inside a 30 to 50 person beta, so read week-2 and week-4 return alongside the Deck-completion funnel, not instead of it.
 
 ## 15. Expansion gate thresholds — AFTER LAUNCH
 
@@ -60,5 +60,5 @@ Building does not wait for these. Shipping to beta users does.
 3. **Reference voices** with provenance records (D-034): two voices, licensed.
 4. **Reviewers** for every beta Card (D-012): two per Card.
 5. **Counsel review** of consent, licensing and provenance wording (#5).
-6. **Calibration-failure fallback** decided (#7).
+6. **Number switch:** `showResonanceNumber` stays off until calibration passes (D-036).
 

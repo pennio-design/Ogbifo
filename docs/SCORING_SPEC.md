@@ -1,6 +1,6 @@
 # Ogbifọ — Resonance Score Specification
 
-**Status: metrics APPROVED (D-031). One open decision: the calibration-failure fallback (section 10, item 4).** Nothing here is built. It replaces the Clarity, Rhythm and Boldness metrics in `AUDIO_SPEECH.md` and `DATA_MODEL.md`, and fixes Sprint 3's scope.
+**Status: APPROVED (D-031, D-036). Nothing open blocks Sprint 3.** Nothing here is built. It replaces the Clarity, Rhythm and Boldness metrics in `AUDIO_SPEECH.md` and `DATA_MODEL.md`, and fixes Sprint 3's scope.
 
 Governed by: D-014 (pitch contour against a native reference), D-019 (on-device, audio not uploaded), D-024 (Studio unscored, Live scored), D-028 (no audio or pitch data to analytics).
 
@@ -126,7 +126,7 @@ The thresholds above are guesses until measured. Before the score ships to beta 
    - Scores for male and female fluent speakers differ by no more than 5 points at the median.
    - Not-scored rate for fluent readings in quiet rooms below 5 percent.
 3. **Automated tests** (no real speech needed): synthetic harmonic signals 80 to 400 Hz recover F0 within 1 percent; octave errors under 2 percent; silence and noise yield no voiced frames; the same input yields the same output; the syllabifier passes the §3 vectors.
-4. If a bar fails, thresholds are retuned and the set re-run. If it still fails, the score does not ship and Live shows contour and markers only.
+4. If a bar fails, thresholds are retuned and the set re-run. If it still fails, the number does not ship and Live shows contour and markers only (D-036). Until calibration passes the number is hidden behind `showResonanceNumber` (default off). A Live attempt is finished when its recording is clear enough to analyse, with or without a number.
 
 ## 11. Privacy
 
@@ -136,7 +136,7 @@ The thresholds above are guesses until measured. Before the score ships to beta 
 
 ## 12. Decisions
 
-Resolved: 1 metrics approved (D-031); 2 and 4 reviewers, linguists and calibration speakers come from the volunteer call, so they are ship gates (D-032, `OPEN_CONFLICTS.md` #17); 3 annotation tool (D-033); 5 reference provenance (D-034); 6 analytics (D-035). Open: 7.
+Resolved: 1 metrics approved (D-031); 2 and 4 reviewers, linguists and calibration speakers come from the volunteer call, so they are ship gates (D-032, `OPEN_CONFLICTS.md` #17); 3 annotation tool (D-033); 5 reference provenance (D-034); 6 analytics (D-035). 7 contour and markers with no number if calibration fails (D-036). Nothing is open.
 
 Original list, for the record:
 
