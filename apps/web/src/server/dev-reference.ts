@@ -28,7 +28,8 @@ export function devReference(cardId: string, cardText: string) {
   const hit = cache.get(cardId);
   if (hit) return hit;
   const parts = syllabify(cardText).syllables;
-  const voice = synthSpeech(parts, { seed: 1 });
+  // Steps of 2 semitones each side of Mid (4 between High and Low): a guess at relaxed speech, to be replaced by a recorded voice.
+  const voice = synthSpeech(parts, { seed: 1, toneStepSemitones: 2 });
   const built = buildReferenceAnnotation({
     samples: voice.samples,
     syllables: parts.map((p, i) => ({ text: p.text, tone: p.tone, ...voice.spans[i]! })),

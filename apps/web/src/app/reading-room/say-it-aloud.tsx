@@ -17,6 +17,7 @@ import {
   recorderAnnouncement,
   scoreSentence,
   stepSummary,
+  testerDetails,
   type AttemptScored,
   type ReferenceAnnotation,
   type Tone,
@@ -195,6 +196,25 @@ export function SayItAloud({ cardId, languageCode, reference, mode, liveFinished
   );
 }
 
+/** Development builds (and NEXT_PUBLIC_TESTER_DETAILS=1) show the numbers behind a result, for testers. */
+const SHOW_TESTER_DETAILS = process.env.NODE_ENV !== "production" || process.env.NEXT_PUBLIC_TESTER_DETAILS === "1";
+
+function TesterDetails({ text }: { text: string }) {
+  return (
+    <details className="mt-6 border border-bone/10 p-3">
+      <summary className="cursor-pointer font-ui text-sm text-ash">Numbers behind this result (for testers)</summary>
+      <pre className="mt-3 overflow-x-auto whitespace-pre font-mono text-xs leading-relaxed text-bone" data-testid="tester-details">{text}</pre>
+      <button
+        type="button"
+        className="mt-3 inline-flex min-h-12 items-center border border-bone/20 px-4 font-ui text-sm hover:border-ochre"
+        onClick={() => void navigator.clipboard?.writeText(text)}
+      >
+        Copy the numbers
+      </button>
+    </details>
+  );
+}
+
 function AttemptResult({
   result,
   annotation,
@@ -243,6 +263,7 @@ function AttemptResult({
         ))}
       </ol>
       <p className="mt-6 max-w-prose font-body text-sm text-ash">{NOT_WORDS_NOTE}</p>
+      {SHOW_TESTER_DETAILS ? <TesterDetails text={testerDetails(result)} /> : null}
       {mode === "live" ? (
         <p className="mt-2 font-ui text-sm text-bone">This Card is now finished in Live.</p>
       ) : (

@@ -158,3 +158,14 @@ Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later
 - **Contractions are not read.** People say it contracted: *Adìyẹ tí 'ò kú ṣì maa j'àgbàdo*. The syllable rules split on the apostrophe and report `j` as a consonant with no vowel (elision is not modelled, SCORING_SPEC section 3). A learner who says the contracted form would be scored against the full written form. Decide: annotate the spoken form per reference voice (the annotation tool already takes the reviewer's syllables), and let the Card carry both written forms.
 - **`maa` counts as two syllables** (ma·M a·M) by the current rules, because every vowel is a nucleus. A linguist should confirm that long vowels like this are treated right for scoring.
 - The Card has no dialect set. A reviewer must name one.
+
+## 26. First real-speech result: Studio scored a real reading 0 of 4 — OPEN
+
+The owner tried the Reading Room in a GitHub Codespace and read *Ẹ káàárọ̀* in their own voice. Studio said "0 of 4 pitch steps were close to the reference", with a jagged orange contour that did not follow the reference bars. This is the first real speech the pipeline has met (OPEN_CONFLICTS #19 predicted it). Likely causes, none yet confirmed:
+
+- **The reference was synthetic and exaggerated.** Steps of 3 semitones each side of Mid (6 between High and Low) are probably larger than relaxed speech, and the score credits a step only within about 1.5 semitones (none at 4 or more). A reading with a smaller High to Low contrast fails every step. The dev reference now uses 2 semitones (a guess).
+- **Real speech breaks the pitch track.** Voiceless consonants, creak and fast L to H changes leave gaps and jumps; the chart showed fragments.
+- **Alignment of a human to a robot.** Syllable boundaries come from matching spectra against a synthetic voice, so a boundary may fall in the wrong place. The numbers below show it.
+- **Natural speech may not follow citation tones.** Downdrift lowers a second High; the score compares steps with the reference, not levels.
+
+Added: a development-only "Numbers behind this result" panel (also `NEXT_PUBLIC_TESTER_DETAILS=1`) with per-syllable timing, voiced share, median pitch and step differences, as plain text to paste. Next: get several real readings' numbers, then decide what to change in the tracker, the alignment or the credit thresholds. Do not retune on one voice. Calibration with 20 speakers stays the gate.
