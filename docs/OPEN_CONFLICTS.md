@@ -180,3 +180,7 @@ Contractions are how Yorùbá is really spoken, including names (the owner's exa
 4. **Understanding contractions in free speech from context.** Long term: speech recognition, tone restoration and translation together. The earlier benchmark (removed, D-006) measured how hard that is. Not planned for the beta or promised.
 
 Open: how a spoken form that is not in the lexicon is treated (accepted, or "we do not know this form yet"); never marked wrong for being a real contraction.
+
+## 28. The synthetic reference still sounds robotic — decided: stop polishing it
+
+Owner feedback after two rounds: it sounds robotic, and the last sound was odd. The second round gave the last syllable a slow fade and a slight phrase-final fall (it had been cut off abruptly). A formant synthesiser will not sound like a Yorùbá speaker however it is tuned, and every hour spent on it is an hour not spent on the real fix: a recorded reference voice. Steps are in `docs/RECORDING_A_REFERENCE.md`. The synthetic voice stays as a plumbing test only. Recordings and reference files are now gitignored (the repository is public; voices are licensed to the Project only).

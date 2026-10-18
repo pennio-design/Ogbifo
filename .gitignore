@@ -25,3 +25,7 @@ apps/web/content/lexicon/*.json
 # Card sheets and exports: contributors' work, licensed to the Project only. Keep them private.
 apps/web/content/cards/*.csv
 apps/web/content/cards/*.json
+
+# Reference recordings are speakers' voices, licensed to the Project only. Keep them private.
+apps/web/content/references/*.json
+apps/web/public/references/

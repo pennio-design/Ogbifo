@@ -136,9 +136,9 @@ export function synthSpeech(syllables: readonly SpeechSyllable[], options: Speec
     const p = parse(s.text);
     const last = k === syllables.length - 1;
     const onsetN = Math.round(((ONSET_MS[p.onset] * tempo) / 1000) * SPEECH_SR);
-    const vowelN = Math.round(((VOWEL_MS * (last ? 1.4 : 1) * (p.vowel === null ? 0.8 : 1) * tempo) / 1000) * SPEECH_SR);
+    const vowelN = Math.round(((VOWEL_MS * (last ? 1.25 : 1) * (p.vowel === null ? 0.8 : 1) * tempo) / 1000) * SPEECH_SR);
     const formants = (p.vowel === null ? NASAL : (VOWEL_FORMANTS[p.vowel] ?? VOWEL_FORMANTS.a!)).map((f) => f * scale) as unknown as Formants;
-    return { p, tone: options.monotone ? ("M" as Tone) : s.tone, onsetN, vowelN, formants };
+    return { p, tone: options.monotone ? ("M" as Tone) : s.tone, onsetN, vowelN, formants, final: last };
   });
 
   const total = plan.reduce((a, s) => a + s.onsetN + s.vowelN, 0);
@@ -170,7 +170,9 @@ export function synthSpeech(syllables: readonly SpeechSyllable[], options: Speec
     const transition = Math.round(0.03 * SPEECH_SR);
     for (let i = 0; i < n; i += 1) {
       const t = (cursor + i - lead) / SPEECH_SR;
-      pitchSt += (target - pitchSt) * smooth;
+      // Phrase-final lowering: the last syllable drifts about a semitone down, as speech does.
+      const finalDrop = seg.final ? -1 * Math.min(1, i / Math.max(n, 1)) : 0;
+      pitchSt += (target + finalDrop - pitchSt) * smooth;
       drift += (gaussian(rand) * 0.15 - drift) * driftStep;
       const f0 = base * 2 ** ((pitchSt - decl * t + drift) / 12);
 
@@ -180,7 +182,8 @@ export function synthSpeech(syllables: readonly SpeechSyllable[], options: Speec
 
       // Loudness: rises into the vowel, falls out of it; louder on High.
       const attack = Math.min(1, j / (0.015 * SPEECH_SR));
-      const release = Math.min(1, (seg.vowelN - j) / (0.025 * SPEECH_SR));
+      // The phrase-final syllable fades out slowly instead of being cut off.
+      const release = Math.min(1, (seg.vowelN - j) / ((seg.final ? 0.12 : 0.025) * SPEECH_SR));
       const hump = 0.75 + 0.25 * Math.sin(Math.PI * Math.min(1, vowelPos * 1.1));
       const toneGain = seg.tone === "H" ? 1.15 : seg.tone === "L" ? 0.95 : 1;
       let voicing = 0;
