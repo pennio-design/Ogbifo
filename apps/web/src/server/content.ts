@@ -15,7 +15,7 @@ import {
   type Card,
   type ReferenceFile,
 } from "@ogbifo/domain";
-import { devReference, devReferenceAudioUrl, isDevReferenceCard } from "./dev-reference";
+import { devReference, devReferenceAudioUrl, isDevReferenceCard, syntheticReferenceEnabled } from "./dev-reference";
 
 /**
  * D-012: users see only reviewed Cards. The developer seed is unreviewed, so
@@ -81,7 +81,7 @@ function withReferences(cards: readonly Card[]): Card[] {
       return card;
     }
     let candidate: Card | null = null;
-    if (allowUnreviewed && isDevReferenceCard(card.id)) {
+    if (allowUnreviewed && syntheticReferenceEnabled && isDevReferenceCard(card.id)) {
       const dev = devReference(card.id, card.sourceText);
       candidate = {
         ...card,

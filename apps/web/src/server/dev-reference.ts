@@ -15,6 +15,14 @@ import {
  * only when unreviewed content is allowed, and it can never be on a reviewed Card
  * (licence `synthetic_test`).
  */
+/**
+ * The synthetic voice is for automated browser tests only. It is OFF in every normal run
+ * (development included): learners and testers never hear a robotic voice. A Card with no
+ * recorded reference says so and keeps Record closed. Turn it on only with
+ * OGBIFO_SYNTHETIC_REFERENCE=1.
+ */
+export const syntheticReferenceEnabled = process.env.OGBIFO_SYNTHETIC_REFERENCE === "1";
+
 export const DEV_REFERENCE_CARD_IDS = ["card-yo-greeting-1", "card-yo-proverb-1"] as const;
 /** Kept for the greeting, which the browser tests use. */
 export const DEV_REFERENCE_CARD_ID = DEV_REFERENCE_CARD_IDS[0];

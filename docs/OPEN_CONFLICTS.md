@@ -184,3 +184,5 @@ Open: how a spoken form that is not in the lexicon is treated (accepted, or "we 
 ## 28. The synthetic reference still sounds robotic — decided: stop polishing it
 
 Owner feedback after two rounds: it sounds robotic, and the last sound was odd. The second round gave the last syllable a slow fade and a slight phrase-final fall (it had been cut off abruptly). A formant synthesiser will not sound like a Yorùbá speaker however it is tuned, and every hour spent on it is an hour not spent on the real fix: a recorded reference voice. Steps are in `docs/RECORDING_A_REFERENCE.md`. The synthetic voice stays as a plumbing test only. Recordings and reference files are now gitignored (the repository is public; voices are licensed to the Project only).
+
+Update (owner: "don't put any robotic sound"): the synthetic voice is now off everywhere unless `OGBIFO_SYNTHETIC_REFERENCE=1`, which only the browser tests set. A Card without a recorded reference shows "A native reference for this Card hasn't been recorded yet" and keeps Record closed. Until the owner's own recordings are placed (`docs/RECORDING_A_REFERENCE.md`), Studio and Live cannot be tried in the app.

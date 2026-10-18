@@ -1,7 +1,8 @@
 /**
  * End-to-end check of the recording flow in a real browser with a fake
  * microphone that plays synthetic readings. Needs the app running with the
- * development reference (OGBIFO_ALLOW_UNREVIEWED=1) and a Chromium binary.
+ * synthetic test reference (OGBIFO_ALLOW_UNREVIEWED=1 and OGBIFO_SYNTHETIC_REFERENCE=1, which no
+ * normal run uses) and a Chromium binary.
  *
  *   BASE_URL=http://localhost:3000 CHROMIUM_PATH=/path/to/chromium npm run e2e -w @ogbifo/web
  *   EXPECT_NUMBER=1 when the app was built with NEXT_PUBLIC_SHOW_RESONANCE_NUMBER=1.
