@@ -101,7 +101,7 @@ async function main() {
     check(parsed.value.cardId === "card-yo-greeting-1" && parsed.value.audioUrl === "/references/card-yo-greeting-1.wav", "it names the Card and the audio location");
     check(parsed.value.annotation.syllables.map((s) => s.text).join("") === "Ẹkáàárọ̀" && parsed.value.annotation.syllables.map((s) => s.tone).join("") === "MHLHL", "it records the reviewer's syllables and tones");
     check(parsed.value.provenance.licence === "recorded_for_ogbifo" && parsed.value.provenance.speakerConsent, "it records the provenance and consent");
-    check(parsed.value.annotation.algorithmVersion === "ogb-pitch-1", "it records the algorithm version");
+    check(parsed.value.annotation.algorithmVersion === "ogb-pitch-2", "it records the algorithm version");
   }
   const [audio] = await Promise.all([page.waitForEvent("download"), page.getByRole("link", { name: /Download card-yo-greeting-1\.wav/ }).click()]);
   check((audio.suggestedFilename()) === "card-yo-greeting-1.wav", "the audio is renamed after the Card");

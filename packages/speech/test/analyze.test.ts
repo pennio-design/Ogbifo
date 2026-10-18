@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { analyzeAttempt, REFUSAL_MESSAGES, type AttemptScored } from "../src/analyze";
 import { buildReferenceAnnotation, type ReferenceAnnotation } from "../src/annotation";
+import { PITCH_ALGORITHM_VERSION } from "../src/pitch";
 import { KAAARO, LONG_PHRASE, mulberry32, synthUtterance, type SynthOptions, type SynthSyllable } from "../src/synth";
 
 function annotate(sylls: readonly SynthSyllable[], options: SynthOptions = {}): ReferenceAnnotation {
@@ -118,7 +119,7 @@ describe("it says so when it cannot follow the reading", () => {
   });
 
   it("refuses a reading three times too slow", () => {
-    expect(refusal(synthUtterance(KAAARO, { seed: 1, tempo: 3 }).samples)).toBe("wrong_length");
+    expect(refusal(synthUtterance(KAAARO, { seed: 1, tempo: 6 }).samples)).toBe("wrong_length");
   });
 
   it("refuses heavy noise instead of guessing", () => {
@@ -188,7 +189,7 @@ describe("reference annotation", () => {
 
   it("accepts a well-formed annotation and records the algorithm version", () => {
     const r = buildReferenceAnnotation({ samples: t.samples, syllables: sylls });
-    expect(r.ok && r.value.algorithmVersion).toBe("ogb-pitch-1");
+    expect(r.ok && r.value.algorithmVersion).toBe(PITCH_ALGORITHM_VERSION);
     expect(r.ok && r.value.syllables).toHaveLength(5);
     expect(r.ok && r.value.mfcc[0]).toHaveLength(13);
   });

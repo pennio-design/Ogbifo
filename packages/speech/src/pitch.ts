@@ -2,7 +2,7 @@ import { median, percentile, semitones } from "./stats";
 import { yinFrame } from "./yin";
 
 /** Bump when the pitch pipeline changes. Stored with every reference annotation. */
-export const PITCH_ALGORITHM_VERSION = "ogb-pitch-1";
+export const PITCH_ALGORITHM_VERSION = "ogb-pitch-2";
 
 export const SAMPLE_RATE = 16000;
 export const FRAME_MS = 40;

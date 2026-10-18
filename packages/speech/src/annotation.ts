@@ -1,3 +1,4 @@
+import { cleanAudio } from "./clean";
 import { computeMfcc } from "./mfcc";
 import { HOP_MS, PITCH_ALGORITHM_VERSION, SAMPLE_RATE, trackPitch } from "./pitch";
 import { failResult, okResult, type SpeechResult } from "./result";
@@ -46,8 +47,10 @@ export function buildReferenceAnnotation(input: {
     previousEnd = s.endMs;
   }
 
-  const track = trackPitch(samples);
-  const mfcc = computeMfcc(samples).map((frame) => Array.from(frame, (v) => Math.round(v * 1000) / 1000));
+  // The reference is treated the same way as a learner's reading (D-045), so the two are comparable.
+  const treated = cleanAudio(samples);
+  const track = trackPitch(treated);
+  const mfcc = computeMfcc(treated).map((frame) => Array.from(frame, (v) => Math.round(v * 1000) / 1000));
   return okResult({
     algorithmVersion: PITCH_ALGORITHM_VERSION,
     hopMs: HOP_MS,

@@ -17,3 +17,4 @@ export * from "./wav";
 export * from "./proposal";
 export * from "./speech-synth";
 export * from "./tester-details";
+export * from "./clean";

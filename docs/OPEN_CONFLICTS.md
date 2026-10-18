@@ -169,3 +169,14 @@ The owner tried the Reading Room in a GitHub Codespace and read *Ẹ káàárọ
 - **Natural speech may not follow citation tones.** Downdrift lowers a second High; the score compares steps with the reference, not levels.
 
 Added: a development-only "Numbers behind this result" panel (also `NEXT_PUBLIC_TESTER_DETAILS=1`) with per-syllable timing, voiced share, median pitch and step differences, as plain text to paste. Next: get several real readings' numbers, then decide what to change in the tracker, the alignment or the credit thresholds. Do not retune on one voice. Calibration with 20 speakers stays the gate.
+
+## 27. Contractions — OPEN (direction decided, D-044)
+
+Contractions are how Yorùbá is really spoken, including names (the owner's examples). Plan, smallest first:
+
+1. **Spoken forms on a Card.** A Card lists its written full form and its common spoken forms; each reference voice is annotated per form; the learner is scored against whichever form fits their reading best. The Cards sheet needs a `spoken_forms` column and the syllable rules need elision (an apostrophe is a dropped vowel or consonant, not a separator: today `j'àgbàdo` yields a bare `j`).
+2. **A contraction lexicon.** Surface form, underlying words, the pattern (which sound dropped, how the tone moved), a dialect label (D-043), and two reviewers. The tone game's contributors are the natural source.
+3. **A Names Deck.** Full names and their everyday contractions. Bounded, culturally central, quick for a teacher to check. Example names must be confirmed by the teacher, not taken from this file.
+4. **Understanding contractions in free speech from context.** Long term: speech recognition, tone restoration and translation together. The earlier benchmark (removed, D-006) measured how hard that is. Not planned for the beta or promised.
+
+Open: how a spoken form that is not in the lexicon is treated (accepted, or "we do not know this form yet"); never marked wrong for being a real contraction.

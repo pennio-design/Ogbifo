@@ -1,4 +1,5 @@
 import { alignOpenEnded } from "./dtw";
+import { cleanAudio } from "./clean";
 import { computeMfcc, normalizeCepstra } from "./mfcc";
 import { rangeScale, rhythmScore, resonanceScore, toneScore, type MarkerState } from "./metrics";
 import { HOP_MS, PITCH_ALGORITHM_VERSION, SAMPLE_RATE, medianHz, toSemitoneContour, trackPitch } from "./pitch";
@@ -14,8 +15,12 @@ export const LIMITS: Record<"minSpeechMs" | "minPeakRms" | "maxClippedFraction" 
   minSnrDb: 8,
   /** Skip the noise check when speech fills almost the whole recording. */
   maxSpeechFractionForNoiseCheck: 0.9,
-  minLengthRatio: 0.5,
-  maxLengthRatio: 2,
+  /**
+   * Pace is never scored or forced (D-045): alignment absorbs speed. These only catch a
+   * reading so short or so long that it cannot be the phrase.
+   */
+  minLengthRatio: 0.25,
+  maxLengthRatio: 4,
   /**
    * Only catches "could not follow that". It is not a wrong-words detector: in
    * synthetic tests wrong phrases cost 2.9 to 4.6 and legitimate very different
@@ -111,11 +116,14 @@ export function analyzeAttempt(
   learner: Float32Array,
   reference: ReferenceAnnotation,
   overrides: Partial<Record<keyof typeof LIMITS, number>> = {},
+  options: { denoise?: boolean } = {},
 ): AttemptAnalysis {
   const limits = { ...LIMITS, ...overrides };
   if (reference.algorithmVersion !== PITCH_ALGORITHM_VERSION) return refuse("reference_mismatch");
 
-  const track = trackPitch(learner);
+  // Clean the audio first (D-045): remove rumble and steady background noise, keep the voice.
+  const audio = options.denoise === false ? learner : cleanAudio(learner);
+  const track = trackPitch(audio);
   const frames = track.rms.length;
   if (frames === 0) return refuse("too_short");
 
@@ -157,7 +165,7 @@ export function analyzeAttempt(
   const pad = 15;
   const learnerFrom = Math.max(0, s0 - pad);
   const learnerTo = Math.min(frames, s1 + 1 + pad);
-  const learnerMfcc = computeMfcc(learner);
+  const learnerMfcc = computeMfcc(audio);
   const learnerSlice = normalizeCepstra(learnerMfcc.slice(learnerFrom, learnerTo));
   const refSlice = normalizeCepstra(
     reference.mfcc.slice(refFirstFrame, refLastFrame).map((frame) => Float64Array.from(frame)),

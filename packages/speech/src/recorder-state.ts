@@ -86,4 +86,5 @@ export function recorderAnnouncement(state: RecorderState): string {
 }
 
 /** Stop automatically after this long, so a forgotten recording cannot run on. */
-export const MAX_RECORDING_MS = 20_000;
+/** A safety limit, not a pace: the learner stops when they are done (D-045). A Card is a phrase or proverb. */
+export const MAX_RECORDING_MS = 60_000;

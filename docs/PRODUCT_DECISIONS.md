@@ -205,3 +205,12 @@ Reversal by the owner: a tone is marked the way it sounds, and it is interpreted
 - The competence test (D-042 item 3) draws only on items a reviewer has marked as the same in every dialect, so a regional speaker is not failed for speaking their own dialect. A per-dialect test comes later.
 - Scoring in the Reading Room compares a learner with the reference recording's dialect. A Card names the dialect of its reference voice.
 - Start with the dialects the owner and the teacher speak, not all of them. Reviewer capacity per dialect is the limit.
+
+
+## D-044 Contractions are core; scoring must not depend on imitating one voice (direction)
+
+Owner: contractions are the beauty of spoken Yorùbá, people contract even their names, and real understanding means reading the speaker's intent from context. Staged plan (`OPEN_CONFLICTS.md` #27): Cards list their spoken forms; a contraction lexicon with patterns; understanding contractions in free speech is long-term research, not promised. Owner finding (#26): the Tone score rewarded imitating the synthetic reference and rejected natural speech. A synthetic voice is a plumbing test only. **Not yet decided:** replacing the reference-contour Tone score with a reference-free, direction-based one on the card's tone labels. Awaiting the owner's approval.
+
+## D-045 Treat the audio, do not force time or pace
+
+A speaker is not made to speak for a set time or at a set pace. The recording is cleaned (rumble and steady noise removed) before analysis, and pace is matched by alignment. The recording limit is a 60 second safety cap. See `SCORING_SPEC.md` section 16.

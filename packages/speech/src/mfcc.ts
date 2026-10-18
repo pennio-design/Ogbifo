@@ -12,7 +12,8 @@ const PREEMPHASIS = 0.97;
 const hz2mel = (hz: number) => 2595 * Math.log10(1 + hz / 700);
 const mel2hz = (mel: number) => 700 * (10 ** (mel / 2595) - 1);
 
-function fft(re: Float64Array, im: Float64Array): void {
+/** In-place radix-2 FFT. `re.length` must be a power of two. */
+export function fft(re: Float64Array, im: Float64Array): void {
   const n = re.length;
   for (let i = 1, j = 0; i < n; i += 1) {
     let bit = n >> 1;

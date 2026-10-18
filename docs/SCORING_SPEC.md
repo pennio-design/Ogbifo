@@ -200,7 +200,7 @@ Fluent and monotone readings separate completely across five voices.
 
 **How it works.**
 
-- The microphone is requested only when Record is pressed (tested: it is not requested on page load). Echo cancellation and noise suppression are off because they can bend pitch; automatic gain is on. Recording stops by itself at 20 seconds.
+- The microphone is requested only when Record is pressed (tested: it is not requested on page load). Echo cancellation and noise suppression are off because they can bend pitch; automatic gain is on. Recording stops by itself at 60 seconds, a safety limit and not a pace: the learner stops when done (D-045).
 - Audio is collected in memory by an audio worklet, resampled to 16 kHz, analysed in a Web Worker, then dropped. It is not stored or uploaded, and progress holds only scores and markers (tested).
 - The reference annotation is fetched on demand from `/api/references/[cardId]`, so Card pages stay small.
 - Recorder states are idle, requesting permission, recording, processing, complete and error. `ready` from `AUDIO_SPEECH.md` is not used.
@@ -219,3 +219,12 @@ Fluent and monotone readings separate completely across five voices.
 - **The development reference is a synthetic tone sequence**, labelled as such, shown only in development, and barred from reviewed Cards by `synthetic_test`.
 - **A screen reader has not been run over any of it.** The chart has a text alternative and every marker is in words, but that is design, not testing.
 - **Reference audio does not yet work offline** (D-017): it streams from the server and is not cached.
+
+## 16. Audio treatment and pace (D-045, `ogb-pitch-2`)
+
+Owner direction after the first real reading: do not force a time or a pace on the speaker; treat the audio and cut out noise; match pace that way.
+
+- **Treatment (`clean.ts`).** Before tracking pitch and computing spectra, remove the offset and rumble below about 60 Hz, then reduce steady background noise by spectral subtraction. The noise level per band is estimated from the quietest part of the recording itself; gains never fall below 0.12, so nothing is cut to silence. Length is unchanged and nothing leaves the device. The reference annotation is treated the same way, so the two stay comparable. Algorithm version bumped to `ogb-pitch-2`, so references made with `ogb-pitch-1` are refused as out of date.
+- **Pace.** Alignment absorbs speed; Rhythm already compares each syllable's share of the duration, not its length. Pace stays informational. The length gate is widened from 0.5 to 2 times the reference to 0.25 to 4 times, and only catches a reading too short or too long to be the phrase. Recording stops at 60 seconds, not 20, and only as a safety limit.
+- **Measured on synthetic speech with added noise** (a speech-like voice, white noise, a 50 Hz hum): a clean reading is unchanged; at 10 dB signal to noise, voiced frames found go from 153 to 186 (130 to 186 with hum); a 5 dB reading that was refused ("not enough voice") now scores; 0 dB is still refused. Tempo from 0.5 to 3.5 times as long still scores Tone at 85 or more.
+- **Not verified:** real microphones, real rooms, speech with background voices or music, Safari and Firefox. Spectral subtraction can leave a faint warble on very noisy input. **Rhythm is the weak point in noise**: even at 20 dB it fell from 100 to about 70 untreated (91 treated), because syllable boundaries move when the spectra are noisy. The Tone score barely moved. Watch Rhythm in calibration.
