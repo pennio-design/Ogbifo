@@ -26,9 +26,16 @@ describe("syllabify: more behaviour", () => {
     const nfc = "Ẹni tó bá fẹ́ jẹun tó dára, kò gbọdọ̀ jẹkí ojúkòkòrò mú un.";
     expect(show(nfc.normalize("NFD"))).toBe(show(nfc.normalize("NFC")));
   });
-  it("syllabifies the seed proverb", () => {
+  it("syllabifies a long sentence with stacked marks (a test string, not a real proverb)", () => {
     expect(show("Ẹni tó bá fẹ́ jẹun tó dára,")).toBe("Ẹ·M ni·M tó·H bá·H fẹ́·H jẹ·M un·M tó·H dá·H ra·M");
     expect(show("mú un.")).toBe("mú·H un·M");
+  });
+  it("syllabifies the hero proverb", () => {
+    expect(show("Adìyẹ tí kò kú ṣì maa jẹ àgbàdo.")).toBe("A·M dì·L yẹ·M tí·H kò·L kú·H ṣì·L ma·M a·M jẹ·M à·L gbà·L do·M");
+  });
+  it("does not yet read a contraction: the apostrophe splits a bare consonant (elision is not modelled)", () => {
+    const result = syllabify("Adìyẹ tí 'ò kú ṣì maa j'àgbàdo.");
+    expect(result.issues.join(" ")).toContain("j");
   });
   it("treats n before a vowel as an onset and n before a consonant as nasalisation", () => {
     expect(show("ìnú")).toBe("ì·L nú·H");

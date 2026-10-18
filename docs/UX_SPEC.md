@@ -24,13 +24,13 @@ Display `Deck: Proverb House`, then: progress, score, Live / Studio, target lang
 ```
 YORUBA · TIER 2 · PROVERB
 
-Ẹni tó bá fẹ́ jẹun tó dára,
-kò gbọdọ̀ jẹkí ojúkòkòrò mú un.
+Adìyẹ tí kò kú ṣì maa jẹ àgbàdo.
 
 ────────────────────
 
-One who wants to eat well
-must not let greed consume them.
+A fowl that isn't dead will still eat corn.
+
+When there is life, there is hope.
 ```
 
 ### Interaction states

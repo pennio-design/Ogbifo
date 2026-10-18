@@ -24,7 +24,7 @@ describe("ContentService", () => {
 
   it("returns a deck with its cards", async () => {
     const result = await service().getDeck("proverb-house-yo");
-    expect(result.ok && result.value.cards[0]?.sourceText).toContain("Ẹni tó bá fẹ́ jẹun");
+    expect(result.ok && result.value.cards[0]?.sourceText).toContain("Adìyẹ tí kò kú ṣì maa jẹ àgbàdo");
   });
 
   it("reports a missing deck with a structured error, not an exception", async () => {

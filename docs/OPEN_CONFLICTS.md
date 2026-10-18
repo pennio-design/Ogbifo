@@ -24,7 +24,7 @@ Tone and Rhythm are approved. If calibration fails, Live shows contour and marke
 
 ## 11. Brand typeface cannot set Yorùbá — BEFORE-PHASE-1 (interim fix shipped)
 
-The guidelines assign language artifacts to Fraunces and claim Space Grotesk never clips diacritics. Measured in Sprint 1: both mis-position a tone mark stacked on a dot-below letter (`ẹ́`, `ọ̀`, as in the Reading Room's own proverb), in NFC and NFD. Fraunces also lacks `ǹ`. Interim: language text is set in Noto Serif (`LanguageText` component); Fraunces stays for the wordmark and English headlines.
+The guidelines assign language artifacts to Fraunces and claim Space Grotesk never clips diacritics. Measured in Sprint 1: both mis-position a tone mark stacked on a dot-below letter (`ẹ́`, `ọ̀`; the test sentence below is made up to contain them, it is not a proverb), in NFC and NFD. Fraunces also lacks `ǹ`. Interim: language text is set in Noto Serif (`LanguageText` component); Fraunces stays for the wordmark and English headlines.
 
 Decide: (a) keep Noto Serif for language text, (b) choose another serif that passes the stacked-mark test, (c) commission Fraunces anchor fixes. Whichever is chosen must pass `Ẹni tó bá fẹ́ jẹun, kò gbọdọ̀ jẹkí` rendered in Chromium, Safari and Firefox. Only Chromium has been checked.
 
@@ -151,3 +151,10 @@ Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later
 - **Card files are read at server start** and live in a private folder. A deployment must supply them (a private volume or, later, the database). A restart is needed to pick up a new export.
 - **Dialect on a Card** is stored (`dialectId`) but the Reading Room does not yet show it or choose references by it.
 - **Build warning.** Reading Card files from a configurable folder makes Turbopack warn that the whole project is traced into the output. Harmless in development; may enlarge a deployment bundle. Fix when the deployment target is chosen (move Cards into the database, or pin the folder).
+
+## 25. The hero proverb, and contractions — OPEN
+
+- **The proverb was invented.** The example in the concept material ("Ẹni tó bá fẹ́ jẹun…") is not a real proverb and had become the Reading Room's hero Card. The owner supplied a real one: *Adìyẹ tí kò kú ṣì maa jẹ àgbàdo* ("A fowl that isn't dead will still eat corn": while there is life, there is hope). It replaces the seed Card, the UX mock and the tests. Still unreviewed: two named speakers must approve it (D-012). The old sentence stays only as a stacked-mark rendering test string, labelled as such.
+- **Contractions are not read.** People say it contracted: *Adìyẹ tí 'ò kú ṣì maa j'àgbàdo*. The syllable rules split on the apostrophe and report `j` as a consonant with no vowel (elision is not modelled, SCORING_SPEC section 3). A learner who says the contracted form would be scored against the full written form. Decide: annotate the spoken form per reference voice (the annotation tool already takes the reviewer's syllables), and let the Card carry both written forms.
+- **`maa` counts as two syllables** (ma·M a·M) by the current rules, because every vowel is a nucleus. A linguist should confirm that long vowels like this are treated right for scoring.
+- The Card has no dialect set. A reviewer must name one.
