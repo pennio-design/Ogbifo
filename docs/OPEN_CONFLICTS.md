@@ -83,7 +83,7 @@ From Sprint 3 part 2 (`SCORING_SPEC.md` section 15). Browser-tested with synthet
 - **References are files placed by hand.** The tool's output goes into `content/references/` and `public/references/`. Fine for a beta of 60 Cards; not a process for a platform. Needs storage and accounts later.
 - **The reviewer tool is protected by a deployment switch, not a login.** Until accounts exist, switch it on only on a private deployment.
 - **The tool trusts the reviewer's boundaries.** It proposes an even split of the speech and shows a pitch-found percentage, but it does not check that the boundaries are plausible. A poor annotation would quietly mis-score every learner on that Card. Consider a second reviewer confirming each annotation (D-012 already needs two reviewers per Card).
-- **No real reference voice has been tested.** The only reference is a synthetic tone sequence.
+- **No real reference voice has been tested.** The only reference is a synthetic voice. It started as a stack of steady musical tones, which the owner rightly said does not sound like speech; it is now a source-filter voice (low pitch, falling baseline, vowel resonances, consonant onsets, loudness that rises and falls per syllable) and exists for the seed greeting and the hero proverb. It is still a robot, not Yorùbá: only a recorded human reference fixes this.
 
 ## 20. Findings from the contribution flow — BEFORE-PHASE-3 launch
 

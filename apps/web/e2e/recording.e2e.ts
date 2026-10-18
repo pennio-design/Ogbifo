@@ -63,10 +63,11 @@ async function main() {
     const { browser, page } = await launch(good, true);
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "load" });
+    await page.getByRole("button", { name: "Hear the reference" }).waitFor();
     check(await page.getByRole("button", { name: "Hear the reference" }).isVisible(), "reference player is shown");
     check(await page.getByRole("button", { name: "Record", exact: true }).isEnabled(), "Record is enabled when a reference exists");
-    check(/Synthetic test tones/.test(await page.locator("section[aria-label='Say it aloud']").innerText()), "provenance line names the synthetic reference");
+    check(/Synthetic test voice/.test(await page.locator("section[aria-label='Say it aloud']").innerText()), "provenance line names the synthetic reference");
 
     await record(page);
     await page.getByTestId("attempt-result").waitFor({ timeout: 20_000 });
@@ -104,7 +105,8 @@ async function main() {
     check(again === 0 && /finished this Card in Live/.test(await page.locator("section[aria-label='Say it aloud']").innerText()), "Live allows one scored attempt per Card, and says why", `buttons: ${again}`);
     if (OUT) await page.screenshot({ path: join(OUT, "live-result.png"), fullPage: true });
 
-    await page.goto(`${BASE}/reading-room`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/reading-room`, { waitUntil: "load" });
+    await page.getByText(/1 of 1 Cards finished/).waitFor();
     text = await page.locator("main").innerText();
     check(!/Locked\./.test(text) && /1 of 1 Cards finished/.test(text), "finishing Common Tongue in Live unlocks Proverb House");
     check(errors.length === 0, "no uncaught page errors", errors.join(" | "));
@@ -114,7 +116,7 @@ async function main() {
   // 2. A monotone reading is shown as different from the reference.
   {
     const { browser, page } = await launch(flat, true);
-    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "load" });
     await record(page);
     await page.getByTestId("attempt-result").waitFor({ timeout: 20_000 });
     const text = await page.getByTestId("attempt-result").innerText();
@@ -130,7 +132,7 @@ async function main() {
   // 3. Silence is refused and does not finish the Card, even in Live.
   {
     const { browser, page } = await launch(quiet, true);
-    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "load" });
     await page.getByRole("button", { name: "Live", exact: true }).click();
     await record(page, 1500);
     const panelAlert = page.locator("section[aria-label='Say it aloud'] [role=alert]");
@@ -145,7 +147,7 @@ async function main() {
   // 4. Microphone permission denied.
   {
     const { browser, page } = await launch(good, false);
-    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "load" });
     await page.getByRole("button", { name: "Record", exact: true }).click();
     const panelAlert = page.locator("section[aria-label='Say it aloud'] [role=alert]");
     await panelAlert.waitFor({ timeout: 10_000 });
@@ -165,7 +167,7 @@ async function main() {
         return original(...args);
       };
     });
-    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "networkidle" });
+    await page.goto(`${BASE}/reading-room/common-tongue-yo`, { waitUntil: "load" });
     await page.waitForTimeout(500);
     asked = await page.evaluate(() => Boolean((window as unknown as { __asked?: boolean }).__asked));
     check(!asked, "the microphone is not requested on page load");

@@ -41,13 +41,13 @@ async function main() {
 
   if (DISABLED) {
     const off = await browser.newPage();
-    await off.goto(`${DISABLED}/reviewer/annotate`, { waitUntil: "networkidle" });
+    await off.goto(`${DISABLED}/reviewer/annotate`, { waitUntil: "load" });
     const text = await off.locator("main").innerText();
     check(/isn.t in the Archive/.test(text) && !/Annotate a reference recording/.test(text), "the tool is not served unless switched on");
     await off.close();
   }
 
-  await page.goto(`${BASE}/reviewer/annotate`, { waitUntil: "networkidle" });
+  await page.goto(`${BASE}/reviewer/annotate`, { waitUntil: "load" });
   check(await page.getByRole("heading", { name: "Annotate a reference recording" }).isVisible(), "the tool opens when switched on");
   await page.selectOption("#card", "card-yo-greeting-1");
   check(/Ẹ·M\s+ká·H\s+à·L\s+á·H\s+rọ̀·L/.test(await page.locator("section").first().innerText()), "the proposal shows the five syllables with their tones");
