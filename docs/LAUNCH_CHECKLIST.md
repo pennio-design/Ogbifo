@@ -1,76 +1,87 @@
 # Closed beta launch checklist
 
-Scope: the Reading Room beta for 30 to 50 people on two Decks (D-026). Contributions, the tone game, the leaderboard and live follow-along are **not** in this beta (see the end). Ship gates come from `OPEN_CONFLICTS.md` #17. Owners: **You** (owner), **Counsel** (Iniabasi), **Teacher**, **Claude** (engineering). Costs follow the lean budget (about $550 to $900). Dates are not set: the long pole is people, not code.
+Scope: the Reading Room beta for 30 to 50 people on two Decks (D-026). Ship gates: `OPEN_CONFLICTS.md` #17. Owners: **You**, **Counsel** (Iniabasi), **Teacher**, **Claude**. Costs follow the lean budget. The long pole is people, not code. Updated 2026-10-20.
 
-## Already done
+## Done
 
-- [x] Reading Room, Studio and Live, on-device scoring, recording, results screen
+- [x] Reading Room, Studio and Live, on-device scoring, recording, results, tester numbers panel
 - [x] Reviewer annotation tool, reference provenance rules
-- [x] Email-link sign-in, Postgres storage, migrations, CI workflow, Codespaces preview
-- [x] Cards and tone lexicon sheet workflows, dialect-aware (D-043)
-- [x] Draft counsel briefing, reference voice licence, volunteer agreement
+- [x] Audio treatment (rumble and noise), pace not forced, 60 s safety cap (D-045)
+- [x] Email-link sign-in, Postgres storage, migrations, CI workflow, Codespaces config
+- [x] Cards and tone lexicon sheet workflows, dialect-aware (D-043); the hero proverb is real
+- [x] No robotic voice in any normal run (it is test-only)
+- [x] Draft counsel briefing, reference voice licence, volunteer agreement, recording guide
 
-## 1. Legal and entity (Counsel, You). Nothing is recorded before this
+## Waiting on a decision from you
 
-- [ ] Decide who is the data controller: company or you personally (briefing Q18)
-- [ ] Trademark check on "Ogbifọ" (Nigerian register)
-- [ ] Counsel reviews: reference voice licence, volunteer agreement, calibration consent
-- [ ] Privacy notice and terms of service, in plain language
-- [ ] Decide whether NDPC registration applies (₦10,000 to ₦100,000 if so)
-- [ ] Withdrawal and deletion contact set up (an email address you read)
+- [ ] **Scoring (D-044):** replace the reference-contour Tone score with a reference-free, direction-based one? Your first real reading was rejected while imitating the robot was accepted
+- [ ] Email provider: Resend or Brevo
+- [ ] Hosting: have me check Netlify's terms and Next.js support, or choose another
+- [ ] Entity: company or personal (briefing Q18)
 
-## 2. Content (You, Teacher, a second reviewer)
+## Your steps, this week
 
-- [ ] Teacher supplies the dialect list for `dialects.json`
-- [ ] A second fluent speaker named, so every Card has two reviewers
-- [ ] About 30 Cards written (greetings for Common Tongue, proverbs for Proverb House), tone-marked, with translation and context
-- [ ] Every Card reviewed by two named people who speak its dialect; `cards check` passes; `cards export` done
-- [ ] My seed Cards confirmed replaced: none ships unreviewed
+- [ ] Buy the domain (Cloudflare, `ogbifo.com` if free), two-factor and auto-renew on
+- [ ] Send Iniabasi the counsel briefing and the two drafts
+- [ ] Send the teacher the Cards README and the lexicon README; ask for the dialect list and 20 greetings and 20 proverbs
+- [ ] Ask a friend to be the second voice (a different pitch range) and a second reviewer
+- [ ] Check that CI is green in GitHub's Actions tab and tell me if it is red
+- [ ] **Record your reference** (`docs/RECORDING_A_REFERENCE.md`): the greeting first, then the proverb. Read it yourself and paste me the "Numbers behind this result" panel
 
-## 3. Voices (You, second voice, Teacher)
+## Legal and entity (Counsel). Nothing is collected before this
 
-- [ ] Your reference voice and a second voice with a different pitch range (a woman), recorded on the same Cards
-- [ ] Both licences signed (`recorded_for_ogbifo`, provenance filled), stored privately
-- [ ] Reference audio uploaded and annotated with the reviewer tool; a second person confirms each annotation
-- [ ] Real-speech test: run the pipeline on a sample of Common Voice Yoruba (CC0) and fix what breaks (Claude)
+- [ ] Data controller decided; trademark check on "Ogbifọ"
+- [ ] Reference voice licence, volunteer agreement, calibration consent approved
+- [ ] Privacy notice and terms of service in plain language
+- [ ] NDPC registration decision
+- [ ] Withdrawal and deletion contact in place
 
-## 4. Calibration and scoring (You, volunteers, Teacher)
+## Content (You, Teacher, second reviewer)
 
-- [ ] 20 or more calibration speakers recruited, each with signed consent, a stated purpose, a storage place and a deletion date; reward separate from consent
-- [ ] Calibration run against the pass bars (`SCORING_SPEC.md` section 10); decide whether the number stays hidden
-- [ ] Teacher's first pass over the syllable and tone rules (a phonologist later)
-- [ ] Phone check on a low-end Android and an iPhone: speed under 2 seconds, microphone settings (#19)
-- [ ] Safari and Firefox checked: recording, fonts with tone marks (#11, #19)
+- [ ] Dialect register filled; Cards named with a dialect
+- [ ] About 30 Cards, each reviewed by two named people who speak its dialect; `cards check` and `cards export` pass
+- [ ] My seed Cards replaced (none unreviewed ships)
 
-## 5. Platform (You, Claude)
+## Voices
 
-- [ ] Domain bought (Cloudflare or Porkbun), two-factor and auto-renew on
-- [ ] Email provider chosen and DNS records added; sign-in verified with a real inbox (Claude builds the adapter)
-- [ ] Hosting chosen (check Netlify's terms and Next.js support first); environment variables and the `migrate` step set
-- [ ] Postgres created (for example Neon); the Cards export delivered to the server privately
-- [ ] CI green on GitHub; a Codespaces preview tried on a phone
-- [ ] Offline: reference audio cached for offline Decks (D-017, not built)
+- [ ] Your reference and a second voice, signed licences, provenance filled
+- [ ] Each reference annotated, then confirmed by a second person
+- [ ] Spoken (contracted) forms of the proverb recorded after the full form (`#27`)
+
+## Calibration and scoring (Claude, volunteers, Teacher)
+
+- [ ] Real-speech check on your readings, then a few volunteers, before any retuning (`#26`)
+- [ ] 20 or more calibration speakers with signed consent, deletion date, reward kept separate
+- [ ] Calibration run against the pass bars; decide whether the score number stays hidden
+- [ ] Teacher's first pass over the syllable and tone rules (including "maa" and elision: `#25`)
+- [ ] Rhythm in noise watched (`SCORING_SPEC.md` section 16)
+- [ ] Phone check on a low-end Android and an iPhone; Safari and Firefox (recording, fonts)
+
+## Platform (You, Claude)
+
+- [ ] Email adapter built once you choose a provider (Claude); DNS records added (You); sign-in verified with a real inbox
+- [ ] Hosting and Postgres chosen; environment variables and `migrate` set; Cards and references delivered privately
+- [ ] Offline caching of reference audio (D-017, not built)
 - [ ] Error logging and database backups (not built)
-- [ ] Analytics: decide whether the beta has any (D-028 needs a consent banner and a named vendor), or measure by interview and a short survey (D-026 week-2 and week-4 return needs data)
+- [ ] Analytics decided: none for the beta (measure by interview) or a named vendor with a consent banner (D-028)
 
-## 6. Quality (You, Claude)
+## Quality
 
-- [ ] Accessibility: a screen reader pass and 200% zoom (`ACCESSIBILITY.md`)
-- [ ] Results copy says "tones and timing, not words"; no "correct" or "authentic" claims anywhere
-- [ ] Security look at sign-in: rate-limit address trust, cookie `Secure` on
-- [ ] `showResonanceNumber` off unless calibration passed
+- [ ] Screen reader pass and 200% zoom
+- [ ] Results copy: "tones and timing, not words", no "correct" or "authentic"
+- [ ] Security look at sign-in (rate-limit address trust, cookie `Secure`)
+- [ ] `showResonanceNumber` stays off unless calibration passed
 
-## 7. Launch operations (You)
+## Launch operations
 
-- [ ] Volunteer call ad: test $30 first, only after consent wording exists
-- [ ] Invitation list of 30 to 50, an onboarding message, a feedback channel
-- [ ] Success measures chosen (Deck completion, week-2 and week-4 return)
-- [ ] Sponsor outreach started, in parallel (no data rights: D-032)
+- [ ] Volunteer call ad: $30 test first, only after the consent wording exists
+- [ ] Invitation list, onboarding message, feedback channel, success measures (D-026)
+- [ ] Sponsor outreach in parallel (no data rights, D-032)
 
 ## Not in this beta
 
-Contribution sync, the Archive and peer confirmation, the tone lexicon game and qualification, the leaderboard, live follow-along, languages other than Yorùbá, an account for progress across devices.
+Contribution sync, the Archive and peer confirmation, the tone game and qualification, the leaderboard, live follow-along, contraction understanding beyond listed spoken forms, other languages, cross-device progress.
 
 ## Critical path
 
-Counsel and the entity answer → voices recorded → annotated and confirmed → calibration → beta. The people items (second voice, two reviewers, 20 speakers, Iniabasi's time) decide the date. Engineering can finish its list while they wait.
+Your recorded reference, then the scoring decision and a real-speech check; in parallel Counsel and the entity answer, the second voice and reviewers, and the domain and email. Calibration and the beta follow.
