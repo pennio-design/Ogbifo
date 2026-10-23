@@ -186,3 +186,11 @@ Open: how a spoken form that is not in the lexicon is treated (accepted, or "we 
 Owner feedback after two rounds: it sounds robotic, and the last sound was odd. The second round gave the last syllable a slow fade and a slight phrase-final fall (it had been cut off abruptly). A formant synthesiser will not sound like a Yorùbá speaker however it is tuned, and every hour spent on it is an hour not spent on the real fix: a recorded reference voice. Steps are in `docs/RECORDING_A_REFERENCE.md`. The synthetic voice stays as a plumbing test only. Recordings and reference files are now gitignored (the repository is public; voices are licensed to the Project only).
 
 Update (owner: "don't put any robotic sound"): the synthetic voice is now off everywhere unless `OGBIFO_SYNTHETIC_REFERENCE=1`, which only the browser tests set. A Card without a recorded reference shows "A native reference for this Card hasn't been recorded yet" and keeps Record closed. Until the owner's own recordings are placed (`docs/RECORDING_A_REFERENCE.md`), Studio and Live cannot be tried in the app.
+
+## 29. Counsel's first reaction — OPEN
+
+Iniabasi gave an informal first read on 23 October (`COUNSEL_BRIEFING.md` section 11). Main points: NDPA is the framework; EU and UK rules "directional, not mandatory"; drafts need proper legal drafting; **the copyright self-declaration exposes the product if a contributor lies**. Not yet answered: the 22 questions. The five that unblock a beta are in section 12 of the briefing.
+
+Proposal (not yet decided): for the beta, accept **no lyrics and no song or praise-poem excerpts**. Contributions would offer phrase, proverb and greeting only; the Cards sheet would refuse `praise_song_excerpt`. That removes the risk counsel flagged before any wording is settled. Tradeoff: the Archive loses its most culturally rich material for now.
+
+Point to settle: whether GDPR and UK GDPR apply because the first audience is the diaspora (D-011). Do not assume "directional only".

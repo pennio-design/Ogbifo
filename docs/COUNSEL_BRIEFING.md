@@ -140,3 +140,24 @@ A game in which qualified speakers mark tones and may opt in to let their record
 ## 10. Source documents (available on request)
 
 `docs/PRODUCT_DECISIONS.md`, `docs/OPEN_CONFLICTS.md`, `docs/SECURITY.md`, `docs/DATA_MODEL.md`, `docs/AUDIO_SPEECH.md`, `docs/SCORING_SPEC.md` (technical; section 10 is the calibration plan).
+
+## 11. Counsel's first reaction (informal, 23 October 2026)
+
+Recorded so the next version of this document can answer it. This is an informal first read of sections 5 and 7, not a formal opinion, and not answers to the 22 questions.
+
+- **Data protection.** The NDPA is the main framework because the operator is in Nigeria. EU and UK rules apply, if at all, when people in those regions use the product, so they are "directional, not mandatory". Counsel found the NDPA quiet on much of what the product does. *Follow-up to put to counsel:* the product's first audience is the diaspora (D-011), and EU/UK rules can apply to a non-EU operator that offers services to people there. Is targeting them enough to make GDPR and UK GDPR apply? And does the NDPC's own implementation guidance fill some of the NDPA's silence?
+- **Draft wording.** The intent is clear; the language needs proper legal drafting, with duration, parties and exact terms in the final version. Agreed. The drafts here are starting points only.
+- **Rights declaration risk.** The self-declaration on copyrighted material ("I wrote this, or I have permission") exposes the product if a contributor lies. Counsel's concern is liability to the product. Answer to settle: stronger warranty and indemnity, a takedown process, a right to remove, and the option of not accepting lyrics or song and praise-poem excerpts at all in the beta (the product owner's leaning, to be confirmed by counsel).
+- **Overall.** Counsel considers it a worthwhile consumer product once the risks are assessed and sorted, and offered to look at anything specific.
+
+## 12. The five questions that would unblock a closed beta
+
+If counsel can answer only five things, these:
+
+1. **Entity before recordings.** Who should be the data controller and the contracting party for a closed beta of 30 to 50 people: a company, or the owner personally for now? What is the cheapest sound option, and when must it be done?
+2. **The minimum pack.** What is the smallest set of documents and protections needed before inviting a closed beta (terms, privacy notice, speaker licence, volunteer agreement, calibration consent)? What can wait for public launch?
+3. **Rights and liability.** If the beta takes no lyrics and no song excerpts, is the remaining self-declaration ("I wrote or said this, or have permission") and a takedown contact enough? What warranty, indemnity and disclaimers should the terms carry, and how should the product word its claims ("tones and timing, guidance only", "community confirmed", never "correct" or "authentic")?
+4. **Voice.** What is the right way to take consent for voice recordings from speakers and calibration volunteers (separate from the terms, withdrawable), and does the diaspora audience bring GDPR or UK GDPR in?
+5. **Sponsors.** What wording in a sponsorship or investment document guarantees that funding gives no rights over contributions or recordings, and survives a change of control?
+
+Also ask for scope and fee for a fixed-price beta pack.

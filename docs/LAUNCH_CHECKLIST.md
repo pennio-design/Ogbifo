@@ -30,6 +30,9 @@ Scope: the Reading Room beta for 30 to 50 people on two Decks (D-026). Ship gate
 
 ## Legal and entity (Counsel). Nothing is collected before this
 
+- [x] Counsel's first informal reaction received (23 Oct): see `COUNSEL_BRIEFING.md` section 11
+- [ ] Put the five priority questions (briefing section 12) and ask for scope and fee of a fixed-price beta pack
+- [ ] Decide: no lyrics or song excerpts in the beta (`#29`)
 - [ ] Data controller decided; trademark check on "Ogbifọ"
 - [ ] Reference voice licence, volunteer agreement, calibration consent approved
 - [ ] Privacy notice and terms of service in plain language
