@@ -14,7 +14,8 @@ Scope: the Reading Room beta for 30 to 50 people on two Decks (D-026). Ship gate
 
 ## Waiting on a decision from you
 
-- [ ] **Scoring (D-044):** replace the reference-contour Tone score with a reference-free, direction-based one? Your first real reading was rejected while imitating the robot was accepted
+- [x] Scoring: Tone is now judged against the tone marks, not a recording (D-046). Needs your real readings to check
+- [x] No lyrics or song excerpts in the beta (D-047)
 - [ ] Email provider: Resend or Brevo
 - [ ] Hosting: have me check Netlify's terms and Next.js support, or choose another
 - [ ] Entity: company or personal (briefing Q18)
@@ -32,7 +33,7 @@ Scope: the Reading Room beta for 30 to 50 people on two Decks (D-026). Ship gate
 
 - [x] Counsel's first informal reaction received (23 Oct): see `COUNSEL_BRIEFING.md` section 11
 - [ ] Put the five priority questions (briefing section 12) and ask for scope and fee of a fixed-price beta pack
-- [ ] Decide: no lyrics or song excerpts in the beta (`#29`)
+- [x] No lyrics or song excerpts in the beta (`#29`, D-047)
 - [ ] Data controller decided; trademark check on "Ogbifọ"
 - [ ] Reference voice licence, volunteer agreement, calibration consent approved
 - [ ] Privacy notice and terms of service in plain language

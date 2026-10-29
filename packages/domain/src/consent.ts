@@ -57,7 +57,7 @@ export const CONSENT_COPY = {
     open_licence: "It is in the public domain or under an open licence.",
   } satisfies Record<RightsDeclaration, string>,
   rightsNoteLabel: {
-    own_work: "Source or context (required for lyrics)",
+    own_work: "Source or context (optional)",
     rights_holder_permission: "Who gave permission?",
     open_licence: "Which licence, and where is it from?",
   } satisfies Record<RightsDeclaration, string>,

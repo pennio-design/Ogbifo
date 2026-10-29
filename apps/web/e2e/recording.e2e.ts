@@ -73,7 +73,7 @@ async function main() {
     await record(page);
     await page.getByTestId("attempt-result").waitFor({ timeout: 20_000 });
     let text = await page.getByTestId("attempt-result").innerText();
-    check(/4 of 4 pitch steps were close to the reference/.test(text), "Studio: a matching reading is described as close on every step", text.slice(0, 200));
+    check(/4 of 4 pitch steps went the way the tone marks call for/.test(text), "Studio: a matching reading is described as close on every step", text.slice(0, 200));
     check(/not the words/.test(text), "result states that words are not checked");
     check((await page.getByTestId("resonance-number").count()) === 0, "Studio never shows a number");
     check(/not scored or saved/.test(text), "Studio says it is not scored or saved");
@@ -122,7 +122,7 @@ async function main() {
     await page.getByTestId("attempt-result").waitFor({ timeout: 20_000 });
     const text = await page.getByTestId("attempt-result").innerText();
     check(!/4 of 4/.test(text) && /of 4 pitch steps/.test(text), "a monotone reading is not described as matching", text.slice(0, 160));
-    check(/a (higher|lower) pitch step than the reference/.test(text), "differing syllables are named in words");
+    check(/came out (higher|lower) than the tone marks call for/.test(text), "differing syllables are named in words");
     if (OUT) {
       await page.addStyleTag({ content: "nav[aria-label=Primary]{display:none}" });
       await page.locator("[data-testid=attempt-result]").screenshot({ path: join(OUT, "chart-monotone.png") });

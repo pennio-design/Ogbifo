@@ -3,7 +3,8 @@
  *
  *   OGBIFO_BASE_URL=http://localhost:3000 OGBIFO_DEV_EMAIL=1 npx next start   (the app under test)
  *   BASE_URL=http://localhost:3000 CHROMIUM_PATH=... npm run e2e:community -w @ogbifo/web
- * The dev mailbox shows the sign-in link on the page instead of sending email.
+ * The dev mailbox shows the sign-in link on the page instead of sending email. A production start also
+ * needs DATABASE_URL (with migrations applied); without a database sign-in stays closed by design.
  */
 import { chromium } from "playwright-core";
 
@@ -108,9 +109,8 @@ async function main() {
   check(await main.getByRole("alert").filter({ hasText: "Say whose this is" }).isVisible(), "no rights declaration, no save");
 
   await main.getByLabel("I wrote or said it myself.").check();
-  await main.getByLabel("What are you adding?").selectOption("lyric");
-  await submit.click();
-  check(await main.getByRole("alert").filter({ hasText: "who holds the rights" }).isVisible(), "lyrics need a rights note");
+  const kinds = await main.getByLabel("What are you adding?").locator("option").allInnerTexts();
+  check(!kinds.includes("Lyric") && kinds.includes("Proverb"), "songs and lyrics are not offered", kinds.join(", "));
   await main.getByLabel("What are you adding?").selectOption("proverb");
 
   // Offline: saving must not need the network.

@@ -112,10 +112,10 @@ describe("result wording", () => {
     expect(stepSummary(["first", "close", "close", "higher", "lower"])).toMatchObject({
       measured: 4,
       close: 2,
-      sentence: "2 of 4 pitch steps were close to the reference.",
+      sentence: "2 of 4 pitch steps went the way the tone marks call for.",
       revisit: [{ index: 3, direction: "higher" }, { index: 4, direction: "lower" }],
     });
-    expect(stepSummary(["first", "close"]).sentence).toBe("1 of 1 pitch step was close to the reference.");
+    expect(stepSummary(["first", "close"]).sentence).toBe("1 of 1 pitch step went the way the tone marks call for.");
     expect(stepSummary(["first", "unmeasured", "unmeasured"]).sentence).toMatch(/couldn't measure/);
   });
   it("reports pace only when it is clearly different", () => {

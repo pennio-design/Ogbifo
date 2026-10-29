@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { ARCHIVE_LICENCE_GRANT, CONSENT_IS_DRAFT, CONSENT_VERSION } from "../src/consent";
-import { createContribution, LIMITS, withdrawContribution, type ContributionInput } from "../src/contribution";
+import { ACCEPTED_KINDS, createContribution, LIMITS, withdrawContribution, type ContributionInput } from "../src/contribution";
 
 const consent = { version: CONSENT_VERSION, acceptedAt: "2026-10-18T10:00:00.000Z" };
 const base: ContributionInput = {
@@ -33,9 +33,14 @@ describe("createContribution", () => {
     const r = createContribution({ ...base, rightsDeclaration: null });
     expect(!r.ok && r.error.code).toBe("RIGHTS_REQUIRED");
   });
-  it("needs a rights note for lyrics, permission and open licences, not for own phrases", () => {
+  it("refuses songs and lyrics for now", () => {
+    const r = createContribution({ ...base, kind: "lyric", rightsNote: "Publisher X" });
+    expect(!r.ok && r.error.code).toBe("KIND_NOT_ACCEPTED");
+    expect(ACCEPTED_KINDS).not.toContain("lyric");
+  });
+  it("needs a rights note for permission and open licences, not for own phrases", () => {
     expect(createContribution(base).ok).toBe(true);
-    for (const patch of [{ kind: "lyric" as const }, { rightsDeclaration: "rights_holder_permission" as const }, { rightsDeclaration: "open_licence" as const }]) {
+    for (const patch of [{ rightsDeclaration: "rights_holder_permission" as const }, { rightsDeclaration: "open_licence" as const }]) {
       const r = createContribution({ ...base, ...patch });
       expect(!r.ok && r.error.field).toBe("rightsNote");
       expect(createContribution({ ...base, ...patch, rightsNote: "  Publisher X, by letter  " })).toMatchObject({ ok: true, value: { rightsNote: "Publisher X, by letter" } });

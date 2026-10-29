@@ -2,9 +2,9 @@ import type { MarkerState } from "./metrics";
 
 export const MARKER_LABELS: Record<MarkerState, string> = {
   first: "starting point",
-  close: "close to the reference",
-  higher: "a higher pitch step than the reference",
-  lower: "a lower pitch step than the reference",
+  close: "went the way the tone marks call for",
+  higher: "came out higher than the tone marks call for",
+  lower: "came out lower than the tone marks call for",
   unmeasured: "not measured",
 };
 
@@ -14,7 +14,7 @@ export interface StepSummary {
   readonly measured: number;
   readonly close: number;
   readonly sentence: string;
-  /** Syllables whose step differed from the reference, to listen to again. */
+  /** Syllables whose step differed from what the tone marks call for, to try again. */
   readonly revisit: readonly { readonly index: number; readonly direction: "higher" | "lower" }[];
 }
 
@@ -35,7 +35,7 @@ export function stepSummary(markers: readonly MarkerState[]): StepSummary {
   const sentence =
     measured === 0
       ? "We couldn't measure the pitch steps in this reading."
-      : `${close} of ${measured} pitch ${measured === 1 ? "step was" : "steps were"} close to the reference.`;
+      : `${close} of ${measured} pitch ${measured === 1 ? "step went" : "steps went"} the way the tone marks call for.`;
   return { measured, close, sentence, revisit };
 }
 
@@ -54,6 +54,6 @@ export function paceSentence(pace: number): string | null {
 export function scoreSentence(overall: number): string {
   if (overall >= 80) return "Your reading followed the tones closely.";
   if (overall >= 60) return "Your reading followed most of the tones.";
-  if (overall >= 40) return "Some tones differed from the reference. Listen again and try the marked syllables.";
-  return "The tones differed from the reference. Listen again, then try once more.";
+  if (overall >= 40) return "Some tones differed from the tone marks. Listen again and try the marked syllables.";
+  return "The tones differed from the tone marks. Listen again, then try once more.";
 }

@@ -14,6 +14,13 @@ import { countGraphemes, isBlank } from "./text";
 export type ContributionKind = "phrase" | "proverb" | "greeting" | "lyric";
 export const CONTRIBUTION_KINDS: readonly ContributionKind[] = ["phrase", "proverb", "greeting", "lyric"];
 
+/**
+ * What the beta accepts. Songs and lyrics are not accepted until counsel has approved the rights
+ * wording: a false "I wrote this" about a copyrighted work would expose the product (OPEN_CONFLICTS #29).
+ * The `lyric` kind stays in the type and the database so turning it back on is a one-line change.
+ */
+export const ACCEPTED_KINDS: readonly ContributionKind[] = ["phrase", "proverb", "greeting"];
+
 /** `peer_verified` is shown as "Peer confirmed". It is never "Reviewed" (D-021). */
 export type VerificationStatus = "pending_review" | "peer_verified" | "flagged" | "rejected";
 
@@ -85,6 +92,9 @@ export function createContribution(input: ContributionInput): Result<Contributio
   }
   if (!CONTRIBUTION_KINDS.includes(input.kind)) {
     return fail("CONTRIBUTION_INVALID", "Choose what you are adding.", "kind");
+  }
+  if (!ACCEPTED_KINDS.includes(input.kind)) {
+    return fail("KIND_NOT_ACCEPTED", "Songs and lyrics are not being accepted yet.", "kind");
   }
   if (isBlank(input.languageId)) return fail("CONTRIBUTION_INVALID", "Choose a language.", "languageId");
   if (isBlank(input.contentText)) return fail("CONTRIBUTION_INVALID", "Write what you want to add.", "contentText");

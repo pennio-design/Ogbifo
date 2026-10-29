@@ -44,6 +44,8 @@ export interface CardSheetContext {
   readonly register: DialectRegister;
   readonly deckIds: readonly string[];
   readonly languageId: string;
+  /** Songs and praise-poem excerpts are not accepted until counsel approves the rights wording (OPEN_CONFLICTS #29). */
+  readonly acceptSongExcerpts?: boolean;
 }
 
 export interface CardRowReport {
@@ -81,6 +83,9 @@ function checkRow(cells: Record<CardSheetColumn, string>, ctx: CardSheetContext,
   const category = cells.category.trim();
   if (isBlank(category)) errors.push({ code: "CATEGORY_MISSING", message: "Choose a category." });
   else if (!isCardCategory(category)) errors.push({ code: "CATEGORY_UNKNOWN", message: `Category must be one of: ${CARD_CATEGORIES.join(", ")}.` });
+  else if (category === "praise_song_excerpt" && !ctx.acceptSongExcerpts) {
+    errors.push({ code: "CATEGORY_NOT_ACCEPTED", message: "Songs and praise-poem excerpts are not being accepted yet. Use another category, or leave it out." });
+  }
 
   need(cells.translation, "TRANSLATION_MISSING", "Add the English translation.");
   need(cells.context, "CONTEXT_MISSING", "Add a short context note: when and why this is said.");

@@ -19,7 +19,8 @@ describe("tester details", () => {
     expect(text).toContain("alignment cost");
     for (const p of parts) expect(text).toContain(p.text);
     expect(text.match(/ to /g)?.length).toBe(parts.length - 1);
-    expect(text).toMatch(/reference [+-]/);
+    expect(text).toMatch(/marks call for (up|down|level)/);
+    expect(text).toContain("tone method direction");
     expect(text).not.toMatch(/NaN|undefined/);
   });
 });

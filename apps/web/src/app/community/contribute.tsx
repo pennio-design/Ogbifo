@@ -5,7 +5,7 @@ import {
   CONSENT_COPY,
   CONSENT_IS_DRAFT,
   CONSENT_VERSION,
-  CONTRIBUTION_KINDS,
+  ACCEPTED_KINDS,
   ContributionService,
   disabledTransport,
   guardTransport,
@@ -23,6 +23,7 @@ import { useAccount } from "@/lib/use-account";
 import { IndexedDbArchiveStore } from "@/lib/indexeddb-archive-store";
 
 const KIND_LABEL: Record<ContributionKind, string> = { phrase: "Phrase", proverb: "Proverb", greeting: "Greeting", lyric: "Lyric" };
+// Songs and lyrics are not offered yet (OPEN_CONFLICTS #29).
 
 const SYNC_COPY: Record<SyncState, string> = {
   queued: "Saved on this device. It will join the archive queue when sync opens.",
@@ -210,7 +211,7 @@ function ContributeForm({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<DomainError | null>(null);
 
-  const noteRequired = kind === "lyric" || (rights !== null && rights !== "own_work");
+  const noteRequired = rights !== null && rights !== "own_work";
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -253,7 +254,7 @@ function ContributeForm({
       <div>
         <label htmlFor="kind" className={label}>What are you adding?</label>
         <select id="kind" className={`${field} mt-2`} value={kind} onChange={(e) => setKind(e.target.value as ContributionKind)}>
-          {CONTRIBUTION_KINDS.map((k) => (
+          {ACCEPTED_KINDS.map((k) => (
             <option key={k} value={k}>{KIND_LABEL[k]}</option>
           ))}
         </select>
@@ -291,7 +292,7 @@ function ContributeForm({
 
       <fieldset>
         <legend className={label}>{CONSENT_COPY.rightsLabel}</legend>
-        {kind === "lyric" ? <p className="mt-2 font-ui text-sm text-ochre">{CONSENT_COPY.lyricsNotice}</p> : null}
+        <p className="mt-2 font-ui text-sm text-ash">Songs and lyrics are not being accepted yet.</p>
         <div className="mt-2 grid gap-1">
           {RIGHTS_DECLARATIONS.map((value) => (
             <label key={value} className="flex min-h-12 items-center gap-3 font-body text-sm text-bone">

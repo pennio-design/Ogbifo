@@ -1,6 +1,8 @@
 import type { AttemptScored } from "./analyze";
 import { HOP_MS } from "./pitch";
 
+const RANK = { L: 0, M: 1, H: 2 } as const;
+
 function stats(contour: readonly (number | null)[], fromMs: number, toMs: number) {
   const from = Math.max(0, Math.floor(fromMs / HOP_MS));
   const to = Math.min(contour.length, Math.ceil(toMs / HOP_MS));
@@ -22,7 +24,7 @@ const fixed = (v: number | null, digits = 1) => (v === null ? "  n/a" : (v >= 0 
 export function testerDetails(a: AttemptScored): string {
   const head =
     `${a.algorithmVersion} | tone ${a.tone} rhythm ${a.rhythm} overall ${a.overall} | ` +
-    `coverage ${Math.round(a.coverage * 100)}% | pace ${a.pace.toFixed(2)} | alignment cost ${a.alignmentCost.toFixed(2)} | range scale ${a.rangeScale.toFixed(2)}`;
+    `tone method ${a.toneMethod} | coverage ${Math.round(a.coverage * 100)}% | pace ${a.pace.toFixed(2)} | alignment cost ${a.alignmentCost.toFixed(2)} | range scale ${a.rangeScale.toFixed(2)}`;
   const rows = a.syllables.map((s) => ({
     s,
     you: stats(a.learnerContour, s.learnerStartMs, s.learnerEndMs),
@@ -36,7 +38,7 @@ export function testerDetails(a: AttemptScored): string {
         `${String(Math.round(s.referenceStartMs)).padStart(5)}-${String(Math.round(s.referenceEndMs)).padEnd(5)}  ${String(ref.voicedPct).padStart(4)}%  ${fixed(ref.median).padStart(8)}`,
     );
   }
-  lines.push("", "pitch steps between neighbouring syllables, in semitones (you are shown before the range scale):");
+  lines.push("", a.toneMethod === "direction" ? "pitch steps between neighbouring syllables, in semitones, against what the tone marks call for:" : "pitch steps between neighbouring syllables, in semitones (you are shown before the range scale):");
   for (let i = 1; i < rows.length; i += 1) {
     const prev = rows[i - 1]!;
     const cur = rows[i]!;
@@ -46,6 +48,12 @@ export function testerDetails(a: AttemptScored): string {
     }
     const refStep = cur.ref.median - prev.ref.median;
     const youStep = cur.you.median - prev.you.median;
+    if (a.toneMethod === "direction") {
+      const levels = RANK[cur.s.tone] - RANK[prev.s.tone];
+      const calls = levels === 0 ? "level" : levels > 0 ? `up ${levels}` : `down ${-levels}`;
+      lines.push(`${prev.s.text} to ${cur.s.text}: marks call for ${calls.padEnd(7)} you ${fixed(youStep)}   (reference ${fixed(refStep)}, not scored)`);
+      continue;
+    }
     lines.push(`${prev.s.text} to ${cur.s.text}: reference ${fixed(refStep)}  you ${fixed(youStep)}  scaled ${fixed(youStep * a.rangeScale)}  difference ${fixed(youStep * a.rangeScale - refStep)}`);
   }
   return `${head}\n${lines.join("\n")}`;

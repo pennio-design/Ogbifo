@@ -12,7 +12,6 @@ import {
   buildOverlay,
   MARKER_LABELS,
   NOT_WORDS_NOTE,
-  paceSentence,
   RECORDER_ERROR_MESSAGES,
   recorderAnnouncement,
   scoreSentence,
@@ -228,7 +227,6 @@ function AttemptResult({
 }) {
   const overlay = buildOverlay(result, annotation);
   const steps = stepSummary(result.syllables.map((s) => s.marker));
-  const pace = paceSentence(result.pace);
   // D-036 and D-024: a number only in Live, and only once calibration has passed.
   const showNumber = showResonanceNumber && mode === "live";
 
@@ -246,11 +244,10 @@ function AttemptResult({
         </div>
       ) : null}
       <p className="mt-4 font-body text-lg text-bone">{steps.sentence}</p>
-      {pace ? <p className="mt-1 font-body text-sm text-ash">{pace}</p> : null}
       <div className="mt-6">
         <ContourChart overlay={overlay} />
       </div>
-      <ol className="mt-4 flex flex-wrap gap-2" aria-label="Each syllable and how its pitch step compared with the reference">
+      <ol className="mt-4 flex flex-wrap gap-2" aria-label="Each syllable and whether its pitch step went the way the tone marks call for">
         {result.syllables.map((s) => (
           <li key={s.index} className="border border-bone/10 px-3 py-2 font-ui text-sm">
             <LanguageText lang={languageCode} text={s.text} className="text-lg" />

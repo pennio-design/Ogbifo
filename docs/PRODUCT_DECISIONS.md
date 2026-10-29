@@ -214,3 +214,11 @@ Owner: contractions are the beauty of spoken Yorùbá, people contract even thei
 ## D-045 Treat the audio, do not force time or pace
 
 A speaker is not made to speak for a set time or at a set pace. The recording is cleaned (rumble and steady noise removed) before analysis, and pace is matched by alignment. The recording limit is a 60 second safety cap. See `SCORING_SPEC.md` section 16.
+
+## D-046 Tone is judged against the tone marks, not against a recording (approves D-044's open point)
+
+Approved by the owner. A step between neighbouring syllables is credited when it goes the way the Card's tone marks call for (up, down or level), for any size of step above a small minimum, with a little drift allowed on level tones. The reference recording is for listening only and no longer sets the target, so no voice has to be imitated, and a speaker's range and pitch drop out without a range correction. The old reference-contour method stays in the code as `toneMethod: "contour"` for comparison. Rhythm is still compared with the reference's syllable shares and has the same weakness to check. Constants (`metrics.ts`) are guesses to calibrate: 0.75 semitones per tone level, level tones free to 1.5 semitones and zero credit at 3.5.
+
+## D-047 No songs or lyrics in the beta
+
+Counsel flagged the rights declaration as a liability if a contributor misrepresents it. Until counsel approves wording, contributions accept phrase, proverb and greeting only (`ACCEPTED_KINDS`), the Community form does not offer Lyric, and the Cards sheet refuses `praise_song_excerpt`. Reversible in one line each.

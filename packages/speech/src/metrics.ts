@@ -15,6 +15,15 @@ export const RHYTHM_ZERO_CREDIT_LOG_RATIO = 0.7;
  */
 export const RANGE_SCALE_MIN = 0.6;
 export const RANGE_SCALE_MAX = 1 / 0.6;
+/**
+ * Direction-based Tone (D-046). A step is judged against what the Card's tone marks
+ * call for, not against a recording, so no voice has to be imitated. Level tones may
+ * drift by this much before credit falls, because speech drifts down through a phrase.
+ */
+export const DIRECTION_LEVEL_FULL_SEMITONES = 1.5;
+export const DIRECTION_LEVEL_ZERO_SEMITONES = 3.5;
+/** A rise or fall of one tone level is credited fully from this many semitones; two levels (High to Low) twice that. A guess to calibrate. */
+export const DIRECTION_SEMITONES_PER_LEVEL = 0.75;
 export const WEIGHT_TONE = 0.7;
 export const WEIGHT_RHYTHM = 0.3;
 
@@ -86,6 +95,54 @@ export function toneScore(learner: readonly (number | null)[], reference: readon
     intervalErrors.push(diff);
     markers[k] = Math.abs(diff) <= TONE_FULL_CREDIT_SEMITONES ? "close" : diff > 0 ? "higher" : "lower";
     credit += linearCredit(Math.abs(diff), TONE_FULL_CREDIT_SEMITONES, TONE_ZERO_CREDIT_SEMITONES);
+    pairs += 1;
+  }
+  return { score: pairs === 0 ? null : (credit / pairs) * 100, pairs, markers, intervalErrors };
+}
+
+const TONE_RANK = { L: 0, M: 1, H: 2 } as const;
+
+/**
+ * Tone score from direction (D-046). For each pair of neighbouring syllables the Card's
+ * tone marks say whether the pitch should go up, down or stay level; the learner's own
+ * pitch (in semitones from their own median) says what happened. Reference-free: the
+ * reference recording is for listening, never for copying. Heights and range drop out.
+ *
+ * Marker meaning: "close" = the step went the way the marks call for; "lower" = it came
+ * out lower than they call for; "higher" = higher than they call for.
+ */
+export function directionToneScore(learner: readonly (number | null)[], tones: readonly ("H" | "M" | "L")[]): ToneResult {
+  const count = Math.min(learner.length, tones.length);
+  const markers: MarkerState[] = new Array<MarkerState>(count).fill("unmeasured");
+  const intervalErrors: (number | null)[] = [];
+  let credit = 0;
+  let pairs = 0;
+  if (count > 0 && learner[0] !== null && learner[0] !== undefined) markers[0] = "first";
+
+  for (let k = 1; k < count; k += 1) {
+    const l0 = learner[k - 1];
+    const l1 = learner[k];
+    if (l0 === null || l0 === undefined || l1 === null || l1 === undefined) {
+      intervalErrors.push(null);
+      continue;
+    }
+    const levels = TONE_RANK[tones[k]!] - TONE_RANK[tones[k - 1]!];
+    const step = l1 - l0;
+    let pairCredit: number;
+    let marker: MarkerState;
+    if (levels === 0) {
+      pairCredit = linearCredit(Math.abs(step), DIRECTION_LEVEL_FULL_SEMITONES, DIRECTION_LEVEL_ZERO_SEMITONES);
+      marker = Math.abs(step) <= DIRECTION_LEVEL_FULL_SEMITONES ? "close" : step > 0 ? "higher" : "lower";
+      intervalErrors.push(step);
+    } else {
+      const needed = DIRECTION_SEMITONES_PER_LEVEL * Math.abs(levels);
+      const along = Math.sign(levels) * step;
+      pairCredit = Math.min(Math.max(along / needed, 0), 1);
+      marker = pairCredit >= 0.5 ? "close" : levels > 0 ? "lower" : "higher";
+      intervalErrors.push(step - levels * DIRECTION_SEMITONES_PER_LEVEL);
+    }
+    markers[k] = marker;
+    credit += pairCredit;
     pairs += 1;
   }
   return { score: pairs === 0 ? null : (credit / pairs) * 100, pairs, markers, intervalErrors };

@@ -1,7 +1,7 @@
 import { alignOpenEnded } from "./dtw";
 import { cleanAudio } from "./clean";
 import { computeMfcc, normalizeCepstra } from "./mfcc";
-import { rangeScale, rhythmScore, resonanceScore, toneScore, type MarkerState } from "./metrics";
+import { directionToneScore, rangeScale, rhythmScore, resonanceScore, toneScore, type MarkerState } from "./metrics";
 import { HOP_MS, PITCH_ALGORITHM_VERSION, SAMPLE_RATE, medianHz, toSemitoneContour, trackPitch } from "./pitch";
 import { median, percentile } from "./stats";
 import type { ReferenceAnnotation } from "./annotation";
@@ -77,7 +77,9 @@ export interface AttemptScored {
   readonly pace: number;
   /** Mean alignment cost. For calibration logging only; never sent to analytics. */
   readonly alignmentCost: number;
-  /** Factor applied to the learner's pitch steps (1 = none). */
+  /** How Tone was judged: against the Card's tone marks (default, D-046) or against the reference contour (kept for comparison). */
+  readonly toneMethod: "direction" | "contour";
+  /** Factor applied to the learner's pitch steps (1 = none; always 1 for direction). */
   readonly rangeScale: number;
   readonly syllables: readonly SyllableResult[];
   /** Normalised pitch (semitones from the speaker's median) per 10 ms, null where unvoiced. */
@@ -116,7 +118,7 @@ export function analyzeAttempt(
   learner: Float32Array,
   reference: ReferenceAnnotation,
   overrides: Partial<Record<keyof typeof LIMITS, number>> = {},
-  options: { denoise?: boolean } = {},
+  options: { denoise?: boolean; toneMethod?: "direction" | "contour" } = {},
 ): AttemptAnalysis {
   const limits = { ...LIMITS, ...overrides };
   if (reference.algorithmVersion !== PITCH_ALGORITHM_VERSION) return refuse("reference_mismatch");
@@ -198,15 +200,20 @@ export function analyzeAttempt(
   const referenceValues = reference.syllables.map((s) =>
     syllablePitch(referenceContour, Math.round(s.startMs / reference.hopMs), Math.round(s.endMs / reference.hopMs), limits.minVoicedFrames),
   );
-  const measured = learnerValues.filter((v, i) => v !== null && referenceValues[i] !== null).length;
+  const method = options.toneMethod ?? "direction";
+  // Direction needs only the learner's pitch; the reference contour is for the chart (D-046).
+  const measured = learnerValues.filter((v, i) => v !== null && (method === "direction" || referenceValues[i] !== null)).length;
   const coverage = measured / spans.length;
   if (coverage < limits.minCoverage) return refuse("not_enough_voice");
 
-  const scale = rangeScale(learnerValues, referenceValues);
-  const tone = toneScore(
-    learnerValues.map((v) => (v === null ? null : v * scale)),
-    referenceValues,
-  );
+  const scale = method === "direction" ? 1 : rangeScale(learnerValues, referenceValues);
+  const tone =
+    method === "direction"
+      ? directionToneScore(learnerValues, reference.syllables.map((s) => s.tone))
+      : toneScore(
+          learnerValues.map((v) => (v === null ? null : v * scale)),
+          referenceValues,
+        );
   if (tone.score === null) return refuse("not_enough_voice");
   const rhythm = rhythmScore(
     spans.map((s) => (s.end - s.start) * HOP_MS),
@@ -223,6 +230,7 @@ export function analyzeAttempt(
     coverage,
     pace: rhythm.pace,
     alignmentCost: alignment.meanCost,
+    toneMethod: method,
     rangeScale: scale,
     syllables: reference.syllables.map((s, index) => ({
       index,

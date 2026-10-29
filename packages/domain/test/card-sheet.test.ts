@@ -6,6 +6,7 @@ import type { DialectRegister } from "../src/dialect";
 // Test fixtures exercise the checker's mechanics. They are not Card content.
 const register: DialectRegister = { dialects: [{ id: "standard", name: "Standard Yorùbá" }, { id: "test-a", name: "Test A" }] };
 const ctx = { register, deckIds: ["common-tongue-yo", "proverb-house-yo"], languageId: "yo" };
+const songsOn = { ...ctx, acceptSongExcerpts: true };
 const NOW = "2026-11-01T00:00:00.000Z";
 const header = CARD_SHEET_COLUMNS.join(",");
 const line = (o: Partial<Record<(typeof CARD_SHEET_COLUMNS)[number], string>>) => toCsv([CARD_SHEET_COLUMNS.map((c) => o[c] ?? "")]).trimEnd();
@@ -15,6 +16,7 @@ const base = {
 };
 const signed = { ...base, reviewer_1: "Bayo", reviewer_1_dialect: "standard", reviewer_2: "Chi", reviewer_2_dialect: "standard", reviewed_on: "2026-10-31" };
 const check = (...lines: string[]) => checkCardSheetCsv([header, ...lines].join("\n"), ctx, NOW);
+const checkSongs = (...lines: string[]) => checkCardSheetCsv([header, ...lines].join("\n"), songsOn, NOW);
 const codes = (r: ReturnType<typeof check>, i = 0) => r.rows[i]!.errors.map((e) => e.code);
 
 describe("cards sheet", () => {
@@ -48,9 +50,14 @@ describe("cards sheet", () => {
       "ID_MISSING", "ID_INVALID", "DECK_UNKNOWN", "CATEGORY_UNKNOWN", "TRANSLATION_MISSING", "CONTEXT_MISSING", "DIFFICULTY_INVALID", "DIALECT_UNKNOWN", "TOKENS_INVALID",
     ]);
   });
-  it("needs a rights note for song and praise-poem excerpts (D-020)", () => {
-    expect(codes(check(line({ ...base, category: "praise_song_excerpt" })))).toContain("RIGHTS_MISSING");
-    const ok = check(line({ ...base, category: "praise_song_excerpt", rights: "Traditional oriki, recited by the contributor's grandmother" }));
+  it("does not accept songs and praise-poem excerpts for now (counsel, OPEN_CONFLICTS #29)", () => {
+    const r = check(line({ ...base, category: "praise_song_excerpt", rights: "Traditional oriki" }));
+    expect(codes(r)).toContain("CATEGORY_NOT_ACCEPTED");
+    expect(r.cards).toHaveLength(0);
+  });
+  it("when songs are switched on, they need a rights note (D-020)", () => {
+    expect(codes(checkSongs(line({ ...base, category: "praise_song_excerpt" })))).toContain("RIGHTS_MISSING");
+    const ok = checkSongs(line({ ...base, category: "praise_song_excerpt", rights: "Traditional oriki, recited by the contributor's grandmother" }));
     expect(ok.rows[0]!.errors).toEqual([]);
     expect(ok.rows[0]!.warnings.map((w) => w.code)).toContain("COPYRIGHT_CARE");
     expect(ok.rights["card-yo-test-1"]).toMatch(/grandmother/);

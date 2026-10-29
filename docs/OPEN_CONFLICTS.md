@@ -159,7 +159,7 @@ Proposal in `TONE_LEXICON_PROPOSAL.md`. Decided: audio opt-in, leaderboard later
 - **`maa` counts as two syllables** (ma·M a·M) by the current rules, because every vowel is a nucleus. A linguist should confirm that long vowels like this are treated right for scoring.
 - The Card has no dialect set. A reviewer must name one.
 
-## 26. First real-speech result: Studio scored a real reading 0 of 4 — OPEN
+## 26. First real-speech result: Studio scored a real reading 0 of 4 — direction scoring built (D-046), unverified on real speech
 
 The owner tried the Reading Room in a GitHub Codespace and read *Ẹ káàárọ̀* in their own voice. Studio said "0 of 4 pitch steps were close to the reference", with a jagged orange contour that did not follow the reference bars. This is the first real speech the pipeline has met (OPEN_CONFLICTS #19 predicted it). Likely causes, none yet confirmed:
 
@@ -194,3 +194,7 @@ Iniabasi gave an informal first read on 23 October (`COUNSEL_BRIEFING.md` sectio
 Proposal (not yet decided): for the beta, accept **no lyrics and no song or praise-poem excerpts**. Contributions would offer phrase, proverb and greeting only; the Cards sheet would refuse `praise_song_excerpt`. That removes the risk counsel flagged before any wording is settled. Tradeoff: the Archive loses its most culturally rich material for now.
 
 Point to settle: whether GDPR and UK GDPR apply because the first audience is the diaspora (D-011). Do not assume "directional only".
+
+Update: Tone is now judged against the tone marks (D-046, `SCORING_SPEC.md` section 17). Not yet seen on a real voice; the owner's recorded reference and readings are the test. An honest note from building it: on synthetic voices the old contour method with its range correction already handled a uniformly smaller contrast, so the owner's rejection was probably a mix of causes (the large synthetic steps, pitch-track gaps, alignment to a robot). The new method removes the dependence on the reference entirely, which is the safer design either way.
+
+Update (D-047): decided for the beta: no lyrics or song excerpts. The Community form no longer offers Lyric, contributions refuse the kind, and the Cards sheet refuses `praise_song_excerpt`.

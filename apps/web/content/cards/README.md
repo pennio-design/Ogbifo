@@ -15,11 +15,11 @@ This repository is public. Card text is contributors' work licensed to the Proje
 2. One row per Card.
    - **id**: lower-case letters, digits and hyphens, like `card-yo-greeting-2`. It never changes once Cards are in use.
    - **deck**: `common-tongue-yo` or `proverb-house-yo` (the Decks that exist).
-   - **category**: `proverb`, `greeting`, `daily_speech`, `praise_song_excerpt`, `market_expression`, `cultural_expression` or `general_phrase`.
+   - **category**: `proverb`, `greeting`, `daily_speech`, `praise_song_excerpt` (not accepted yet: see below), `market_expression`, `cultural_expression` or `general_phrase`.
    - **dialect**: from `../lexicon/dialects.json`.
    - **text**: the Yorùbá with tone marks, as it sounds in that dialect. A line break is fine. Leave mid tone unmarked.
    - **translation**, **context** (when and why it is said), **source** (for example "own knowledge").
-   - **rights**: required for `praise_song_excerpt`. Who holds the rights, or who gave permission. Do not copy songs or books without permission.
+   - **rights**: who holds the rights or gave permission, if anyone other than you. Songs and praise-poem excerpts are **not accepted for now** (counsel flagged the copyright risk, `OPEN_CONFLICTS.md` #29): the checker refuses `praise_song_excerpt`. Do not copy songs or books without permission.
    - **difficulty**: 1, 2 or 3. **tokens**: optional whole number (default 10, a placeholder).
    - **contributor**, then **reviewer_1/2** and their dialects, and **reviewed_on** (`2026-10-31`). Two different people, neither the contributor, each speaking the Card's dialect.
 3. Download as **CSV (UTF-8)**.

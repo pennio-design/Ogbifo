@@ -74,7 +74,8 @@ describe("a reading that differs in tone or timing scores clearly lower", () => 
     const r = scored(KAAARO, { seed: 6, monotone: true });
     expect(r.tone).toBeLessThanOrEqual(25);
     expect(r.overall).toBeLessThanOrEqual(45);
-    expect(r.rangeScale).toBeCloseTo(1 / 0.6, 2); // stretched to the limit, and still low
+    expect(r.toneMethod).toBe("direction");
+    expect(r.rangeScale).toBe(1); // direction needs no range correction (D-046)
   });
 
   it("scores two swapped tones at least 40 points below the correct reading, and marks the steps", () => {
