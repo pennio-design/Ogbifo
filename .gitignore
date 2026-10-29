@@ -1,10 +1,31 @@
+node_modules/
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+.env*
+!.env.example
+
 __pycache__/
 *.pyc
 .venv/
 
 # Lyrics are copyrighted and this repository is public: keep line sheets,
 # drafts, verifier exports and reports out of git.
-bench/data/
-bench/runs/
-audit/data/
-audit/runs/
+*.lyrics.*
+line-sheets/
+verifier-exports/
+reports/
+
+# Lexicon sheets hold contributors' work, licensed to the Project only. Keep them private.
+apps/web/content/lexicon/*.csv
+apps/web/content/lexicon/*.json
+!apps/web/content/lexicon/dialects.json
+
+# Card sheets and exports: contributors' work, licensed to the Project only. Keep them private.
+apps/web/content/cards/*.csv
+apps/web/content/cards/*.json
+
+# Reference recordings are speakers' voices, licensed to the Project only. Keep them private.
+apps/web/content/references/*.json
+apps/web/public/references/

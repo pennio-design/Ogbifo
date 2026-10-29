@@ -1,0 +1,224 @@
+# Ogbifọ — Product Decisions
+
+Decisions that override or constrain other documents. Newest definition wins (see `CLAUDE.md`).
+
+## D-001 Product category
+
+Ogbifọ is a consumer language and cultural archive/interpreter product. It is not a data-engine business.
+
+## D-002 No dataset-selling business model in the MVP
+
+The Ogbifọ MVP has no dataset-selling, data-licensing or training-data revenue model. Do not build export, licensing, buyer-facing or "dataset" features, and do not design schemas, UI copy or consent flows around that purpose.
+
+## D-003 Purpose of the Reading Room and contributions
+
+The Reading Room exists for language learning, interpretation, preservation and cultural participation. Contributions are primarily for the Ogbifọ Archive and Community, not commercial dataset production.
+
+## D-004 Meaning of verification
+
+Peer verification supports community trust and archive quality. It is not dataset certification. `peer_verified` must never be presented, exported or described as gold, certified or authoritative linguistic truth.
+
+## D-005 Consent and licensing still apply
+
+Users may contribute recordings, media, lyrics and cultural material, so consent, license and rights capture are required before any contribution is stored (`OPEN_CONFLICTS.md` #5). The grant covers Archive display, community verification and the contributor's own use. Any other use needs new, explicit consent and a new decision in this file.
+
+## D-006 The benchmark project
+
+`bench/`, `audit/`, `docs/reference/ogbifo-architecture.md` and the pitch deck belong to a separate project. They do not drive Ogbifọ's roadmap. The owner chose to delete them from this repository; they remain in git history (before the commit that removed them). Nothing in the app depends on them.
+
+## D-007 Royal Seal
+
+One loop. The canonical seal is `brand/royal-seal.svg`: a 16-spoke radial waveform (`currentColor`), a single Ochre loop, and a central Ochre fulcrum. Do not redraw it or add a loop. The earlier "two intersecting loops" wording is retired, and an eye-shaped candidate was rejected because it reads as an eye, against the brand's rejection of surveillance aesthetics.
+
+## D-008 Canonical sources
+
+`docs/` is the single source of truth. The brand guidelines palette and typography (Clay / Ochre / Bone; Fraunces / Space Grotesk / Plus Jakarta Sans) are canonical. `DATA_MODEL.md` is the canonical data model. No earlier prototype, deck or pipeline document is a source.
+
+## D-009 No leaderboards
+
+No leaderboards or competitive ranking in the MVP.
+
+## D-010 Yorùbá at launch, multi-language by design
+
+Ogbifọ launches with Yorùbá only. The MVP's content, Decks, Archive, scoring, copy and fonts cover Yorùbá. Hausa, Igbo, Pidgin and other languages are out of the MVP, and nothing is seeded or designed for them. The architecture stays multi-language: `languageId` on every entity, so adding a language does not rewrite the schema.
+
+Public framing is "Yorùbá first", never "African languages", while one language ships.
+
+A language is added only through the gate in `LANGUAGE_EXPANSION.md`, and adding one needs a new decision here. Planned order, by cost: Igbo, Hausa, then Pidgin.
+
+D-011 to D-030 were decided for Yorùbá and apply to Yorùbá without qualification. Each later language re-confirms the ones that depend on language (D-012, D-014, D-015, D-016, D-024).
+
+## D-011 Launch user
+
+The first user is the diaspora heritage learner: a Yorùbá-descent adult, usually abroad, who understands some speech but cannot read or write it. English is the support language. Design, copy and pricing serve this user first. Native speakers are contributors and reviewers, not the primary audience. Not for launch: resident students on constrained data, researchers, children.
+
+## D-012 Content authority
+
+No Card reaches a user until at least two named native-speaker reviewers have approved it. Cards display who reviewed them. Community contributions live in a separate, clearly labelled Archive and never enter a Deck without the same review. Developer seed content is for building only and must not ship.
+
+Consequence: `Card` needs review fields (reviewers, review date, review status) before Sprint 2 ships Cards to users. Not yet in `DATA_MODEL.md`.
+
+## D-013 Language Map
+
+The Language Map is a map of Yorùbá dialects and regions, showing Archive coverage and gaps by dialect. Pioneer status rewards contributing to under-documented dialects. The page is named "Language Map" (terminology unchanged) but its content is Yorùbá-internal.
+
+## D-014 Speech scoring
+
+The Resonance Score compares the learner's pitch contour and timing against a native reference recording of the same Card, syllable by syllable, because tone carries meaning in Yorùbá. No ASR transcript is used for scoring. Every Card therefore needs reviewer-recorded reference audio. Clarity, Rhythm and Boldness as originally specified are replaced; the new metrics are defined in `OPEN_CONFLICTS.md` #7. The score stays labelled as guidance.
+
+## D-015 Orthography
+
+Every Deck Card is fully tone-marked and dot-below marked, and a reviewer checks the marking. Contributors get assisted tone-mark entry: a key palette plus lexicon-based suggestions. Archive entries may arrive unmarked but are flagged "needs marking" and cannot be confirmed by peers until marked. The reference standard for marking is still to be named (the 1966 Yorùbá orthography is the usual one).
+
+## D-016 Dialect policy
+
+Decks and reference recordings use standard Yorùbá. Dialect speech is collected, tagged and verified in the Archive. Dialect Decks (for example Ìjẹ̀bú or Ẹ̀kìtì) come later, once reviewers exist for that dialect. `dialectId` stays optional on Card.
+
+## D-017 Platform
+
+An installable web app (PWA) first, responsive, using the browser microphone. Offline: contribution drafts (per `OFFLINE_FIRST.md`) and any Deck the user has downloaded, including its reference audio. Native iOS and Android apps are revisited only if retention justifies them.
+
+## D-018 Business model
+
+None in the first release: free until the product shows retention. No paywalls. Locked Decks are progression only, not payment. Tokens are progress points with no cash value. Pricing is revisited with retention data.
+
+## D-019 Learner audio
+
+Pitch analysis runs on-device. A learner's recordings are not uploaded by default; only the numeric scores and contour are saved. The audio is discarded unless the learner explicitly keeps or shares it. Consequence: the scoring algorithm must run client-side (WASM or Web Audio), offline, and old attempts cannot be re-scored when it improves.
+
+## D-020 Archive visibility and licence
+
+Verified Archive entries are public to read. The contributor keeps ownership and grants Ogbifọ a non-exclusive licence to display, preserve and let the community verify the entry, on Ogbifọ only. The contributor can withdraw the licence, and a withdrawn entry disappears from view. Nothing is licensed to third parties (see D-002). Copyrighted works such as lyrics are not accepted without a rights declaration.
+
+## D-021 Two verification tiers
+
+Any signed-in user who declares fluency may confirm a contribution, and five confirmations make it "Peer confirmed". Only the named reviewer group (D-012) can mark an item "Reviewed", and only "Reviewed" items may enter a Deck. The two labels are never conflated in copy or data. One vote per account, with rate limits.
+
+## D-022 Accounts
+
+Anyone can read anonymously, including the Reading Room and a free sample Deck. An account (Google, Apple or an email link, no passwords) is required to keep progress, download Decks, contribute or confirm. Phone-number sign-in is not part of the first release. First provider: **email link** (D-039).
+
+## D-023 Translation
+
+The MVP has no free-text machine translation. Every Card carries a reviewer-approved English translation plus a note on meaning and context. The PRD's Translation page (language swap, copy, counts, confidence) is deferred. Revisit only with a measured quality bar on Yorùbá.
+
+## D-024 Reading Room modes
+
+**Studio** is unscored practice: hear the reference at normal or slow speed, record, compare contours, no score, no progress. **Live** is one scored attempt per Card and counts toward progress.
+
+## D-025 Progression
+
+Ranks are Listener, Reader, Interpreter, Keeper, and Ogbifọ as the highest. "Sovereign" is retired as a rank and as a product term. Ranks are earned by consistent practice and by Reviewed contributions, never by popularity. Thresholds are set later from retention data. Tokens are plain progress points (D-018). No leaderboards (D-009).
+
+## D-026 Launch bar
+
+A private beta with 30 to 50 diaspora learners: two Decks (Proverb House and Common Tongue) of about 30 Cards each, all reviewer-approved (D-012) with reference audio from two voices. The success measure is the share of learners who return in week 2 and week 4.
+
+## D-027 Translation placement
+
+The reviewer-approved English translation is always visible beneath the Yorùbá text, as in the UX sketch. The Yorùbá is always first in reading order and visually dominant. There is no hide or reveal control in the MVP.
+
+## D-028 Analytics
+
+Full product analytics, behind a consent banner. Analytics are off until the user consents, and consent can be withdrawn at any time. Hard guardrails, regardless of vendor: no audio and no pitch data are ever sent; session replay masks the recording interface, the contribution form and any typed language text; no Yorùbá text a user types leaves the product through analytics; the vendor is named in the privacy notice. The vendor and the banner design are open (`OPEN_CONFLICTS.md` #13).
+
+## D-029 Deck unlocks
+
+Proverb House is locked until the learner has finished Common Tongue. Common Tongue is open, and is the free sample Deck for anonymous readers (D-022). The lock is progression only (D-018). "Finished" is defined in `OPEN_CONFLICTS.md` #14.
+
+## D-030 Interface language
+
+The interface is English. Yorùbá appears as Card content, the Ogbifọ name, and rank names with English glosses. Build string handling so a Yorùbá interface could be added later, but ship English only. Any Yorùbá UI string is reviewed content (D-012).
+
+## D-031 Score metrics
+
+Approved: **Tone** and **Rhythm**. Clarity and Boldness are dropped. Resonance Score is 0.7 x Tone + 0.3 x Rhythm as an integer 0 to 100, with weights and thresholds subject to calibration (`SCORING_SPEC.md`). The weights were not discussed separately and are treated as accepted; change them here if not.
+
+## D-032 Who reviews, annotates and calibrates
+
+Reviewers, linguists, annotators and calibration speakers come from an open volunteer call, published once the build sprints are done. Sponsors are sought to fund rewards for volunteers. The search for investors, donors and contributors runs in parallel. Funding must not bring data rights: no sponsor or investor receives licences to contributions or recordings (D-002, D-020).
+
+Consequence: the build proceeds before reviewers exist. Review and calibration are therefore **ship gates for the beta**, not prerequisites for building (see `OPEN_CONFLICTS.md` #17).
+
+## D-033 Reference annotation tool
+
+Build an in-app, reviewer-only annotation tool so volunteers need no outside software. It uses permissive open-source components (wavesurfer.js, BSD-3-Clause, with its regions plugin). Audacity label files (tab-separated start, end, label) are also imported, at little cost, for anyone who prefers Audacity.
+
+Audacity code is not copied or forked: it is GPLv3, so copying it would require the whole app to be released under GPLv3, and it is a C++ desktop program that cannot be moved into a web app. Ideas and the label file format are free to use. LGPL (peaks.js) and AGPL components are avoided for the same reason.
+
+## D-034 Reference audio provenance
+
+Reference recordings (D-014) may come only from:
+
+1. a speaker recorded for Ogbifọ under a written consent and licence;
+2. an existing recording whose rights holder gives written permission for this use; or
+3. a clip published under CC BY or CC0, with attribution kept and no third-party music or lyrics in it.
+
+Nothing is downloaded or used because it is "found online". Every reference carries a provenance record: source, licence, rights holder, speaker consent, date. Quality bar: one clean speaker, no music, no heavy compression, because the pitch analysis needs a clean signal. Most video-platform content fails that bar, so it is used chiefly to find speakers and creators to approach for permission or a fresh recording. Counsel reviews this before launch (`OPEN_CONFLICTS.md` #5).
+
+## D-035 Analytics carries no score
+
+Analytics events never include a score, only that an attempt completed (confirms D-028).
+
+## D-036 Calibration-failure fallback, and the default until calibration passes
+
+If calibration fails, Live shows the pitch contour overlay and per-syllable markers and **no number**. The number stays hidden until calibration passes. Build it behind a switch (`showResonanceNumber`, default off) so it can be enabled without a code change.
+
+A Live attempt is **finished when the recording is clear enough to analyse**, whether or not a number is shown. A recording refused for poor audio, or a failed alignment, does not finish a Card. This makes the Deck unlock rule (D-029) work with or without a number, and it settles the finished rule in `OPEN_CONFLICTS.md` #14 for attempts: finished means one analysable Live attempt per Card.
+
+## D-037 Pitch-range correction kept
+
+Approved by the owner. The learner's pitch steps are rescaled to the reference's spread, clamped to 0.6 to 1.67 (`RANGE_SCALE_MIN`, `RANGE_SCALE_MAX` in `packages/speech/src/metrics.ts`), before Tone is scored. It stays on through calibration. If calibration shows it rewards flat readings or hides real differences, retune the clamp or switch it off by setting both bounds to 1. That is a calibration decision, to be recorded here.
+
+## D-038 Contributions stay on the device until counsel signs off
+
+Sprint 4 builds the contribution flow local-first: validate, write to IndexedDB, queue in an outbox, render at once. The consent screen and licence wording are a marked DRAFT (`CONSENT_IS_DRAFT`, version `draft-0.1`). While that flag is true, `guardTransport` forces the sync transport off, so nothing a contributor writes leaves their device. Flipping it requires counsel-reviewed wording, a new `CONSENT_VERSION`, and a decision here. Contributing needs an account (D-022), so there are no anonymous contributions: without a signed-in user the Community page offers no form, and every contribution carries a `userId`. This makes consent, withdrawal and confirmation attributable to a person. Contributions are text only (phrase, proverb, greeting, lyric); audio, video and links wait for speaker-consent handling (`OPEN_CONFLICTS.md` #20). Peer confirmation exists as tested domain logic only; there is no confirm UI until accounts exist.
+
+## D-039 Sign-in by email link
+
+Accounts use an emailed link, no passwords, no other provider in the first release. A link works once and expires after 15 minutes; a session lasts 30 days. Only hashes of tokens are stored. The link opens a page that needs one button press, so mail scanners cannot use it up. The answer to "send me a link" is the same whether or not the address has an account, and requests are rate limited per address and per IP. A user's display name is "Reader" until they choose one; it is never taken from the email address, and the address is never shown to other users. Sign-in stays closed (no faked success) until a real email provider is configured (`OPEN_CONFLICTS.md` #21). Google and Apple sign-in remain possible later behind the same `AuthService` seam.
+
+## D-040 PostgreSQL through `DATABASE_URL`; migrations are a deploy step
+
+The app talks to any PostgreSQL through a connection string, so the hosting choice stays open. Migrations are additive, run once each, and are applied by `npm run migrate -w @ogbifo/web` before a new version starts; an applied migration whose text has changed is refused. The app never migrates itself in production. Without `DATABASE_URL`: development uses memory, production keeps sign-in closed. The repositories sit behind the same ports as the in-memory ones and share one contract test.
+
+## D-041 The founder's roles, and the people around them
+
+The owner is a native Yorùbá speaker and may act as Card author, annotator, first reviewer and one reference voice. Limits that keep that honest: nobody reviews a Card they wrote; every Card still needs two different named reviewers (D-012), so a second fluent speaker, ideally a Yorùbá teacher, is required; and the owner counts as one calibration speaker among at least twenty, never as the judge of whether calibration passes. A second reference voice with a clearly different pitch range is required (`OPEN_CONFLICTS.md` #18); the plan is a female speaker. Every recorded voice, the owner's included, is licensed in writing to the Ogbifọ project and its successor, not to a person; the licence names the project so it transfers to a company if one is formed. Drafts for counsel: `docs/legal/REFERENCE_VOICE_LICENCE_DRAFT.md` and `docs/legal/VOLUNTEER_AGREEMENT_DRAFT.md`. The seed Cards were written by the assistant and have not been checked by any Yorùbá speaker; they are developer content only until two named reviewers approve them (D-012).
+
+## D-042 Tone lexicon and tone game: direction
+
+Answers to `TONE_LEXICON_PROPOSAL.md` section 9:
+
+1. **Audio is in scope**, as an explicit, separate opt-in. Audio from games is never used without it. Learners' own readings keep being analysed on the device (D-019). Opted-in audio may be used to test and tune tone detection, never to create or imitate a voice and never sold or licensed (D-002). Reference voices carry the same choice as a tick-box in their licence.
+2. **Leaderboard: after the contributor tier is live and abuse controls exist** (`OPEN_CONFLICTS.md` #4), not in the beta. It counts accepted answers only. The "Not MVP" list is amended to say so.
+3. **Qualification tests competence, not birth.** See the proposal, section 3. Nativeness cannot be proved and does not need to be.
+4. **One lexicon standard: Standard Yorùbá.** Dialects are not modelled in the lexicon. Game copy says "Standard Yorùbá". Revisit if reviewers or contributors report that a regional form is being marked wrong. (The Language Map keeps its own dialect view, D-013.)
+5. **Terms are necessary but not sufficient.** The terms of service explain the product plainly. Using people's recordings to tune the app also needs a separate, unbundled, withdrawable opt-in, in plain language, worded by counsel. A single "I agree to the terms" box is not enough for voice.
+
+## D-043 The tone lexicon is dialect-aware (amends D-042 item 4)
+
+Reversal by the owner: a tone is marked the way it sounds, and it is interpreted the way it sounds. The lexicon therefore records each entry **in a named dialect**; no dialect is "wrong", and a difference between dialects is not an error. Standard Yorùbá is one dialect label among the others and the default for beginners. Consequences:
+
+- Agreement is counted **within a dialect**: three qualified contributors who declare that dialect, same tone-marked form. Reviewers are likewise recorded by dialect, and a reviewer can only mark Reviewed an entry in a dialect they speak.
+- A dialect register (name, region, status), curated by reviewers, is shared with the Language Map (D-013). No dialects are invented in code; the first entries come from the teacher.
+- The competence test (D-042 item 3) draws only on items a reviewer has marked as the same in every dialect, so a regional speaker is not failed for speaking their own dialect. A per-dialect test comes later.
+- Scoring in the Reading Room compares a learner with the reference recording's dialect. A Card names the dialect of its reference voice.
+- Start with the dialects the owner and the teacher speak, not all of them. Reviewer capacity per dialect is the limit.
+
+
+## D-044 Contractions are core; scoring must not depend on imitating one voice (direction)
+
+Owner: contractions are the beauty of spoken Yorùbá, people contract even their names, and real understanding means reading the speaker's intent from context. Staged plan (`OPEN_CONFLICTS.md` #27): Cards list their spoken forms; a contraction lexicon with patterns; understanding contractions in free speech is long-term research, not promised. Owner finding (#26): the Tone score rewarded imitating the synthetic reference and rejected natural speech. A synthetic voice is a plumbing test only. **Not yet decided:** replacing the reference-contour Tone score with a reference-free, direction-based one on the card's tone labels. Awaiting the owner's approval.
+
+## D-045 Treat the audio, do not force time or pace
+
+A speaker is not made to speak for a set time or at a set pace. The recording is cleaned (rumble and steady noise removed) before analysis, and pace is matched by alignment. The recording limit is a 60 second safety cap. See `SCORING_SPEC.md` section 16.
+
+## D-046 Tone is judged against the tone marks, not against a recording (approves D-044's open point)
+
+Approved by the owner. A step between neighbouring syllables is credited when it goes the way the Card's tone marks call for (up, down or level), for any size of step above a small minimum, with a little drift allowed on level tones. The reference recording is for listening only and no longer sets the target, so no voice has to be imitated, and a speaker's range and pitch drop out without a range correction. The old reference-contour method stays in the code as `toneMethod: "contour"` for comparison. Rhythm is still compared with the reference's syllable shares and has the same weakness to check. Constants (`metrics.ts`) are guesses to calibrate: 0.75 semitones per tone level, level tones free to 1.5 semitones and zero credit at 3.5.
+
+## D-047 No songs or lyrics in the beta
+
+Counsel flagged the rights declaration as a liability if a contributor misrepresents it. Until counsel approves wording, contributions accept phrase, proverb and greeting only (`ACCEPTED_KINDS`), the Community form does not offer Lyric, and the Cards sheet refuses `praise_song_excerpt`. Reversible in one line each.

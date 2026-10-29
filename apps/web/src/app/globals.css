@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "@ogbifo/ui/tokens.css";
+@source "../../../../packages/ui/src";
+
+@theme inline {
+  --color-clay: var(--ogb-clay);
+  --color-ochre: var(--ogb-ochre);
+  --color-bone: var(--ogb-bone);
+  --color-charcoal: var(--ogb-charcoal);
+  --color-forest: var(--ogb-forest);
+  --color-ash: var(--ogb-ash);
+  --color-card: var(--ogb-card);
+  --font-serif: var(--ogb-font-serif);
+  --font-language: var(--ogb-font-language);
+  --font-ui: var(--ogb-font-ui);
+  --font-body: var(--ogb-font-body);
+}
+
+html {
+  color-scheme: dark;
+  background: var(--ogb-clay);
+}
+
+body {
+  background: var(--ogb-clay);
+  color: var(--ogb-bone);
+  font-family: var(--ogb-font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ogb-ochre);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--ogb-ochre);
+  color: var(--ogb-clay);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

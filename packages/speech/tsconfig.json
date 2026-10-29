@@ -1,0 +1,1 @@
+{ "extends": "@ogbifo/config/tsconfig.base.json", "include": ["src", "test"], "compilerOptions": { "types": ["node"] } }

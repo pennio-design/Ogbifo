@@ -1,0 +1,5 @@
+{
+  "dialects": [
+    { "id": "standard", "name": "Standard Yorùbá", "note": "The written standard. Add every other dialect here, with its region, before using it in a sheet. Reviewers curate this list (D-043)." }
+  ]
+}
